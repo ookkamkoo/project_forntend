@@ -17,7 +17,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile
+          file: ./frontend/Dockerfile
           push: true
           tags: littleweb14766/project_csn:latest
         env:
