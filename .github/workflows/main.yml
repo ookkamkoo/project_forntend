@@ -19,5 +19,5 @@ jobs:
           context: .
           push: true
         env:
-          DOCKER_USERNAME: ${{ docker.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ docker.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
