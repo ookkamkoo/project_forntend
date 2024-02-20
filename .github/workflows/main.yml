@@ -24,10 +24,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Debugging output
-      - name: Debug tag
-        run: echo "Tag: ${{ secrets.NAME }}/${{ secrets.DOCKER_PROJECT }}:${{ steps.set_tag.outputs.tag }}"
-
       # Build and push
       - name: Build and push
         uses: docker/build-push-action@v5
