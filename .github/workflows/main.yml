@@ -31,4 +31,4 @@ jobs:
           context: .
           file: ./frontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_NAME }}/project_csn:tagname
+          tags: ${{ secrets.DOCKER_NAME }}/project_csn:${{ steps.set_tag.outputs.tag }}
