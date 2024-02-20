@@ -1,10 +1,12 @@
-FROM node:19.5.0-alpine as build
+FROM node:20.11-alpine as build
 
 # Create app directory
 WORKDIR /usr/src/app
 
+# Copy package.json and package-lock.json files
+COPY package.json package-lock.json ./
+
 # Install app dependencies
-COPY package*.json ./
 RUN npm install
 
 # Bundle app source
