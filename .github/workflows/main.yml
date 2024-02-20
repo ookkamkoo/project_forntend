@@ -31,4 +31,4 @@ jobs:
           context: .
           file: ./frontend/Dockerfile
           push: true
-          tags: littleweb14766/project_csn:123
+          tags: ${{ secrets.NANE }}/${{ secrets.DOCKER_PROJECT }}:${{ steps.set_tag.outputs.tag }}
