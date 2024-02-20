@@ -25,8 +25,8 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Build and push
-      - name: Build and push
+      # Build and push docker hub
+      - name: Build and push docker hub
         uses: docker/build-push-action@v5
         with:
           context: .

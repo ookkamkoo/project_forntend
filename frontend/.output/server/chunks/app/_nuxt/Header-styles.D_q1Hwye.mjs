@@ -1,0 +1,6 @@
+const Header_vue_vue_type_style_index_0_lang = ".primary{background-color:#49240f}.secondary{background-color:#e4a79d}.info{background-color:#0080ff}.success{background-color:#38c172}.primary-text{color:#333}.secondary-text{color:#666}.accent-text{color:red}.muted-text{color:#999}.white-smoke-text{color:#f5f5f5}.small-font{font-size:12px}.medium-font{font-size:16px}.large-font{font-size:20px}.p-1{padding:.3125rem}.p-2{padding:.625rem}.p-3{padding:.9375rem}.p-4{padding:1.25rem}.p-5{padding:1.5625rem}.p-rl-1{padding-left:.3125rem;padding-right:.3125rem}.p-rl-2{padding-left:.625rem;padding-right:.625rem}.p-rl-3{padding-left:.9375rem;padding-right:.9375rem}.p-rl-4{padding-left:1.25rem;padding-right:1.25rem}.p-rl-5{padding-left:1.5625rem;padding-right:1.5625rem}.m-1{margin:.5rem}.m-2{margin:1rem}.m-3{margin:1.5rem}.m-4{margin:2rem}.m-5{margin:2.5rem}@media screen and (max-width:952px){.mobile{display:block}.mobile-none{display:none}}@media screen and (min-width:952px){.mobile{display:none}}.m-auto{margin:auto}.danger{background-color:red;color:#fff}.danger:hover{background-color:#c00!important}";
+
+const HeaderStyles_D_q1Hwye = [Header_vue_vue_type_style_index_0_lang];
+
+export { HeaderStyles_D_q1Hwye as default };
+//# sourceMappingURL=Header-styles.D_q1Hwye.mjs.map

@@ -1,0 +1,1 @@
+import{_ as n,t as e,v as s,L as _}from"./entry.jPoHeEaz.js";const r={};function a(c,t){return e(),s("div",null," sdsdsdsd ")}const d=n(r,[["render",a]]),f={};function m(c,t){const o=d;return e(),_(o)}const p=n(f,[["render",m]]);export{p as default};
