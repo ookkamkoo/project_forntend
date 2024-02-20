@@ -21,18 +21,18 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Set up Docker Buildx
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      # # Set up Docker Buildx
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v3
 
-      # Build and push
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./frontend/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice
+      # # Build and push
+      # - name: Build and push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     file: ./frontend/Dockerfile
+      #     push: true
+      #     tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice
       
       #Connect SSH
       - name: Set up SSH
@@ -43,6 +43,6 @@ jobs:
       #Update file
       - name: Update Docker container
         run: |
-          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' < var/www/update_script.sh
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' < /var/www/update_script.sh
 
       
