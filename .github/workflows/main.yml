@@ -40,11 +40,17 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       
-      - name: List directory contents
-        run: ls
+      # - name: List directory contents
+      #   run: ls
+
       # #Update file
       # - name: Update Docker container
       #   run: |
       #     sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' < update_script.sh
+
+      # Pull Docker image on the SSH server
+      - name: Pull Docker image
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'docker pull littleweb14766/project_csn:backOfice'
 
       
