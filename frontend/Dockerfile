@@ -1,16 +1,14 @@
 FROM node:20.11-alpine as build
-
 # Create app directory
+RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json files
-COPY package.json package-lock.json ./
-
 # Install app dependencies
+COPY package.json /usr/src/app/
 RUN npm install
 
 # Bundle app source
-COPY . .
+COPY . /usr/src/app
 
 EXPOSE 8080
-CMD ["npm", "run", "dev"]
+CMD [ "npm", "run","dev" ]
