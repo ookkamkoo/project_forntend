@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
       - name: Checkout code
         uses: actions/checkout@v4
       
@@ -31,4 +32,17 @@ jobs:
           context: .
           file: ./frontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice
+          tags: ${{ secrets.DOCKER_NAME }}/project_csn:${{ steps.set_tag.outputs.tag }}
+      
+      #Connect SSH
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      #Update file
+      - name: Update Docker container
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} 'bash -s' < update_script.sh
+
+      
