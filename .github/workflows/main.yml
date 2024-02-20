@@ -51,6 +51,6 @@ jobs:
       # Pull Docker image on the SSH server
       - name: Pull Docker image
         run: |
-          sshpass -p @Asdf1@asdf@asdf ssh -o StrictHostKeyChecking=no -p 22 root@128.199.218.147 'docker pull littleweb14766/project_csn:backOfice'
+          sshpass -p '@Asdf1@asdf@asdf' ssh -o StrictHostKeyChecking=no -p 22 root@128.199.218.147 'docker pull littleweb14766/project_csn:backOfice'
 
       
