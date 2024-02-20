@@ -39,7 +39,5 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          ssh -o StrictHostKeyChecking=no -p 22 root@128.199.218.147 'docker pull littleweb14766/project_csn:backOfice'
       
       
