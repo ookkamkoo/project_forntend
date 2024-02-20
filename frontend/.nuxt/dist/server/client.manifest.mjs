@@ -6,7 +6,7 @@ export default {
     "file": "LanguageComponent.DEPUNADM.css",
     "src": "_LanguageComponent.!~{00b}~.js"
   },
-  "_LanguageComponent.rqdcap2f.js": {
+  "_LanguageComponent.BJ6ATdqz.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
@@ -14,9 +14,9 @@ export default {
     "css": [
       "LanguageComponent.DEPUNADM.css"
     ],
-    "file": "LanguageComponent.rqdcap2f.js",
+    "file": "LanguageComponent.BJ6ATdqz.js",
     "imports": [
-      "_collapseMotion.CG0HrHqN.js",
+      "_collapseMotion.Bayh-2Xh.js",
       "node_modules/nuxt/dist/app/entry.js"
     ]
   },
@@ -26,33 +26,33 @@ export default {
     "prefetch": true,
     "preload": true
   },
-  "_UserOutlined.Dhvi6aU3.js": {
+  "_UserOutlined.WxLLaYWU.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "UserOutlined.Dhvi6aU3.js",
+    "file": "UserOutlined.WxLLaYWU.js",
     "imports": [
-      "_collapseMotion.CG0HrHqN.js",
+      "_collapseMotion.Bayh-2Xh.js",
       "node_modules/nuxt/dist/app/entry.js"
     ]
   },
-  "_collapseMotion.CG0HrHqN.js": {
+  "_collapseMotion.Bayh-2Xh.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "collapseMotion.CG0HrHqN.js",
+    "file": "collapseMotion.Bayh-2Xh.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ]
   },
-  "_vue.f36acd1f.CDypImrT.js": {
+  "_vue.f36acd1f.De9nQchO.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "vue.f36acd1f.CDypImrT.js",
+    "file": "vue.f36acd1f.De9nQchO.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ]
@@ -63,11 +63,11 @@ export default {
     "prefetch": true,
     "preload": true,
     "css": [],
-    "file": "auth.C26G5LpP.js",
+    "file": "auth.DHg_YHhg.js",
     "imports": [
-      "_LanguageComponent.rqdcap2f.js",
+      "_LanguageComponent.BJ6ATdqz.js",
       "node_modules/nuxt/dist/app/entry.js",
-      "_collapseMotion.CG0HrHqN.js"
+      "_collapseMotion.Bayh-2Xh.js"
     ],
     "isDynamicEntry": true,
     "src": "layouts/auth.vue"
@@ -84,12 +84,12 @@ export default {
     "prefetch": true,
     "preload": true,
     "css": [],
-    "file": "default.Czay5Ila.js",
+    "file": "default.BkMQy4-I.js",
     "imports": [
-      "_collapseMotion.CG0HrHqN.js",
+      "_collapseMotion.Bayh-2Xh.js",
       "node_modules/nuxt/dist/app/entry.js",
-      "_LanguageComponent.rqdcap2f.js",
-      "_UserOutlined.Dhvi6aU3.js"
+      "_LanguageComponent.BJ6ATdqz.js",
+      "_UserOutlined.WxLLaYWU.js"
     ],
     "isDynamicEntry": true,
     "src": "layouts/default.vue"
@@ -106,10 +106,10 @@ export default {
     "prefetch": true,
     "preload": true,
     "css": [],
-    "file": "error-404.puN_2Q-3.js",
+    "file": "error-404.BYQ4KowO.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_vue.f36acd1f.CDypImrT.js"
+      "_vue.f36acd1f.De9nQchO.js"
     ],
     "isDynamicEntry": true,
     "src": "node_modules/@nuxt/ui-templates/dist/templates/error-404.vue"
@@ -126,9 +126,9 @@ export default {
     "prefetch": true,
     "preload": true,
     "css": [],
-    "file": "error-500.Bd1rY1qi.js",
+    "file": "error-500.DKpXp50K.js",
     "imports": [
-      "_vue.f36acd1f.CDypImrT.js",
+      "_vue.f36acd1f.De9nQchO.js",
       "node_modules/nuxt/dist/app/entry.js"
     ],
     "isDynamicEntry": true,
@@ -154,7 +154,7 @@ export default {
       "node_modules/@nuxt/ui-templates/dist/templates/error-404.vue",
       "node_modules/@nuxt/ui-templates/dist/templates/error-500.vue"
     ],
-    "file": "entry.jPoHeEaz.js",
+    "file": "entry.zcx9PXAQ.js",
     "isEntry": true,
     "src": "node_modules/nuxt/dist/app/entry.js",
     "_globalCSS": true
@@ -170,7 +170,7 @@ export default {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "dashboard.CDOiSQ0g.js",
+    "file": "dashboard.BVkpP291.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ],
@@ -185,10 +185,10 @@ export default {
     "css": [
       "index.kig2Qye7.css"
     ],
-    "file": "index.BMf_VBrO.js",
+    "file": "index.BPr_ATrg.js",
     "imports": [
-      "_UserOutlined.Dhvi6aU3.js",
-      "_collapseMotion.CG0HrHqN.js",
+      "_UserOutlined.WxLLaYWU.js",
+      "_collapseMotion.Bayh-2Xh.js",
       "node_modules/nuxt/dist/app/entry.js"
     ],
     "isDynamicEntry": true,
