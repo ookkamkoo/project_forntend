@@ -32,7 +32,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice
+          tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice_${{ github.run_number }}
       
       #Connect SSH
       - name: Set up SSH
@@ -45,6 +45,7 @@ jobs:
       - name: Update Docker container
         run: |
           sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} './update_script.sh'
+
 
 
       
