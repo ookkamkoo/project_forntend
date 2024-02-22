@@ -6,3 +6,6 @@
     - git push
 
 github การ build to dist and build to docker image and pull to server auto.
+
+Run
+-npm run dev -- -o

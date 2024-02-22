@@ -19,5 +19,8 @@ export default defineNuxtConfig({
       webName:process.env.WEB_NAME,
       webUrl:process.env.WEB_URL,
     }
+  },
+  devServer: {
+    port: 8080
   }
 })
