@@ -3,7 +3,10 @@ export default defineNuxtConfig({
   modules: [
     '@ant-design-vue/nuxt'
   ],
-  devtools: { enabled: process.env.DEVTOOLS === 'false' },
+  devServer: {
+    port: 3001
+  },
+  devtools: { enabled: process.env.DEVTOOLS === 'true' },
   vite: {
     css: {
       preprocessorOptions: {
@@ -19,8 +22,5 @@ export default defineNuxtConfig({
       webName:process.env.WEB_NAME,
       webUrl:process.env.WEB_URL,
     }
-  },
-  devServer: {
-    port: 8080
   }
 })
