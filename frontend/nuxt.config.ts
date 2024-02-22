@@ -4,9 +4,9 @@ export default defineNuxtConfig({
     '@ant-design-vue/nuxt'
   ],
   devServer: {
-    port: 8080
+    port: 3000
   },
-  devtools: { enabled: process.env.DEVTOOLS === 'true' },
+  devtools: { enabled: process.env.DEVTOOLS === 'false' },
   vite: {
     css: {
       preprocessorOptions: {
