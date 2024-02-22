@@ -44,13 +44,13 @@ jobs:
       #Update file
       - name: Update Docker container
         run: |
-          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} '
+            sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} '
             echo "${{ secrets.DOCKER_USERNAME }}" | docker login -u "${{ secrets.DOCKER_PASSWORD }}" --password-stdin
             docker stop backOfice
             docker rm backOfice
             echo "backOfice_${{ github.run_number }}"
             docker pull littleweb14766/project_csn:backOfice_${{ github.run_number }}
-            docker run -d --name backOfice -p 8080:8080 littleweb14766/project_csn:backOfice_${{ github.run_number }}
+            docker run -d --name backOfice -p 3001:3001 littleweb14766/project_csn:backOfice_${{ github.run_number }}
             '
 
 
