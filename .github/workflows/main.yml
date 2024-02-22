@@ -49,7 +49,7 @@ jobs:
             docker stop backOfice
             docker rm backOfice
             docker pull littleweb14766/project_csn:backOfice
-            docker run -d --name backOfice -p 3000:3000 littleweb14766/project_csn:backOfice
+            docker run -d --name backOfice -p 8080:8080 littleweb14766/project_csn:backOfice
             '
 
 
