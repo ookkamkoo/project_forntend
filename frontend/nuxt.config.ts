@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   modules: [
     '@ant-design-vue/nuxt'
   ],
-  devtools: { enabled: process.env.DEVTOOLS === 'false' },
+  devtools: { enabled: process.env.DEVTOOLS === 'true' },
   vite: {
     css: {
       preprocessorOptions: {

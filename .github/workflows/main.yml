@@ -32,7 +32,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice_${{ github.run_number }}
+          tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice_1
       
       #Connect SSH
       - name: Set up SSH
@@ -48,9 +48,10 @@ jobs:
             echo "${{ secrets.DOCKER_USERNAME }}" | docker login -u "${{ secrets.DOCKER_PASSWORD }}" --password-stdin
             docker stop backOfice
             docker rm backOfice
-            echo "backOfice_${{ github.run_number }}"
-            docker pull littleweb14766/project_csn:backOfice_${{ github.run_number }}
-            docker run -d --name backOfice -p 3000:3000 littleweb14766/project_csn:backOfice_${{ github.run_number }}
+            echo "backOfice_1"
+            docker pull littleweb14766/project_csn:backOfice_1
+            # docker run -d --name backOfice -p 3000:3000 littleweb14766/project_csn:backOfice_1
+            docker-compose up -d
             '
 
 
