@@ -45,7 +45,8 @@ jobs:
       - name: Update Docker container
         run: |
             sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} '
-            echo "${{ secrets.DOCKER_USERNAME }}" | docker login -u "${{ secrets.DOCKER_PASSWORD }}" --password-stdin
+            # echo "${{ secrets.DOCKER_USERNAME }}" | docker login -u "${{ secrets.DOCKER_PASSWORD }}" --password-stdin
+            docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
             # docker stop backOfice
             # docker rm backOfice
             docker-compose rm
