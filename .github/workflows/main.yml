@@ -45,7 +45,7 @@ jobs:
       - name: Update Docker container
         run: |
             sshpass -p @Asdf1@asdf@asdf ssh -o StrictHostKeyChecking=no -p 22 root@128.199.218.147 '
-            echo "littleweb14766@gmail.com" | docker login -u "warkhem14766" --password-stdin
+            docker login -u "littleweb14766@gmail.com" -p "warkhem14766"
             docker stop backOfice
             docker rm backOfice
             echo "backOfice_1"
