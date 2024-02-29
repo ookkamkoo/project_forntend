@@ -49,6 +49,7 @@ jobs:
             docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
             # docker stop backOfice
             # docker rm backOfice
+            docker-compose stop
             docker-compose rm
             echo "backOfice_1"
             docker pull littleweb14766/project_csn:backOfice_1
