@@ -44,7 +44,7 @@ jobs:
       #Update file
       - name: Update Docker container
         run: |
-            sshpass -p @Asdf1@asdf@asdf ssh -o StrictHostKeyChecking=no -p 22 root@22 '
+            sshpass -p @Asdf1@asdf@asdf ssh -o StrictHostKeyChecking=no -p 22 root@128.199.218.147 '
             echo "${{ secrets.DOCKER_USERNAME }}" | docker login -u "${{ secrets.DOCKER_PASSWORD }}" --password-stdin
             docker stop backOfice
             docker rm backOfice
