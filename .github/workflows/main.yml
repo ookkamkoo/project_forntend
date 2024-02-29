@@ -21,18 +21,18 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # # Set up Docker Buildx
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      # # Build and push docker hub
-      # - name: Build and push docker hub
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     file: ./Dockerfile
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice_1
+      # Build and push docker hub
+      - name: Build and push docker hub
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice_1
       
       #Connect SSH
       - name: Set up SSH
@@ -50,7 +50,7 @@ jobs:
             docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
             # docker stop backOfice
             # docker rm backOfice
-            docker-compose stop
+            docker-compose down
             docker-compose rm
             # echo "backOfice_1"
             docker pull littleweb14766/project_csn:backOfice_1

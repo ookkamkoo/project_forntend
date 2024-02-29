@@ -39,7 +39,7 @@
   
         <a-form-item>
           <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" size="large">
-            เข้าสู่ระบบ
+            เข้าสู่ระบบ {{$config.VARIABLE_NAME}}
           </a-button>
         </a-form-item>
       </a-form>

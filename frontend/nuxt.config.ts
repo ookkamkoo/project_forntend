@@ -18,6 +18,7 @@ export default defineNuxtConfig({
     public:{
       webName:process.env.WEB_NAME,
       webUrl:process.env.WEB_URL,
+      VARIABLE_NAME:process.env.VARIABLE_NAME,
     }
   }
 })
