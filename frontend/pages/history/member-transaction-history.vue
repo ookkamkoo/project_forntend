@@ -1,0 +1,3 @@
+<template>
+    <TableMemberTransactionHistoryComponent/>
+</template>

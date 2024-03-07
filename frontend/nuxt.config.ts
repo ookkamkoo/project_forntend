@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    '@ant-design-vue/nuxt'
+    '@ant-design-vue/nuxt',
   ],
   devtools: { enabled: process.env.DEVTOOLS === 'true' },
   vite: {
@@ -20,5 +20,5 @@ export default defineNuxtConfig({
       webUrl:process.env.WEB_URL,
       VARIABLE_NAME:process.env.VARIABLE_NAME,
     }
-  }
+  },
 })

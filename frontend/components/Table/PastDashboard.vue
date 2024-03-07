@@ -1,4 +1,14 @@
 <template>
+    <a-row class="p-2" >
+      <a-col :span="11">
+        <a-row >
+            <a-col class="p-1" :span="15">
+            <label>เริ่มต้นวันที่</label>
+            <a-date-picker v-model:value="dateStart" />
+            </a-col>
+        </a-row>
+      </a-col>
+    </a-row>
     <!-- row 1 -->
     <a-flex class="report" wrap="wrap">
         <a-flex class="report-row" >
@@ -120,37 +130,47 @@
     </a-flex>
 </template>
 <script>
-  export default {
-    setup() {
-      return {
-        dataSource: [
-          {
-            key: '1',
-            name: 'TW_0641625823',
-            age: '45',
-          },
-          {
-            key: '2',
-            name: 'SCB_8422536083',
-            age: '3,663',
-          },
-        ],
+import { ref } from 'vue';
+import dayjs, { Dayjs } from 'dayjs'; // Import Dayjs and its type
 
-        columns: [
-          {
-            title: 'ธนาคาร',
-            dataIndex: 'name',
-            key: 'name',
-          },
-          {
-            title: 'คงเหลือ',
-            dataIndex: 'age',
-            key: 'age',
-          },
-        ],
-      };
-    },
-  };
+export default {
+  setup() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+
+    const dateStart = ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD'));
+
+    return {
+      dataSource: [
+        {
+          key: '1',
+          name: 'TW_0641625823',
+          age: '45',
+        },
+        {
+          key: '2',
+          name: 'SCB_8422536083',
+          age: '3,663',
+        },
+      ],
+
+      columns: [
+        {
+          title: 'ธนาคาร',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: 'คงเหลือ',
+          dataIndex: 'age',
+          key: 'age',
+        },
+      ],
+    };
+  },
+};
 </script>
 <style>
 .report{

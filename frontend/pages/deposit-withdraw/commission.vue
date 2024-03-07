@@ -1,0 +1,3 @@
+<template>
+    <TableCommissionComponent/>
+</template>

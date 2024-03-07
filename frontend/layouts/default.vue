@@ -1,37 +1,61 @@
 <template>
-  <a-layout :style="{ height: '100vh'}">
-    <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+  <a-layout>
+    <a-layout-sider
+      v-model:collapsed="collapsed"
+      :trigger="collapsed_togle"
+      :zeroWidthTriggerStyle="{ width: '0px !important' }"
+      collapsible
+      :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }"
+      :class="{ 'collapsed_togle': collapsed , 'sidebar': true}"
+    >
       <LayoutSidebar/>
     </a-layout-sider>
-    <a-layout>
+    <a-layout :class="{ 'collapsed': collapsed , 'set-layout': true}">
       <a-layout-header style="background: #fb7d7d; padding: 0">
         <a-flex :justify="'space-between'">
           <div>
-            <menu-unfold-outlined
-              v-if="collapsed"
-              class="trigger"
-              @click="() => (collapsed = !collapsed)"
-            />
-            <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+            <menu-unfold-outlined v-if="collapsed" class="trigger" @click="toggleCollapsed" />
+            <menu-fold-outlined v-else class="trigger" @click="toggleCollapsed" />
           </div>
           <LayoutHeader/>
         </a-flex>
       </a-layout-header>
-      <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fdf', minHeight: '280px' }"
-      >
-        sdsdsdsd
+      <a-layout-content :style="{ margin: '24px 16px', padding: '24px', minHeight: '280px' }" @click="handleLayoutClick">
         <slot />
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue';
+<script setup>
+import { ref, onMounted } from 'vue';
 
-const collapsed = ref<boolean>(false);
+const collapsed = ref(false);
+const collapsed_togle = ref(false);
 
+const toggleCollapsed = () => {
+  collapsed.value = !collapsed.value;
+  if(collapsed.value){
+      collapsed_togle.value = null;
+    }else{
+      collapsed_togle.value = false;
+  }
+};
+
+const handleLayoutClick = (event) => {
+  if(window.innerWidth < 750){
+    if (!collapsed.value) {
+      toggleCollapsed();
+    }
+  }
+};
+
+onMounted(() => {
+  if (window.innerWidth < 750) {
+    collapsed.value = true;
+    collapsed_togle.value = null;
+  }
+});
 </script>
 
 <style>
@@ -51,5 +75,35 @@ const collapsed = ref<boolean>(false);
   height: 32px;
   background: rgba(255, 255, 255, 0.3);
   margin: 16px;
+}
+.sidebar{
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+.collapsed{
+  margin-left: 0px !important;
+  transition: 'margin-left 0.2s'
+}
+.set-layout{
+  margin-left: 250px;
+}
+.ant-layout-sider {
+  z-index: 999;
+}
+.ant-layout-sider-trigger{
+  width: 250px !important;
+}
+.collapsed_togle .ant-layout-sider-trigger{
+  width: 0 !important;
+}
+
+@media screen and (max-width: 750px) {
+  .collapsed{
+    margin-left: 0 !important;
+    z-index: 0;
+  }
+  .set-layout{
+  margin-left: 0px !important;
+}
 }
 </style>

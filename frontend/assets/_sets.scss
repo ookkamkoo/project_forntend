@@ -1,16 +1,21 @@
+// website
+$web-background:#f5f5f5;
+// $web-background:#f5f5f5;
 // _variables.scss
 $primary: #49240F;
 $secondary: #E4A79D;
-$danger: #FF0000;
+$danger: #f93e3e;
 $info: #0080FF;
+$sky: #2bbdf6;
 $success: #38c172;
+$warning: #f6b213;
 
 // text
-$text-color-primary: #333333;
-$text-color-secondary: #666666;
-$text-color-accent: #FF0000;
-$text-color-muted: #999999;
-$text-color-whiteSmoke: #f5f5f5;
+$primary: #333333;
+$secondary: #666666;
+$accent: #FF0000;
+$muted: #999999;
+$whiteSmoke: #f5f5f5;
 
 // font
 $small-font-size: 12px;
@@ -44,25 +49,52 @@ $m-5: 2.5rem;
 .info {
   background-color: $info;
 }
+.sky {
+  background-color: $sky;
+}
 .success {
   background-color: $success;
+}
+.warning {
+  background-color: $warning;
 }
 
 // text class
 .primary-text {
-  color: $text-color-primary;
+  color: $primary;
 }
 .secondary-text {
-  color: $text-color-secondary;
+  color: $secondary;
 }
 .accent-text {
-  color: $text-color-accent;
+  color: $accent;
 }
 .muted-text {
-  color: $text-color-muted;
+  color: $muted;
+}
+.white-text{
+  color: #fff !important;
+}
+.white-text-logo{
+  color: #ffffff9d !important;
 }
 .white-smoke-text{
-  color: $text-color-whiteSmoke;
+  color: $whiteSmoke;
+}
+.success-text {
+  color: $success !important;
+}
+.danger-text {
+  color: $danger !important;
+}
+.warning-text {
+  color: $warning !important;
+}
+.info-text {
+  color: $info !important;
+}
+.sky-text {
+  color: $sky !important;
 }
 
 // font class
@@ -133,6 +165,66 @@ $m-5: 2.5rem;
 }
 .m-5 {
   margin: $m-5;
+}
+
+// fornt size
+.fs-1 {
+  font-size: 0.3125rem;
+}
+.fs-2 {
+  font-size: 0.625rem;
+}
+.fs-3 {
+  font-size: 0.9375rem;
+}
+.fs-4 {
+  font-size: 1.25rem;
+}
+.fs-5 {
+  font-size: 1.5625rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+//box shadow
+.box-shadow{
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1),
+              0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+// center
+.center{
+  text-align: center;
+}
+.ant-layout{
+  background-color: white !important;
+}
+.ant-layout-content{
+  background: white !important;
+}
+// app edit
+.ant-table-cell {
+  text-align: center !important;
+}
+.ant-table-cell-header {
+  text-align: center !important;
+}
+.ant-picker{
+  width: 100% !important;
+}
+.submit{
+  width:100%
+}
+.action_page{
+  float: right;
+}
+.action{
+  width: 100px;
+}
+.ant-table-cell{
+  padding: 8px !important;
 }
 
 // response

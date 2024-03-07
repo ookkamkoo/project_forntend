@@ -1,4 +1,5 @@
 <template>
+  <!-- <LoadingComponents /> -->
   <a-layout class="layout">
     <a-layout-header>
       <div class="logo" />
@@ -11,7 +12,7 @@
       </div>
     </a-layout-content>
     <a-layout-footer style="text-align: center">
-      Ant Design ©2018 Created by Ant UED
+      {{ $config.public.webName }} ©2024 Created by fastPlay
     </a-layout-footer>
   </a-layout>
 </template>
@@ -53,5 +54,9 @@
 }
 .black{
   color: black;
+}
+.layout .ant-layout-header{
+  background: white !important;
+  padding: 1rem;
 }
 </style>

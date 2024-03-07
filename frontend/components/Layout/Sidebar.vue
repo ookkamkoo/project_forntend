@@ -3,48 +3,48 @@
         <img src="https://betflix24hours.imember.cc/img/websetting/1680175806.png" alt="AdminLTE Logo" width="50%">
     </div>
     <div class="sidebar-layout">
-    <div class="sidebar-list">
-        <div class="sidebar-lists">
-        <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-            <template v-for="(item, index) in sidebarData" :key="index">
-            <template v-if="!item.children">
-                <a-menu-item :key="'menu-item-' + index">
-                <component :is="item.icon" :style="{ margin: '0 10px' }" />
-                <router-link :to="item.path">
-                    <span>{{ item.name }}</span>
-                </router-link>
-                <span class="new" v-if="item.notify !== 0">
-                  <span class="badge padding-1 ">
-                    {{item.notify}}
-                  </span>
-                </span>
-                </a-menu-item>
-            </template>
-            <template v-else>
-                <a-sub-menu :key="'sub-menu-' + index">
-                <template #title>
-                    <component :is="item.icon" :style="{ margin: '0 10px' }" />
-                    <span class="sub-link">{{ item.name }}</span>
-                </template>
-                <template v-for="(child, childIndex) in item.children" :key="child.path">
-                    <a-menu-item>
-                    <component :is="child.icon" :style="{ margin: '0 10px' }" />
-                    <router-link :to="child.path">
-                        <span>{{ child.name }}</span>
-                    </router-link>
-                    <span class="new" v-if="child.notify !== 0">
-                      <span class="badge padding-1 ">
-                        {{child.notify}}
-                      </span>
+      <div class="sidebar-list">
+          <div class="sidebar-lists">
+          <a-menu v-model:selectedKeys="selectedKeys" mode="inline">
+              <template v-for="(item, index) in sidebarData" :key="index">
+              <template v-if="!item.children">
+                  <a-menu-item :key="'menu-item-' + index">
+                  <component :is="item.icon" :style="{ margin: '0 10px' }" />
+                  <router-link :to="item.path">
+                      <span>{{ item.name }}</span>
+                  </router-link>
+                  <span class="new" v-if="item.notify !== 0">
+                    <span class="badge padding-1 ">
+                      {{item.notify}}
                     </span>
-                    </a-menu-item>
-                </template>
-                </a-sub-menu>
-            </template>
-            </template>
-        </a-menu>
-        </div>
-    </div>
+                  </span>
+                  </a-menu-item>
+              </template>
+              <template v-else>
+                  <a-sub-menu :key="'sub-menu-' + index">
+                  <template #title>
+                      <component :is="item.icon" :style="{ margin: '0 10px' }" />
+                      <span class="sub-link">{{ item.name }}</span>
+                  </template>
+                  <template v-for="(child, childIndex) in item.children" :key="child.path">
+                      <a-menu-item>
+                      <component :is="child.icon" :style="{ margin: '0 10px' }" />
+                      <router-link :to="child.path">
+                          <span>{{ child.name }}</span>
+                      </router-link>
+                      <span class="new" v-if="child.notify !== 0">
+                        <span class="badge padding-1 ">
+                          {{child.notify}}
+                        </span>
+                      </span>
+                      </a-menu-item>
+                  </template>
+                  </a-sub-menu>
+              </template>
+              </template>
+          </a-menu>
+          </div>
+      </div>
     </div>
 </template>
 <script lang="ts" setup>
@@ -58,6 +58,7 @@ const selectedKeys = ref<string[]>(['1']);
 <style>
 .site-layout .site-layout-background {
   background: #fff;
+  transition: margin-left 0.3s;
 }
 .layout-logo{
   text-align: center;
@@ -72,6 +73,7 @@ const selectedKeys = ref<string[]>(['1']);
   max-width: 0px !important;
   min-width: 0px !important;
   width: 0px !important;
+  margin-left: 0 !important;
 }
 .sidebar-layout{
   height: 90vh;
@@ -102,7 +104,7 @@ const selectedKeys = ref<string[]>(['1']);
 .trigger{
   font-size: 20px;
   margin-left: 15px;
-  color: #939393;
+  color: whitesmoke;
 }
 .sub-link{
   margin: 0 !important;
