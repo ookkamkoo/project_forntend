@@ -28,7 +28,7 @@ export async function checkToken(token: string): Promise<boolean> {
 
   try {
       await axios.get<{ token: string }>(
-          url + '/protected',
+          `${url}/protected`,
           {
               headers: {
                   Authorization: `Bearer ${token}`
