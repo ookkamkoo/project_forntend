@@ -117,7 +117,10 @@
   const onFinish = async () => {
     try {
       const jwt_token = await login(formState.username, formState.password, formState.twofactor);
+      console.log(jwt_token);
+      console.log(jwt_token.token);
       if(jwt_token.token != undefined){
+        console.log();
         localStorage.setItem('token', jwt_token.token); 
         router.push('/dashboard');
       }else{
