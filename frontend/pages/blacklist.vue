@@ -1,0 +1,3 @@
+<template>
+    <TableBlacklistComponent/>
+</template>

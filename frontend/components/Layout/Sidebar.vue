@@ -7,41 +7,47 @@
           <div class="sidebar-lists">
           <a-menu v-model:selectedKeys="selectedKeys" mode="inline">
               <template v-for="(item, index) in sidebarData" :key="index">
-              <template v-if="!item.children">
-                  <a-menu-item :key="'menu-item-' + index">
-                  <component :is="item.icon" :style="{ margin: '0 10px' }" />
-                  <router-link :to="item.path">
-                      <span>{{ item.name }}</span>
-                  </router-link>
-                  <span class="new" v-if="item.notify !== 0">
-                    <span class="badge padding-1 ">
-                      {{item.notify}}
-                    </span>
-                  </span>
-                  </a-menu-item>
-              </template>
-              <template v-else>
-                  <a-sub-menu :key="'sub-menu-' + index">
-                  <template #title>
-                      <component :is="item.icon" :style="{ margin: '0 10px' }" />
-                      <span class="sub-link">{{ item.name }}</span>
-                  </template>
-                  <template v-for="(child, childIndex) in item.children" :key="child.path">
-                      <a-menu-item>
-                      <component :is="child.icon" :style="{ margin: '0 10px' }" />
-                      <router-link :to="child.path">
-                          <span>{{ child.name }}</span>
-                      </router-link>
-                      <span class="new" v-if="child.notify !== 0">
-                        <span class="badge padding-1 ">
-                          {{child.notify}}
-                        </span>
+                <template v-if="!item.children">
+                    <a-menu-item :key="'menu-item-' + index">
+                    <component :is="item.icon" :style="{ margin: '0 10px' }" />
+                    <router-link :to="item.path">
+                        <span>{{ item.name }}</span>
+                    </router-link>
+                    <span class="new" v-if="item.notify !== 0">
+                      <span class="badge padding-1 ">
+                        {{item.notify}}
                       </span>
-                      </a-menu-item>
-                  </template>
-                  </a-sub-menu>
+                    </span>
+                    </a-menu-item>
+                </template>
+                <template v-else>
+                    <a-sub-menu :key="'sub-menu-' + index">
+                    <template #title>
+                        <component :is="item.icon" :style="{ margin: '0 10px' }" />
+                        <span class="sub-link">{{ item.name }}</span>
+                    </template>
+                    <template v-for="(child, childIndex) in item.children" :key="child.path">
+                        <a-menu-item>
+                        <component :is="child.icon" :style="{ margin: '0 10px' }" />
+                        <router-link :to="child.path">
+                            <span>{{ child.name }}</span>
+                        </router-link>
+                        <span class="new" v-if="child.notify !== 0">
+                          <span class="badge padding-1 ">
+                            {{child.notify}}
+                          </span>
+                        </span>
+                        </a-menu-item>
+                    </template>
+                    </a-sub-menu>
+                </template>
               </template>
-              </template>
+              <a-menu-item key="25" @click="logout">
+                <LogoutOutlined :style="{ margin: '0 10px' }" />
+                <router-link to="/">
+                    <span>ออกจากระบบ</span>
+                </router-link>
+              </a-menu-item>
           </a-menu>
           </div>
       </div>
@@ -53,6 +59,11 @@ import sidebarData from '@/data/sidebarData.js';
 
 const selectedKeys = ref<string[]>(['1']);
 
+const logout = () => {
+  const router = useRouter();
+  localStorage.removeItem('token');
+  router.push('/');
+};
 </script>
 
 <style>
@@ -123,5 +134,8 @@ const selectedKeys = ref<string[]>(['1']);
 }
 .new {
   float: right;
+}
+.ant-layout-sider-trigger{
+  background: linear-gradient(88deg,#13b4ca,#18cabe) !important;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <a-row class="p-2" justify="end">
       <a-col class="p-1">
-        <lebel><br></lebel>
+        <label><br></label>
         <a-button class="submit sky" type="primary"><PlusOutlined /> เพิ่ม</a-button>
       </a-col>
     </a-row>

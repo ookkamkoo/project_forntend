@@ -12,7 +12,7 @@
             <div class="">team</div>
             <div class="p-rl-1">ผู้ช่วยเจ้าของเว็บ</div>
         </a-flex>
-        <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
+        <!-- <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
             <div class="">ออนไลน์</div>
             <a-tag color="green" class="m-auto">อัตโนมัติ</a-tag>
         </a-flex>
@@ -31,7 +31,7 @@
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
             <div class="">ฝาก</div>
             <a-tag color="green" class="m-auto">เปิด</a-tag>
-        </a-flex>
+        </a-flex> -->
         <div class="m-auto p-rl-2 mobile">
             <a-avatar size="large"  @click="showDrawer">
                 <template #icon><UserOutlined /></template>

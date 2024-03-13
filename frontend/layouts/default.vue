@@ -11,7 +11,7 @@
       <LayoutSidebar/>
     </a-layout-sider>
     <a-layout :class="{ 'collapsed': collapsed , 'set-layout': true}">
-      <a-layout-header style="background: #fb7d7d; padding: 0">
+      <a-layout-header style="background: linear-gradient(88deg,#13b4ca,#18cabe); padding: 0">
         <a-flex :justify="'space-between'">
           <div>
             <menu-unfold-outlined v-if="collapsed" class="trigger" @click="toggleCollapsed" />

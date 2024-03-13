@@ -1,7 +1,7 @@
 <template>
     <a-row class="p-2">
         <a-col class="p-1" :span="8">
-            <lebel>ประเภท</lebel>
+            <label>ประเภท</label>
             <a-select
                 ref="select"
                 v-model:value="sl_type"
@@ -13,7 +13,7 @@
             </a-select>
         </a-col>
         <a-col class="p-1" :span="8">
-        <lebel>ค้นหาด้วย</lebel>
+        <label>ค้นหาด้วย</label>
         <a-select
                 ref="select"
                 v-model:value="sl_search"
@@ -27,7 +27,7 @@
             </a-select>
         </a-col>
         <a-col class="p-1" :span="8">
-        <lebel>ข้อมูลที่ต้องการค้นหา</lebel>
+        <label>ข้อมูลที่ต้องการค้นหา</label>
         <a-input v-model:value="amount" />
         </a-col>
     </a-row>
@@ -35,11 +35,11 @@
         <a-col :span="11">
         <a-row >
             <a-col class="p-1" :span="15">
-            <lebel>เริ่มต้นวันที่</lebel>
+            <label>เริ่มต้นวันที่</label>
             <a-date-picker v-model:value="dateStart" />
             </a-col>
             <a-col class="p-1" :span="8">
-            <lebel><br></lebel>
+            <label><br></label>
             <a-time-picker v-model:value="timeStart" format="HH:mm" />
             </a-col>
         </a-row>
@@ -47,17 +47,17 @@
         <a-col :span="11">
         <a-row>
             <a-col class="p-1" :span="15">
-            <lebel>ถึงวันที่</lebel>
+            <label>ถึงวันที่</label>
             <a-date-picker v-model:value="dateEnd" />
             </a-col>
             <a-col class="p-1" :span="8">
-            <lebel><br></lebel>
+            <label><br></label>
             <a-time-picker v-model:value="timeEnd" format="HH:mm" />
             </a-col>
         </a-row>
         </a-col>
         <a-col class="p-1" :span="2">
-        <lebel><br></lebel>
+        <label><br></label>
         <a-button class="submit sky" type="primary"><SearchOutlined /> ค้นหา</a-button>
         </a-col>
     </a-row>

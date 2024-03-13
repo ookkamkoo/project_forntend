@@ -74,10 +74,10 @@ const sidebarData = [
   {
     path: '#',
     name: 'ธนาคาร',
-    icon: WalletOutlined,
+    icon: CreditCardOutlined,
     notify: 0,
     children: [
-      { path: '/bank/bank-list', name: 'iBanking (เช็คเงิน)', icon: WalletOutlined, notify: 0 },
+      { path: '/bank/bank-list', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
       { path: '/bank/bank-statement', name: 'Statement จากธนาคาร', icon: WalletOutlined, notify: 0 },
     ]
   },
@@ -95,18 +95,16 @@ const sidebarData = [
   },
   { path: '/admin', name: 'เเอดมิน', icon: AndroidOutlined, notify: 0 },
   { path: '/alliance', name: 'จัดการพันธมิตร', icon: UsergroupAddOutlined, notify: 0 },
-  { path: '/dashboard', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
+  // { path: '/dashboard', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
   {
     path: '#',
     name: 'ตั้งค่า',
     icon: SettingOutlined,
     notify: 0,
     children: [
-      { path: '/deposit', name: 'ตั้งค่าทั่วไป', icon: SettingOutlined, notify: 0 },
-      // { path: '/withdraw', name: 'ตั้งค่าหน้าลูกค้า' , icon:MenuUnfoldOutlined},
-      // { path: '/withdraw', name: 'ตั้งค่าธีมเข้าสู่ระบบ' , icon:MenuUnfoldOutlined},
-      { path: '/withdraw', name: 'ตั้งค่าระบบ', icon: SettingOutlined, notify: 0 },
-      { path: '/withdraw', name: 'ตั้งค่ายเกมส์', icon: SettingOutlined, notify: 0 },
+      { path: '/setting/member', name: 'ตั้งค่าลูกค้า', icon: SettingOutlined, notify: 0 },
+      { path: '/setting/system', name: 'ตั้งค่าระบบ', icon: SettingOutlined, notify: 0 },
+      { path: '/setting/game-provider', name: 'ตั้งค่ายเกมส์', icon: SettingOutlined, notify: 0 },
     ]
   },
   // { 
@@ -118,10 +116,9 @@ const sidebarData = [
   //       { path: '/deposit', name: 'ตั้งค่ากงล้อ' , icon:MenuUnfoldOutlined},
   //     ]
   // },
-  { path: '/dashboard', name: 'โปรไฟล์', icon: UserOutlined,notify: 0 },
-  { path: '/dashboard', name: 'Log', icon: MenuUnfoldOutlined,notify: 0 },
-  { path: '/dashboard', name: 'บัญชีดำ', icon: LockOutlined,notify: 0 },
-  { path: '/dashboard', name: 'ออกจากระบบ', icon: LogoutOutlined,notify: 0 },
+  { path: '/profile', name: 'โปรไฟล์', icon: UserOutlined,notify: 0 },
+  { path: '/log', name: 'Log', icon: MenuUnfoldOutlined,notify: 0 },
+  { path: '/blacklist', name: 'บัญชีดำ', icon: LockOutlined,notify: 0 },
 ];
 
 export default sidebarData;

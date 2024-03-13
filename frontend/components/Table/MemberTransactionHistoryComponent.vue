@@ -1,15 +1,15 @@
 <template class="search">
     <a-row class="p-2" justify="end">
       <a-col class="p-1" :span="5">
-        <lebel>ยูสเซอร์เนม</lebel>
+        <label>ยูสเซอร์เนม</label>
         <a-input v-model:value="username" placeholder="username" />
       </a-col>
       <a-col class="p-1" :span="5">
-        <lebel>ยอดเงิน</lebel>
+        <label>ยอดเงิน</label>
         <a-date-picker v-model:value="sl_year" picker="month" />
       </a-col>
       <a-col class="p-1" :span="2">
-        <lebel><br></lebel>
+        <label><br></label>
         <a-button class="submit sky" type="primary"><SearchOutlined /> ค้นหา</a-button>
       </a-col>
     </a-row>

@@ -1,7 +1,14 @@
 <template>
+    <div>
+        <a-modal v-model:open="open" title="เพิ่มสมาชิก" :closable="true">
+            <FormMember value="create" :closeModal="closeModal"/>
+            <template #footer>
+            </template>
+        </a-modal>
+    </div>
     <a-row class="p-2">
-        <a-col class="p-1" :span="8">
-            <lebel>ประเภท</lebel>
+        <a-col class="p-rl-1" :span="24" :md="8">
+            <label>ประเภท</label>
             <a-select
                 ref="select"
                 v-model:value="sl_type"
@@ -14,8 +21,8 @@
                 <a-select-option value="4">กำลังใช้งาน</a-select-option>
             </a-select>
         </a-col>
-        <a-col class="p-1" :span="8">
-        <lebel>ค้นหาด้วย</lebel>
+        <a-col class="p-rl-1" :span="24" :md="8">
+        <label>ค้นหาด้วย</label>
         <a-select
                 ref="select"
                 v-model:value="sl_search"
@@ -28,18 +35,18 @@
                 <a-select-option value="4">นามสกุล</a-select-option>
             </a-select>
         </a-col>
-        <a-col class="p-1" :span="8">
-        <lebel>ข้อมูลที่ต้องการค้นหา</lebel>
+        <a-col class="p-rl-1" :span="24" :md="8">
+        <label>ข้อมูลที่ต้องการค้นหา</label>
         <a-input v-model:value="amount" />
         </a-col>
     </a-row>
     <a-row class="p-2">
-        <a-col class="p-1" :span="8">
-            <lebel>เลขบัญชีตามรายการที่ค้างหน้าหลัก</lebel>
+        <a-col class="p-rl-1" :span="24" :md="8">
+            <label>เลขบัญชีตามรายการที่ค้างหน้าหลัก</label>
             <a-input v-model:value="find_bank_no" />
         </a-col>
-        <a-col class="p-1" :span="8">
-        <lebel>ธนาคาร</lebel>
+        <a-col class="p-rl-1" :span="24" :md="8">
+        <label>ธนาคาร</label>
             <a-select
                 ref="select"
                 v-model:value="bank"
@@ -53,8 +60,8 @@
                 <a-select-option value="4">นามสกุล</a-select-option>
             </a-select>
         </a-col>
-        <a-col class="p-1" :span="8">
-        <lebel>ช่องทางเข้าการถึง</lebel>
+        <a-col class="p-rl-1" :span="24" :md="8">
+        <label>ช่องทางเข้าการถึง</label>
             <a-select
                 ref="select"
                 v-model:value="bank"
@@ -70,33 +77,33 @@
         </a-col>
     </a-row>
     <a-row class="p-2">
-        <a-col :span="11">
+        <a-col :span="24" :md="11">
         <a-row >
-            <a-col class="p-1" :span="15">
-            <lebel>เริ่มต้นวันที่</lebel>
+            <a-col class="p-rl-1" :span="15" >
+            <label>เริ่มต้นวันที่</label>
             <a-date-picker v-model:value="dateStart" />
             </a-col>
-            <a-col class="p-1" :span="8">
-            <lebel><br></lebel>
+            <a-col class="p-rl-1" :span="8">
+            <label><br></label>
             <a-time-picker v-model:value="timeStart" format="HH:mm" />
             </a-col>
         </a-row>
         </a-col>
-        <a-col :span="11">
+        <a-col :span="24" :md="11">
         <a-row>
-            <a-col class="p-1" :span="15">
-            <lebel>ถึงวันที่</lebel>
+            <a-col class="p-rl-1" :span="15">
+            <label>ถึงวันที่</label>
             <a-date-picker v-model:value="dateEnd" />
             </a-col>
-            <a-col class="p-1" :span="8">
-            <lebel><br></lebel>
+            <a-col class="p-rl-1" :span="8">
+            <label><br></label>
             <a-time-picker v-model:value="timeEnd" format="HH:mm" />
             </a-col>
         </a-row>
         </a-col>
-        <a-col class="p-1" :span="2">
-        <lebel><br></lebel>
-        <a-button class="submit sky" type="primary"><SearchOutlined /> ค้นหา</a-button>
+        <a-col class="p-rl-1" :span="24" :md="2">
+            <label><br></label>
+            <a-button class="submit sky" type="primary"><SearchOutlined /> ค้นหา</a-button>
         </a-col>
     </a-row>
     <a-row class="p-2">
@@ -107,6 +114,12 @@
             <a-radio-button value="ThisMonth">เดือนนี้</a-radio-button>
         </a-radio-group>
         </div>
+    </a-row>
+    <a-row class="p-2" justify="end">
+      <a-col class="p-rl-1">
+        <label><br></label>
+        <a-button class="submit sky" type="primary"  @click="showModal"><PlusOutlined /> เพิ่ม</a-button>
+      </a-col>
     </a-row>
     <a-table 
         :columns="columns"
@@ -129,6 +142,8 @@
   import type { TableColumnsType } from 'ant-design-vue';
   import { ref } from 'vue';
   import dayjs, { Dayjs } from 'dayjs';
+  
+  const open = ref<boolean>(false);
   const columns: TableColumnsType = [
     { title: 'ทั้งหมด 6 รายการ', children: [
       { title: 'สถานะ', width: 100, dataIndex: 'name', key: 'name',  },
@@ -181,5 +196,14 @@ const find_bank_no = ref<string>('');
 const bank = ref<string>('');
 const amount = ref<string>('');
 const dateSelect = ref<string>('Today');
+
+
+const showModal = () => {
+  open.value = true;
+};
+
+const closeModal = () => {
+  open.value = false;
+};
 
 </script>

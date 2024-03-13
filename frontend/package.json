@@ -12,7 +12,12 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
+    "@nuxtjs/axios": "^5.13.6",
+    "@pinia/nuxt": "^0.5.1",
     "nuxt": "^3.10.1",
+    "pinia": "^2.1.7",
+    "qrcode": "^1.5.3",
+    "speakeasy": "^2.0.0",
     "vue": "^3.4.15",
     "vue-mq": "^1.0.1",
     "vue-router": "^4.2.5"
@@ -20,6 +25,8 @@
   "devDependencies": {
     "@ant-design-vue/nuxt": "^1.4.1",
     "@nuxtjs/dotenv": "^1.4.2",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
     "sass": "^1.71.0"
   }
 }

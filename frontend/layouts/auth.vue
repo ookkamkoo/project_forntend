@@ -7,7 +7,6 @@
     </a-layout-header>
     <a-layout-content>
       <div :style="{ background: '#fff', padding: '24px', minHeight: '100%' }">
-        {{$config.public.apiBase}}
         <slot />
       </div>
     </a-layout-content>
