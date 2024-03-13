@@ -24,7 +24,8 @@ export async function login(Username: string, Password: string, Twofactor: strin
 
 export async function checkToken(token: string): Promise<boolean> {
   const config = useRuntimeConfig();
-  const url = config.public.serviceUrls;
+  // const url = config.public.serviceUrls;
+  const url = 'http://128.199.218.147:3001';
 
   try {
       await axios.get<{ token: string }>(
