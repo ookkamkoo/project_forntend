@@ -15,7 +15,8 @@ export interface LoginResponse {
 
 export async function login(Username: string, Password: string, Twofactor: string): Promise<LoginResponse> {
   const config = useRuntimeConfig()
-  const url = config.public.serviceUrls;
+//   const url = config.public.serviceUrls;
+  const url = 'http://128.199.218.147:3001';
   
   const response = await axios.post<LoginResponse>(`${url}/login`, { Username, Password, Twofactor });
   return response.data;
