@@ -19,6 +19,7 @@ export async function login(Username: string, Password: string, Twofactor: strin
     const config = useRuntimeConfig()
     const url = config.public.serviceUrls;
     console.log(config.public.serviceUrls);
+    
     // const url = 'http://128.199.218.147:3001';
     
     try {
