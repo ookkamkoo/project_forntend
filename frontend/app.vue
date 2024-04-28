@@ -17,7 +17,6 @@
 
 <script>
 import { ref } from 'vue'; // Import ref from Vue
-
 export default {
   setup() {
     const loading = ref(true); // Define loading as a ref

@@ -11,33 +11,38 @@ export interface LoginResponse {
     data: UserData;
     error: string;
     time: string;
+    name: string;
+    username: string;
   }
 
 export async function login(Username: string, Password: string, Twofactor: string): Promise<LoginResponse> {
-  const config = useRuntimeConfig()
-//   const url = config.public.serviceUrls;
-  const url = 'http://128.199.218.147:3001';
-  
-  const response = await axios.post<LoginResponse>(`${url}/login`, { Username, Password, Twofactor });
-  return response.data;
+    const config = useRuntimeConfig()
+    const url = config.public.serviceUrls;
+    // const url = 'http://128.199.218.147:3001';
+    
+    try {
+        const response = await axios.post<LoginResponse>(`${url}/login`, { Username, Password, Twofactor });
+        return response.data;
+    } catch (error : any) {
+        return error.response.data;
+    }
 }
 
 export async function checkToken(token: string): Promise<boolean> {
   const config = useRuntimeConfig();
-  // const url = config.public.serviceUrls;
-  const url = 'http://128.199.218.147:3001';
+  const url = config.public.serviceUrls;
 
   try {
-      await axios.get<{ token: string }>(
-          `${url}/protected`,
-          {
-              headers: {
-                  Authorization: `Bearer ${token}`
-              }
-          }
-      );
-      return true;
-  } catch (error) {
-      return false;
+        await axios.get<{ token: string }>(
+            `${url}/check-token`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        return true;
+  } catch (error : any) {
+        return false;
   }
 }

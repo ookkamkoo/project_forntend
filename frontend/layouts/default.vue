@@ -8,7 +8,7 @@
       :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }"
       :class="{ 'collapsed_togle': collapsed , 'sidebar': true}"
     >
-      <LayoutSidebar/>
+      <LayoutSidebar @name-updated="handleNameUpdate"/>
     </a-layout-sider>
     <a-layout :class="{ 'collapsed': collapsed , 'set-layout': true}">
       <a-layout-header style="background: linear-gradient(88deg,#13b4ca,#18cabe); padding: 0">
@@ -21,6 +21,7 @@
         </a-flex>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px', padding: '24px', minHeight: '280px' }" @click="handleLayoutClick">
+          <h3>{{ selectName.name }}</h3>
         <slot />
       </a-layout-content>
     </a-layout>
@@ -29,9 +30,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-
 const collapsed = ref(false);
 const collapsed_togle = ref(false);
+const selectName = ref({
+  path:"/dashboard",
+  name:"หน้าเเรก"
+});
 
 const toggleCollapsed = () => {
   collapsed.value = !collapsed.value;
@@ -40,6 +44,11 @@ const toggleCollapsed = () => {
     }else{
       collapsed_togle.value = false;
   }
+};
+
+const handleNameUpdate = (newName) => {
+  console.log(newName);
+  selectName.value = newName;
 };
 
 const handleLayoutClick = (event) => {

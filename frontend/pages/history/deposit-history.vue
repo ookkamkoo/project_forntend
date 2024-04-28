@@ -1,3 +1,3 @@
 <template>
-    <TableDepositHistoryConponent/>
+    <PagesDepositHistoryConponent/>
 </template>

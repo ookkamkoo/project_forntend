@@ -1,68 +1,86 @@
 <template>
-    <div class="layout-logo">
-        <img src="https://betflix24hours.imember.cc/img/websetting/1680175806.png" alt="AdminLTE Logo" width="50%">
-    </div>
-    <div class="sidebar-layout">
-      <div class="sidebar-list">
-          <div class="sidebar-lists">
-          <a-menu v-model:selectedKeys="selectedKeys" mode="inline">
-              <template v-for="(item, index) in sidebarData" :key="index">
-                <template v-if="!item.children">
-                    <a-menu-item :key="'menu-item-' + index">
-                    <component :is="item.icon" :style="{ margin: '0 10px' }" />
-                    <router-link :to="item.path">
-                        <span>{{ item.name }}</span>
-                    </router-link>
-                    <span class="new" v-if="item.notify !== 0">
-                      <span class="badge padding-1 ">
-                        {{item.notify}}
-                      </span>
+  <div class="layout-logo">
+      <img src="https://betflix24hours.imember.cc/img/websetting/1680175806.png" alt="AdminLTE Logo" width="50%">
+  </div>
+  <div class="sidebar-layout">
+    <div class="sidebar-list">
+        <div class="sidebar-lists">
+        <a-menu v-model:selectedKeys="selectedKeys" mode="inline">
+            <template v-for="(item, index) in sidebarData" :key="index">
+              <template v-if="!item.children">
+                  <a-menu-item :key="'menu-item-' + index" @click="handleMenuItemClick(item)">
+                  <component :is="item.icon" :style="{ margin: '0 10px' }" />
+                  <router-link :to="item.path">
+                      <span>{{ item.name }}</span>
+                  </router-link>
+                  <span class="new" v-if="item.notify !== 0">
+                    <span class="badge padding-1 ">
+                      {{item.notify}}
                     </span>
-                    </a-menu-item>
-                </template>
-                <template v-else>
-                    <a-sub-menu :key="'sub-menu-' + index">
-                    <template #title>
-                        <component :is="item.icon" :style="{ margin: '0 10px' }" />
-                        <span class="sub-link">{{ item.name }}</span>
-                    </template>
-                    <template v-for="(child, childIndex) in item.children" :key="child.path">
-                        <a-menu-item>
-                        <component :is="child.icon" :style="{ margin: '0 10px' }" />
-                        <router-link :to="child.path">
-                            <span>{{ child.name }}</span>
-                        </router-link>
-                        <span class="new" v-if="child.notify !== 0">
-                          <span class="badge padding-1 ">
-                            {{child.notify}}
-                          </span>
-                        </span>
-                        </a-menu-item>
-                    </template>
-                    </a-sub-menu>
-                </template>
+                  </span>
+                  </a-menu-item>
               </template>
-              <a-menu-item key="25" @click="logout">
-                <LogoutOutlined :style="{ margin: '0 10px' }" />
-                <router-link to="/">
-                    <span>ออกจากระบบ</span>
-                </router-link>
-              </a-menu-item>
-          </a-menu>
-          </div>
-      </div>
+              <template v-else>
+                  <a-sub-menu :key="'sub-menu-' + index">
+                  <template #title>
+                      <component :is="item.icon" :style="{ margin: '0 10px' }" />
+                      <span class="sub-link">{{ item.name }}</span>
+                  </template>
+                  <template v-for="(child, childIndex) in item.children" :key="child.path">
+                      <a-menu-item @click="handleMenuItemClick(child)">
+                      <component :is="child.icon" :style="{ margin: '0 10px' }" />
+                      <router-link :to="child.path">
+                          <span>{{ child.name }}</span>
+                      </router-link>
+                      <span class="new" v-if="child.notify !== 0">
+                        <span class="badge padding-1 ">
+                          {{child.notify}}
+                        </span>
+                      </span>
+                      </a-menu-item>
+                  </template>
+                  </a-sub-menu>
+              </template>
+            </template>
+            <a-menu-item key="25" @click="logout">
+              <LogoutOutlined :style="{ margin: '0 10px' }" />
+              <router-link to="/">
+                  <span>ออกจากระบบ</span>
+              </router-link>
+            </a-menu-item>
+        </a-menu>
+        </div>
     </div>
+  </div>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import sidebarData from '@/data/sidebarData.js';
 
+
+  interface SidebarItem {
+  path: string;
+  name: string;
+}
+
+
 const selectedKeys = ref<string[]>(['1']);
+
 
 const logout = () => {
   const router = useRouter();
   localStorage.removeItem('token');
   router.push('/');
+};
+
+const emits = defineEmits<{
+  (event: 'name-updated', item: SidebarItem): void;
+}>();
+
+const handleMenuItemClick = (item: SidebarItem) => {
+  // console.log(item);
+  
+  emits('name-updated', item);
 };
 </script>
 

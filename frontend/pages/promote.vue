@@ -1,3 +1,3 @@
 <template>
-    <TablePromoteComponent/>
+    <PagesPromoteComponent/>
 </template>

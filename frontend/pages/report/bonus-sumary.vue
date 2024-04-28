@@ -1,3 +1,3 @@
 <template>
-    <TableBonutSumaryComponent/>
+    <PagesBonutSumaryComponent/>
 </template>

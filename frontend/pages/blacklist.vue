@@ -1,3 +1,3 @@
 <template>
-    <TableBlacklistComponent/>
+    <PagesBlacklistComponent/>
 </template>

@@ -1,16 +1,18 @@
 import { checkToken } from '~/services/authService';
+import { getToken,logout } from '~/auth/authToken';
+import { Alert } from '../components/Alert/alertComponent';
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     let token: string | null = null;
     if (typeof localStorage !== 'undefined') {
-        token = localStorage.getItem('token');
+        token = getToken();
     }
     try {
         if (to.path !== '/') {
             if (token) {
                 const check = await checkToken(token);
                 if(!check){
-                    localStorage.removeItem('token'); 
+                    logout()
                     return navigateTo('/');
                 }
             } else {
@@ -19,14 +21,19 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         } else {
             if (token) {
                 const check = await checkToken(token);
+                console.log(check);
+                
                 if(check){
-                    return navigateTo('/dashboard');
+                    // return navigateTo('/dashboard');
+                    return navigateTo('/setting/system');
                 }
-                localStorage.removeItem('token'); 
+                
+                Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
+                logout();
             }
         }
     } catch (error) {
-        localStorage.removeItem('token'); 
+        logout();
         return navigateTo('/');
     }
 });

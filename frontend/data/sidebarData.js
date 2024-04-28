@@ -71,16 +71,17 @@ const sidebarData = [
       // { path: '/history/commission2', name: 'ประวัติการใช้เหรียญ', icon: HistoryOutlined, notify: 0 },
     ]
   },
-  {
-    path: '#',
-    name: 'ธนาคาร',
-    icon: CreditCardOutlined,
-    notify: 0,
-    children: [
-      { path: '/bank/bank-list', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
-      { path: '/bank/bank-statement', name: 'Statement จากธนาคาร', icon: WalletOutlined, notify: 0 },
-    ]
-  },
+  // {
+  //   path: '#',
+  //   name: 'ธนาคาร',
+  //   icon: CreditCardOutlined,
+  //   notify: 0,
+  //   children: [
+  //     { path: '/bank/bank-list', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
+  //     // { path: '/bank/bank-statement', name: 'Statement จากธนาคาร', icon: WalletOutlined, notify: 0 },
+  //   ]
+  // },
+  { path: '/bank/bank-list', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
   {
     path: '#',
     name: 'รายงาน',
@@ -93,7 +94,7 @@ const sidebarData = [
       { path: '/report/past-dashboard', name: 'สรุปภาพรวมย้อนหลัง', icon: FileOutlined, notify: 0 },
     ]
   },
-  { path: '/admin', name: 'เเอดมิน', icon: AndroidOutlined, notify: 0 },
+  { path: '/admin', name: 'พนักงาน', icon: AndroidOutlined, notify: 0 },
   { path: '/alliance', name: 'จัดการพันธมิตร', icon: UsergroupAddOutlined, notify: 0 },
   // { path: '/dashboard', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
   {
@@ -116,7 +117,7 @@ const sidebarData = [
   //       { path: '/deposit', name: 'ตั้งค่ากงล้อ' , icon:MenuUnfoldOutlined},
   //     ]
   // },
-  { path: '/profile', name: 'โปรไฟล์', icon: UserOutlined,notify: 0 },
+  { path: '/profile', name: 'ข้อมูลส่วนตัว', icon: UserOutlined,notify: 0 },
   { path: '/log', name: 'Log', icon: MenuUnfoldOutlined,notify: 0 },
   { path: '/blacklist', name: 'บัญชีดำ', icon: LockOutlined,notify: 0 },
 ];

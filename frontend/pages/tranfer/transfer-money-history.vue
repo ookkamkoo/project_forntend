@@ -1,3 +1,3 @@
 <template>
-    <TableTransferMoneyHistory/>
+    <PagesTransferMoneyHistory/>
 </template>

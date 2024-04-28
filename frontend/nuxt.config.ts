@@ -40,5 +40,5 @@ export default defineNuxtConfig({
       }
       setMiddleware(pages)
     }
-  }
+  },
 })

@@ -1,3 +1,3 @@
 <template>
-    <TableTransferMoneyAuto/>
+    <PagesTransferMoneyAuto/>
 </template>

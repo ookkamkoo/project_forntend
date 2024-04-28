@@ -1,3 +1,3 @@
 <template>
-    <TableMemberTransactionHistoryComponent/>
+    <PagesMemberTransactionHistoryComponent/>
 </template>

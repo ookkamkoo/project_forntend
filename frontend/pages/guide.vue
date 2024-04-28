@@ -1,3 +1,3 @@
 <template>
-    <TableGuideComponent/>
+    <PagesGuideComponent/>
 </template>

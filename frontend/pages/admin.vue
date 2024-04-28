@@ -1,3 +1,3 @@
 <template>
-    <TableAdminComponent/>
+    <PagesUserComponent/>
 </template>

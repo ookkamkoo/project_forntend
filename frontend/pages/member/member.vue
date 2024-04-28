@@ -1,3 +1,3 @@
 <template>
-    <TableMemberComponent/>
+    <PagesMemberComponent/>
 </template>

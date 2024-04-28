@@ -1,3 +1,3 @@
 <template>
-    <TableDepositComponent/>
+    <PagesDepositComponent/>
 </template>

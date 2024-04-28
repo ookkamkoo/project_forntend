@@ -1,3 +1,3 @@
 <template>
-    <TableCashbackListComponent/>
+    <PagesCashbackListComponent/>
 </template>

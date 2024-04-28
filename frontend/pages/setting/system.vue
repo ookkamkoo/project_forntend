@@ -1,3 +1,3 @@
 <template>
-    <TableSettingSystemComponent/>
+    <PagesSettingSystemComponent/>
 </template>

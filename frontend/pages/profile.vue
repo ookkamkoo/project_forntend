@@ -1,3 +1,3 @@
 <template>
-    <TableProfileComponent/>
+    <PagesProfileComponent/>
 </template>

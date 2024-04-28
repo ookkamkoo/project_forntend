@@ -1,3 +1,3 @@
 <template>
-    <TablePastDashboard/>
+    <PagesPastDashboard/>
 </template>

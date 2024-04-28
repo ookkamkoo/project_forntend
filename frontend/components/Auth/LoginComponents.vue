@@ -95,6 +95,12 @@
   import { reactive, computed } from 'vue';
   import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
   import { login } from '~/services/authService';
+  import { setToken,setName,setUsername } from '~/auth/authToken';
+  // import { connectWebSocket, sendMessage } from '~/services/socketService';
+
+  // import { connectWebSocket } from '~/services/socketService';
+  // emitEvent('aa', 'logn');
+  // connectWebSocket();
   const open = ref<boolean>(false);
   const text = ref('');
 
@@ -105,9 +111,9 @@
     remember: boolean;
   }
   const formState = reactive<FormState>({
-    username: "programmer",
+    username: "programer",
     password: "aa123456789.",
-    twofactor: "",
+    twofactor: "123456",
     remember: true,
   });
   
@@ -115,26 +121,26 @@
 
   // login
   const onFinish = async () => {
-    try {
-      const jwt_token = await login(formState.username, formState.password, formState.twofactor);
-      console.log(jwt_token);
-      console.log(jwt_token.token);
-      if(jwt_token.token != undefined){
-        console.log();
-        localStorage.setItem('token', jwt_token.token); 
+    // try {
+      const data = await login(formState.username, formState.password, formState.twofactor);
+      if(data.token != undefined){
+        // connectWebSocket();
+        setToken(data.token);
+        setName(data.name);
+        setUsername(data.username);
+
         router.push('/dashboard');
       }else{
-        if(jwt_token.message == "authen"){
-          text.value = `otpauth://totp/${jwt_token.data.name}:${jwt_token.data.name}?secret=${jwt_token.data.refkey}&issuer=${jwt_token.data.name}`
+        if(data.message == "authen"){
+          text.value = `otpauth://totp/${data.data.name}:${data.data.name}?secret=${data.data.refkey}&issuer=${data.data.name}`
           showModal();
+        }else{
+          Modal.error({
+            title: 'เกิดข้อผิดพลาด',
+            content: data.error,
+          });
         }
       }
-    } catch (error) {
-      Modal.error({
-        title: 'เกิดข้อผิดพลาด',
-        content: 'ผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง!',
-      });
-    }
   }
 
   const showModal = () => {
@@ -147,7 +153,7 @@
   const disabled = computed(() => {
     return !(formState.username && formState.password);
   });
-  
+
 </script>
 
   <style>

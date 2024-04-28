@@ -1,3 +1,3 @@
 <template>
-    <TableLogComponent/>
+    <PagesLogComponent/>
 </template>

@@ -167,6 +167,48 @@ $m-5: 2.5rem;
   margin: $m-5;
 }
 
+.my-1 {
+  margin-top: $m-1;
+  margin-bottom: $m-1;
+}
+.my-2 {
+  margin-top: $m-2;
+  margin-bottom: $m-2;
+}
+.my-3 {
+  margin-top: $m-3;
+  margin-bottom: $m-3;
+}
+.my-4 {
+  margin-top: $m-4;
+  margin-bottom: $m-4;
+}
+.my-5 {
+  margin-top: $m-5;
+  margin-bottom: $m-5;
+}
+
+.mx-1 {
+  margin-right: $m-1;
+  margin-left: $m-1;
+}
+.mx-2 {
+  margin-right: $m-2;
+  margin-left: $m-2;
+}
+.mx-3 {
+  margin-right: $m-3;
+  margin-left: $m-3;
+}
+.mx-4 {
+  margin-right: $m-4;
+  margin-left: $m-4;
+}
+.mx-5 {
+  margin-right: $m-5;
+  margin-left: $m-5;
+}
+
 // fornt size
 .fs-1 {
   font-size: 0.3125rem;
@@ -226,6 +268,35 @@ $m-5: 2.5rem;
 .ant-table-cell{
   padding: 8px !important;
 }
+.ant-form-item{
+  margin: 0;
+}
+.ant-popover-inner-content p{
+  margin: 0;
+}
+.ant-input-number{
+  width: 100% ;
+}
+.model-week{
+  width: 100% ;
+  column-gap: 3%;
+}
+.model-week .ant-checkbox-group-item{
+  width: 22%;
+}
+.select-day{
+  padding: 0.5rem 2rem;
+  box-sizing: border-box;
+}
+.request::after{
+  content: "*";
+  display: inline-block;
+  color: red;
+  margin-inline-start: 4px;
+}
+:where(.css-dev-only-do-not-override-1hsjdkk).ant-switch.ant-switch-checked {
+  background: #1ba8e0 !important;
+}
 
 // response
 @media screen and (max-width: 952px) {
@@ -245,5 +316,11 @@ $m-5: 2.5rem;
   /* Styles for desktop */
   .mobile{
     display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .select-day{
+    padding: 5px 10px;
   }
 }
