@@ -17,6 +17,7 @@ export interface LoginResponse {
 
 export async function login(Username: string, Password: string, Twofactor: string): Promise<LoginResponse> {
     const url = process.env.SERVICEURL;
+    console.log(url);
     
     try {
         const response = await axios.post<LoginResponse>(`${url}/login`, { Username, Password, Twofactor });
