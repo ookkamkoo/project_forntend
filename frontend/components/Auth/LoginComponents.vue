@@ -154,9 +154,6 @@
     return !(formState.username && formState.password);
   });
 
-  const runtimeConfig = useRuntimeConfig()
-  console.log(runtimeConfig.public.serviceUrls)
-
 </script>
 
   <style>

@@ -18,7 +18,6 @@ export interface LoginResponse {
 export async function login(Username: string, Password: string, Twofactor: string): Promise<LoginResponse> {
     const config = useRuntimeConfig()
     const url = config.public.serviceUrls;
-    console.log(url);
     
     // const url = 'http://128.199.218.147:3001';
     
