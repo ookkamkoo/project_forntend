@@ -118,11 +118,11 @@
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const day = String(currentDate.getDate()).padStart(2, '0');
   
-  const dateSelect = ref<string>('All');
+  const dateSelect = ref<string>('Today');
 
   let formData = reactive({
-    dateStart: ref<Dayjs>(dayjs(`2020-01-01`, 'YYYY-MM-DD')),
-    dateEnd:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
+    dateStart: ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
+    dateEnd: ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
     typeSearch:1,
       search:"",
   });
