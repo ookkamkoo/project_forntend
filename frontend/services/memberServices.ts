@@ -86,7 +86,8 @@ export interface editMemberSent {
 }
 
 export async function getDetailconfigMember(): Promise<getResponse> {
-  const url = process.env.SERVICEURL;
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -101,7 +102,8 @@ export async function getDetailconfigMember(): Promise<getResponse> {
 }
 
 export async function getMembers(): Promise<getResponse> {
-    const url = process.env.SERVICEURL;
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -116,7 +118,8 @@ export async function getMembers(): Promise<getResponse> {
 }
 
 export async function getBackListServices(data: any): Promise<getResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const headers = {
     Authorization: `Bearer ${getToken()}`
@@ -133,7 +136,8 @@ export async function getBackListServices(data: any): Promise<getResponse> {
 }
 
 export async function updateStatus(id:number,status:boolean): Promise<getResponse> {
-    const url = process.env.SERVICEURL;
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -153,7 +157,8 @@ export async function updateStatus(id:number,status:boolean): Promise<getRespons
 }
 
 export async function updateStatuBlacklist(id:number,status:boolean): Promise<getResponse> {
-    const url = process.env.SERVICEURL;
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -173,7 +178,8 @@ export async function updateStatuBlacklist(id:number,status:boolean): Promise<ge
 }
 
 export async function deleteMember(id: number): Promise<getResponse> {
-    const url = process.env.SERVICEURL;
+    const config = useRuntimeConfig()
+    const url = config.public.serviceUrls;
   
     const headers = {
       Authorization: `Bearer ${getToken()}`
@@ -188,7 +194,8 @@ export async function deleteMember(id: number): Promise<getResponse> {
   }
 
 export async function createMember(data:dataMember): Promise<getResponse> {
-    const url = process.env.SERVICEURL;
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
     const headers = {
         Authorization: `Bearer ${getToken()}`
     };
@@ -221,7 +228,8 @@ export async function createMember(data:dataMember): Promise<getResponse> {
 }
 
 export async function editMember(data:dataMember): Promise<getResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig();
+  const url = config.public.serviceUrls;
   const headers = {
       Authorization: `Bearer ${getToken()}`
   };
@@ -253,7 +261,8 @@ export async function editMember(data:dataMember): Promise<getResponse> {
 }
 
 export async function getAgent(id:number ,search: string): Promise<getResponse> {
-    const url = process.env.SERVICEURL;
+    const config = useRuntimeConfig()
+    const url = config.public.serviceUrls;
   
     const headers = {
       Authorization: `Bearer ${getToken()}`
@@ -268,7 +277,8 @@ export async function getAgent(id:number ,search: string): Promise<getResponse> 
   }
 
 export async function getDetailMember(id:number): Promise<getResponse> {
-    const url = process.env.SERVICEURL;
+    const config = useRuntimeConfig()
+    const url = config.public.serviceUrls;
   
     const headers = {
       Authorization: `Bearer ${getToken()}`

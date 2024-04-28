@@ -45,7 +45,8 @@ export interface userEdit {
 
 
 export async function getUser(): Promise<getRoleUserResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const headers = {
     Authorization: `Bearer ${getToken()}`
@@ -61,7 +62,8 @@ export async function getUser(): Promise<getRoleUserResponse> {
 
 
 export async function getRoleUserServices(): Promise<getRoleUserResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const headers = {
     Authorization: `Bearer ${getToken()}`
@@ -76,7 +78,8 @@ export async function getRoleUserServices(): Promise<getRoleUserResponse> {
 }
 
 export async function createUser(data: userCreate): Promise<getRoleUserResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const body: userCreate = {
     "name": data.name,
@@ -97,7 +100,8 @@ export async function createUser(data: userCreate): Promise<getRoleUserResponse>
 }
 
 export async function updateStatus(id: number, status: boolean): Promise<getRoleUserResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const body = {
     "id": id,
@@ -116,7 +120,8 @@ export async function updateStatus(id: number, status: boolean): Promise<getRole
 }
 
 export async function updateProfile(data: any): Promise<getRoleUserResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const body = {
     "name": data.name,
@@ -137,7 +142,8 @@ export async function updateProfile(data: any): Promise<getRoleUserResponse> {
 }
 
 export async function deleteUser(id: number): Promise<getRoleUserResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const headers = {
     Authorization: `Bearer ${getToken()}`
@@ -152,7 +158,8 @@ export async function deleteUser(id: number): Promise<getRoleUserResponse> {
 }
 
 export async function editUser(data: userEdit): Promise<getRoleUserResponse> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const body: userCreate = {
     "name": data.name,
@@ -173,7 +180,8 @@ export async function editUser(data: userEdit): Promise<getRoleUserResponse> {
 }
 
 export async function getPermisionByIdServices(id: number): Promise<any> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const headers = {
     Authorization: `Bearer ${getToken()}`
@@ -189,7 +197,8 @@ export async function getPermisionByIdServices(id: number): Promise<any> {
 }
 
 export async function updatePermissionParent(id:number,data: any): Promise<any> {
-  const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
 
   const headers = {
     Authorization: `Bearer ${getToken()}`

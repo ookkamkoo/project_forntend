@@ -1,0 +1,12 @@
+services:
+  backoffice: 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NUXT_PUBLIC_DEVTOOLS: "true"
+      NUXT_PUBLIC_WEB_NAME: "demo_project"
+      NUXT_PUBLIC_WEB_URL: "WEB_URL"
+      NUXT_PUBLIC_SERVICE_URLS: "http://127.0.0.1:3001"
+    ports:
+      - "3000:3000"

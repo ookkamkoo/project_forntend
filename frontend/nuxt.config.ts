@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import type { NuxtPage } from 'nuxt/schema'
+console.log('sssssssssssssssssssssssssssss');
+console.log(process.env);
 export default defineNuxtConfig({
   modules: [
     '@ant-design-vue/nuxt',
@@ -21,7 +23,7 @@ export default defineNuxtConfig({
       webName:process.env.WEB_NAME,
       webUrl:process.env.WEB_URL,
       VARIABLE_NAME:process.env.VARIABLE_NAME,
-      serviceUrls:'ssssssssssssssssssss'
+      serviceUrls: process.env.NUXT_PUBLIC_SERVICE_URLS
     }
   },
   hooks: {
