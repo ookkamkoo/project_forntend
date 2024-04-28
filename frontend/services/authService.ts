@@ -16,8 +16,10 @@ export interface LoginResponse {
   }
 
 export async function login(Username: string, Password: string, Twofactor: string): Promise<LoginResponse> {
-    const url = process.env.SERVICEURL;
-    console.log(url);
+    const config = useRuntimeConfig()
+    const url = config.public.serviceUrls;
+    console.log(config.public.serviceUrls);
+    // const url = 'http://128.199.218.147:3001';
     
     try {
         const response = await axios.post<LoginResponse>(`${url}/login`, { Username, Password, Twofactor });
@@ -28,7 +30,8 @@ export async function login(Username: string, Password: string, Twofactor: strin
 }
 
 export async function checkToken(token: string): Promise<boolean> {
-    const url = process.env.SERVICEURL;
+  const config = useRuntimeConfig();
+  const url = config.public.serviceUrls;
 
   try {
         await axios.get<{ token: string }>(
