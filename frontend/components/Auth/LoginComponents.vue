@@ -153,10 +153,6 @@
   const disabled = computed(() => {
     return !(formState.username && formState.password);
   });
-  
-
-  console.log('Service URL:', public.serviceUrl);
-
 
 </script>
 
