@@ -33,6 +33,7 @@
                 <a-form-item
                   name="username"
                   placeholder="Username"
+                  class="input-login"
                   :rules="[{ required: true, message: 'Please input your username!' }]"
                 >
                   <a-input v-model:value="formState.username" placeholder="ชื่อผู้ใช้งาน" size="large">
@@ -45,6 +46,7 @@
                 <a-form-item
                   name="password"
                   placeholder="Password"
+                  class="input-login"
                   :rules="[{ required: true, message: 'Please input your password!' }]"
                 >
                   <a-input-password v-model:value="formState.password" placeholder="รหัสผ่าน" size="large">
@@ -57,6 +59,7 @@
                 <a-form-item
                   name="twofactor"
                   placeholder="twofactor"
+                  class="input-login"
                   :rules="[{ required: true, message: 'Please input your twofactor!' }]"
                 >
                   <a-input v-model:value="formState.twofactor" placeholder="รหัสสองชั้น" size="large" :maxlength="6">
@@ -68,7 +71,7 @@
           
                 <a-form-item>
                   <a-form-item name="remember" no-style>
-                    <a-checkbox v-model:checked="formState.remember" class="white-text">จดจำฉันไว้</a-checkbox>
+                    <a-checkbox v-model:checked="formState.remember" class="white-text input-login">จดจำฉันไว้</a-checkbox>
                   </a-form-item>
                 </a-form-item>
           

@@ -70,7 +70,7 @@ const selectedKeys = ref<string[]>(['1']);
 const logout = () => {
   // const router = useRouter();
   localStorage.removeItem('token');
-  window.location.reload();
+  // window.location.reload();
 };
 
 const emits = defineEmits<{
