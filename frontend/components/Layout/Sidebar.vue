@@ -68,9 +68,9 @@ const selectedKeys = ref<string[]>(['1']);
 
 
 const logout = () => {
-  const router = useRouter();
+  // const router = useRouter();
   localStorage.removeItem('token');
-  router.push('/');
+  window.location.reload();
 };
 
 const emits = defineEmits<{

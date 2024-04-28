@@ -1,7 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import type { NuxtPage } from 'nuxt/schema'
-console.log('sssssssssssssssssssssssssssss');
-console.log(process.env);
 export default defineNuxtConfig({
   modules: [
     '@ant-design-vue/nuxt',
