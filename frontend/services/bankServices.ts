@@ -10,8 +10,7 @@ export interface getResponse {
     }
 
 export async function getSystemBankServices(): Promise<getResponse> {
-    const config = useRuntimeConfig();
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -26,8 +25,7 @@ export async function getSystemBankServices(): Promise<getResponse> {
 }
 
 export async function updateStatuBankSystem(id:number,status: boolean): Promise<getResponse> {
-    const config = useRuntimeConfig();
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -43,8 +41,7 @@ export async function updateStatuBankSystem(id:number,status: boolean): Promise<
  
 
 export async function createBank(data :any): Promise<getResponse> {
-    const config = useRuntimeConfig();
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -76,8 +73,7 @@ export async function createBank(data :any): Promise<getResponse> {
 }
 
 export async function editSystemBank(data :any): Promise<getResponse> {
-    const config = useRuntimeConfig();
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -109,8 +105,7 @@ export async function editSystemBank(data :any): Promise<getResponse> {
 }
 
 export async function deleteBankSystemServices(id: number): Promise<getResponse> {
-    const config = useRuntimeConfig()
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
   
     const headers = {
       Authorization: `Bearer ${getToken()}`

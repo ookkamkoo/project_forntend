@@ -9,8 +9,7 @@ export interface getResponse {
   }
 
 export async function getPromotion(): Promise<getResponse> {
-    const config = useRuntimeConfig();
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -25,8 +24,7 @@ export async function getPromotion(): Promise<getResponse> {
 }
 
 export async function updateStatuPromotion(id:number,status: boolean): Promise<getResponse> {
-    const config = useRuntimeConfig();
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -41,8 +39,7 @@ export async function updateStatuPromotion(id:number,status: boolean): Promise<g
 }
 
 export async function createPromotion(data :any): Promise<getResponse> {
-    const config = useRuntimeConfig();
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -91,8 +88,7 @@ export async function createPromotion(data :any): Promise<getResponse> {
 }
 
 export async function editPromotion(data :any): Promise<getResponse> {
-    const config = useRuntimeConfig();
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
@@ -141,8 +137,7 @@ export async function editPromotion(data :any): Promise<getResponse> {
 }
 
 export async function deletePromotion(id: number): Promise<getResponse> {
-    const config = useRuntimeConfig()
-    const url = config.public.serviceUrls;
+    const url = process.env.SERVICEURL;
   
     const headers = {
       Authorization: `Bearer ${getToken()}`
