@@ -55,7 +55,8 @@ jobs:
             # echo "backOfice_1"
             docker pull littleweb14766/project_csn:backOfice_1
             # # docker run -d --name backOfice -p 3000:3000 littleweb14766/project_csn:backOfice_1
-            docker-compose up -d
+            # docker-compose up -d
+            docker run --env-file .env -d --name backOfice -p 3000:3000 littleweb14766/project_csn:backOfice_1
             '
 
 
