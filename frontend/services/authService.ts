@@ -13,6 +13,7 @@ export interface LoginResponse {
     time: string;
     name: string;
     username: string;
+    permission: string;
   }
 
 export async function login(Username: string, Password: string, Twofactor: string): Promise<LoginResponse> {

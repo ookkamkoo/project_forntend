@@ -103,7 +103,7 @@ const sidebarData = [
     icon: SettingOutlined,
     notify: 0,
     children: [
-      { path: '/setting/member', name: 'ตั้งค่าลูกค้า', icon: SettingOutlined, notify: 0 },
+      // { path: '/setting/member', name: 'ตั้งค่าลูกค้า', icon: SettingOutlined, notify: 0 },
       { path: '/setting/system', name: 'ตั้งค่าระบบ', icon: SettingOutlined, notify: 0 },
       { path: '/setting/game-provider', name: 'ตั้งค่ายเกมส์', icon: SettingOutlined, notify: 0 },
     ]

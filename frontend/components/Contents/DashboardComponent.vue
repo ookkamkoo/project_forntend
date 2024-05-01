@@ -196,7 +196,7 @@
     }
     .ant-layout-content{
         padding: 0 !important;
-        margin: 0 !important;
+        margin: 0.5rem !important;
     }
     .wap{
         flex-wrap: wrap;

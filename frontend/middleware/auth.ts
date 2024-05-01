@@ -25,7 +25,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 
                 if(check){
                     // return navigateTo('/dashboard');
-                    return navigateTo('/setting/system');
+                    return navigateTo('/setting/game-provider');
                 }
                 
                 Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")

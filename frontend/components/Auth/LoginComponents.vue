@@ -98,7 +98,7 @@
   import { reactive, computed } from 'vue';
   import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
   import { login } from '~/services/authService';
-  import { setToken,setName,setUsername } from '~/auth/authToken';
+  import { setToken,setName,setUsername,setPermission } from '~/auth/authToken';
   // import { connectWebSocket, sendMessage } from '~/services/socketService';
 
   // import { connectWebSocket } from '~/services/socketService';
@@ -131,6 +131,7 @@
         setToken(data.token);
         setName(data.name);
         setUsername(data.username);
+        setPermission(data.permission);
 
         router.push('/dashboard');
       }else{

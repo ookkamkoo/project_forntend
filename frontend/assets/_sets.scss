@@ -311,10 +311,10 @@ $m-5: 2.5rem;
   .mobile-none{
     display: none;
   }
-  .ant-layout-content{
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+  // .ant-layout-content{
+  //   margin: 0 !important;
+  //   padding: 0 !important;
+  // }
 }
 @media screen and (min-width: 952px) {
   /* Styles for desktop */

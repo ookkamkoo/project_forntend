@@ -310,6 +310,17 @@ const optionsLoseTypeMember = [
     },
 ];
 
+const optionsFee = [
+    {
+        value: 1,
+        label: 'ปกติ',
+    },
+    {
+        value: 2,
+        label: 'กำหนดเอง',
+    },
+];
+
 export {optionsType,
     optionsListType,
     optionsMaxWithdrow,
@@ -323,5 +334,6 @@ export {optionsType,
     optionsBlacklist,
     optionsProduct,
     optionsLose,
-    optionsLoseTypeMember
+    optionsLoseTypeMember,
+    optionsFee,
 }

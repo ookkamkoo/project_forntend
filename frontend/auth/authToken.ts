@@ -2,6 +2,7 @@ export interface TokenResponse {
     token: string;
     name: string;
     username: string;
+    permission: string;
 }
 
 // Function to set data in localStorage
@@ -13,6 +14,9 @@ export function setName(name: string): void {
 }
 export function setUsername(username: string): void {
   localStorage.setItem('username', username);
+}
+export function setPermission(permission: string): void {
+  localStorage.setItem('permission', permission);
 }
 
 
@@ -26,12 +30,15 @@ export function getName(): string | null {
 export function getUsername(): string | null {
   return localStorage.getItem('username');
 }
-
+export function getPermission(): string | null {
+  return localStorage.getItem('permission');
+}
 // Function to remove data from localStorage
 export function removeToken(): void {
   localStorage.removeItem('token');
   localStorage.removeItem('name');
   localStorage.removeItem('username');
+  localStorage.removeItem('permission');
 }
 
 export function logout(): void {

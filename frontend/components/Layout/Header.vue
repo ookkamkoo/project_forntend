@@ -9,8 +9,8 @@
             </div>
         </a-flex>
         <a-flex class="status-web-check border-right p-rl-2" vertical>
-            <div class="">team</div>
-            <div class="p-rl-1">ผู้ช่วยเจ้าของเว็บ</div>
+            <div class="white-text text-name">{{ name }}</div>
+            <div class="p-rl-1 white-text">{{ permission }}</div>
         </a-flex>
         <!-- <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
             <div class="">ออนไลน์</div>
@@ -60,6 +60,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { getName,getUsername,getPermission } from '~/auth/authToken';
 
 export default defineComponent({
   setup() {
@@ -70,11 +71,15 @@ export default defineComponent({
     const onClose = () => {
       visible.value = false;
     };
+    const name = getName();
+    const permission = getPermission();
     
     return {
         visible,
         showDrawer,
         onClose,
+        name,
+        permission
     };
   },
 });
