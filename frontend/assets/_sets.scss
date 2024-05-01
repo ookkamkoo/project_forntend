@@ -302,6 +302,16 @@ $m-5: 2.5rem;
   margin-bottom: 24px !important;
 }
 
+hr {
+  border-top: 1px dashed #1ba8e04d;
+}
+
+.long-text {
+  white-space: nowrap; 
+  width: 100%; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 // response
 @media screen and (max-width: 952px) {
   /* Styles for mobile */
