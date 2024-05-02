@@ -26,31 +26,55 @@ export async function getSettingGameServices(): Promise<getResponse> {
     }
 }
 
-export async function updateGameServices(id:number,status: boolean): Promise<getResponse> {
+export async function setSettingGameMenu(data:any): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
     const headers = {
         Authorization: `Bearer ${getToken()}`
     };
     
+    interface DataElement {
+        id: number;
+        name: string;
+        priority: number;
+        is_active: boolean;
+    }
+    
+    const body: DataElement[] = data.game.map((element: any) => ({
+        id: element.id,
+        name: element.name,
+        priority: element.priority,
+        is_active: element.is_active,
+    }));
+
     try {
-        const response = await axios.post<getResponse>(`${url}/setting-game/update-status/${id}`,{'status':status}, { headers });
+        const response = await axios.post<getResponse>(`${url}/setting-game/update-gameMenu`,body, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;
     }
 }
 
-export async function updateGameMenuServices(id:number,status: boolean): Promise<getResponse> {
+export async function setSettingGame(data:any,type:string): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
-
     const headers = {
         Authorization: `Bearer ${getToken()}`
     };
     
+
+    let body: any = {};
+    data.game.forEach((element:any) => {
+        if(type == element.name){
+            body = element.settingGame;
+            
+        }
+    });
+
+    
+
     try {
-        const response = await axios.post<getResponse>(`${url}/setting-game/update-status-menu/${id}`,{'status':status}, { headers });
+        const response = await axios.post<getResponse>(`${url}/setting-game/updateGame`,body, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;

@@ -4,6 +4,14 @@
         <a-row>
           <h2>ตั้งค่าเมนู</h2>
           <a-col :span="24" :md="24">
+            <a-form
+            :model="formData"
+            name="basic"
+            :wrapper-col="{ span: 24 }"
+            autocomplete="off"
+            @finish="onFinish"
+            @finishFailed="onFinishFailed"
+            >
               <a-row justify="center">
                 <a-col :xs="8" :md="4" :lg="2" class="p-1" v-for="game in formData.game">
                   <div class="center">
@@ -24,6 +32,7 @@
               <a-row justify="end">
                 <a-button type="primary" class="sky" html-type="submit">บันทึก</a-button>
               </a-row>
+            </a-form>
               <br>
               <hr>
           </a-col>
@@ -49,7 +58,7 @@
             </a-row>
             <br>
             <a-row justify="end">
-                <a-button type="primary" class="sky" html-type="submit">บันทึก</a-button>
+                <a-button type="primary" class="sky" @click="editSettingGame(game.name)" >บันทึก</a-button>
             </a-row>
             <br>
             <hr>
@@ -62,7 +71,7 @@
   import { ref,createVNode } from 'vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   // import * as Constants from '../Constants/Constants';
-  import { getSettingGameServices,updateGameMenuServices,updateGameServices } from '~/services/settingGameService';
+  import { getSettingGameServices,setSettingGameMenu,setSettingGame } from '~/services/settingGameService';
   import { Alert } from '../Alert/alertComponent';
 
   const activeKey = ref('1');
@@ -78,33 +87,30 @@
     }
   }
 
-  const updateStatusGame = async(name: string,status: boolean,id: number) =>{
-  let is_active = ''; 
-    if (status) {
-        is_active = 'เปิดใช้งาน';
-    } else {
-        is_active = 'ปิดใช้งาน';
+  const onFinish = async() => {
+        const data = await setSettingGameMenu(formData);
+        if(data.status == "success"){
+            Alert('success','เเก้ไขการตั้งค่า เรียบร้อย.')
+        }else{
+            Alert('error',data.message);
+        }
     }
 
-    Modal.confirm({
-        title: 'คุณต้องการที่จะเปลี่ยนสถานะใช่ไหม?',
-        icon: createVNode(ExclamationCircleOutlined),
-        content: createVNode('div', { key: 'content' }, [`เปลี่ยนสถานะของ ${name} เป็น${is_active}`]),
-        async onOk() {
-            const data = await updateGameServices(id, status);
-            if (data.status == 'success') {
-                Alert("success", "เปลี่ยนสถานะเรียบร้อย.");
-            } else {
-                Alert("error", data.message);
-            }
-        },
-        onCancel() {
-          getSettingGame();
-          console.log('Cancel');
-        },
-        class: 'test',
-    });
-}
+  const onFinishFailed = (errorInfo: any) => {
+      Alert("error","กรุณากรอกข้อมูลให้ครบ!!")
+  };
+  
+  const editSettingGame = async(typeGame:string) => {
+    const data = await setSettingGame(formData,typeGame);
+        if(data.status == "success"){
+            Alert('success','เเก้ไขการตั้งค่า เรียบร้อย.')
+        }else{
+            Alert('error',data.message);
+        }
+  };
+
+
+
 
   onMounted(() => {
     getSettingGame();
