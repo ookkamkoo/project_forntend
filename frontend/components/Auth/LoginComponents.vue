@@ -19,7 +19,7 @@
           <div class="login-set">
             <div class="login-set-detail" >
               <div class="login-set-detail-image" >
-                <img src="https://betflix24hours.imember.cc/img/websetting/1680175806.png" alt="login logo" width="80%" height="auto">
+                <img src="https://cdn.zabbet.com/NRM9/lobby_settings/625f5901-0f8d-4f0f-b959-431179967df9.png" alt="login logo" width="80%" height="auto">
               </div>
               <div class="center">
                 <h1 class="white-text"></h1>
@@ -87,9 +87,14 @@
         </a-flex>
       </div>
     </div>
-      <a-modal v-model:open="open" title="Verify QR Code" @ok="handleOk">
+    <a-modal v-model:open="open" title="Verify QR Code" @ok="handleOk">
       <div class="">
         <a-qrcode :value="text" :size="256"/>
+      </div>
+    </a-modal>
+    <a-modal v-model:open="openPin" title="Verify Pin" @ok="handleOkPin">
+      <div class="">
+        <a-input v-model:value="valuePin" placeholder="Input Pin" :maxlength="6" @input="validatePin"/>
       </div>
     </a-modal>
   </a-flex>
@@ -97,15 +102,19 @@
   <script setup lang="ts">
   import { reactive, computed } from 'vue';
   import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
-  import { login } from '~/services/authService';
+  import { login,setPinUser } from '~/services/authService';
   import { setToken,setName,setUsername,setPermission } from '~/auth/authToken';
+  import { Alert } from '../Alert/alertComponent';
   // import { connectWebSocket, sendMessage } from '~/services/socketService';
 
   // import { connectWebSocket } from '~/services/socketService';
   // emitEvent('aa', 'logn');
   // connectWebSocket();
   const open = ref<boolean>(false);
+  const openPin = ref<boolean>(false);
   const text = ref('');
+  const valuePin = ref('');
+  const refKey = ref<string>('');
 
   interface FormState {
     username: string;
@@ -138,6 +147,9 @@
         if(data.message == "authen"){
           text.value = `otpauth://totp/${data.data.name}:${data.data.name}?secret=${data.data.refkey}&issuer=${data.data.name}`
           showModal();
+        }else if(data.message == "authen_pin"){
+          refKey.value = data.data.refkey
+          showModalPin();
         }else{
           Modal.error({
             title: 'เกิดข้อผิดพลาด',
@@ -147,11 +159,33 @@
       }
   }
 
+  const validatePin = () => { 
+    valuePin.value = valuePin.value.replace(/\D/g, '');
+    if (valuePin.value.length > 6) {
+      valuePin.value = valuePin.value.slice(0, 6);
+    }
+  }
   const showModal = () => {
     open.value = !open.value;
   };
+
+  const showModalPin = () => {
+    openPin.value = !openPin.value;
+  };
+
   const handleOk = (e: MouseEvent) => {
     open.value = false;
+  };
+
+  const handleOkPin = async() => {
+    const data = await setPinUser(refKey.value,valuePin.value);
+    if(data.status == "success"){
+        Alert('success','เพิ่ม pin เรียบร้อยเเล้ว.')
+    }else{
+        Alert('error',data.message);
+    }
+
+    openPin.value = false;
   };
   
   const disabled = computed(() => {

@@ -103,7 +103,7 @@ onMounted(() => {
   width: 250px !important;
 }
 .collapsed_togle .ant-layout-sider-trigger{
-  width: 0 !important;
+  width: 0px !important;
 }
 
 @media screen and (max-width: 750px) {

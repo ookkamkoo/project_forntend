@@ -41,4 +41,15 @@ export default defineNuxtConfig({
       setMiddleware(pages)
     }
   },
+  app: {
+    head: {
+      meta: [
+        {
+          name: 'viewport',
+          // content: 'width=1080, initial-scale=0.1',
+          content: 'width=1080',
+        },
+      ],
+    },
+  },
 })

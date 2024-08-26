@@ -119,13 +119,14 @@ const optionsBankType = [
                     value: 1,
                     label: 'เชื่อมเอง',
                 },
-                {
-                    value: 2,
-                    label: 'เชื่อมออโต้',
-                }],
+                // {
+                //     value: 2,
+                //     label: 'เชื่อมออโต้',
+                // }
+            ],
                 action:[
                     {value:1,name:'api',show:1,bankNo:1,pin:1,deviceId:1,keyID:0,UnP:0},
-                    {value:2,name:'line-connect',show:1,bankNo:1,pin:0,deviceId:0,keyID:0,UnP:0}
+                    // {value:2,name:'line-connect',show:1,bankNo:1,pin:0,deviceId:0,keyID:0,UnP:0}
                 ]
             },
             {
@@ -284,28 +285,28 @@ const optionsBlacklist = [
 const optionsProduct = [
     {
         value: 1,
-        label: 'AMBKING',
+        label: 'SuperApi',
     },
 ];
 
 const optionsLose = [
     {
-        value: 1,
-        label: 'ยอดเสีย',
+        value: '1',
+        label: 'ยอดเสีย (เงินฝาก)',
     },
     {
-        value: 2,
-        label: 'เทิร์การเล่น',
+        value: '2',
+        label: 'ยอดเสีย (เงินฝาก + โบนัส)',
     },
 ];
 
 const optionsLoseTypeMember = [
     {
-        value: 1,
+        value: '1',
         label: 'รับอัตโนมัติ',
     },
     {
-        value: 2,
+        value: '2',
         label: 'ลูกค้าล็อกอินแล้วกดรับเอง',
     },
 ];
@@ -318,6 +319,32 @@ const optionsFee = [
     {
         value: 2,
         label: 'กำหนดเอง',
+    },
+];
+
+const optionsSystemLogin = [
+    {
+        value: 1,
+        label: 'Google Authenticator',
+    },
+    {
+        value: 2,
+        label: 'Pin 6 หลัก',
+    },
+];
+
+const creditCustom = [
+    {
+        value: 1,
+        label: 'เพิ่มเครดิต',
+    },
+    {
+        value: 2,
+        label: 'ลดเครดิต',
+    },
+    {
+        value: 3,
+        label: 'ฝากเงินไม่เข้า',
     },
 ];
 
@@ -336,4 +363,6 @@ export {optionsType,
     optionsLose,
     optionsLoseTypeMember,
     optionsFee,
+    optionsSystemLogin,
+    creditCustom
 }

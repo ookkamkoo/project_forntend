@@ -12,12 +12,13 @@
       </a-col>
     </a-row>
     <a-table 
-        :columns="columns"
-        :data-source="dataShow"
-        bordered
-        size="small"
-        :scroll="{ x: 1500, y: 700 }"
-        :pagination="{ pageSize: 10 }"
+        :columns="dynamicColumns"
+      :data-source="dataShow"
+      bordered
+      size="small"
+      :scroll="{ x: 1500, y: 700 }"
+      :pagination="{ pageSize: 10 }"
+      :loading="loading"
     >
       <template #bodyCell="{ column, record, index }">
           <template v-if="column.key === 'operation'">
@@ -52,7 +53,7 @@
             <a-switch v-model:checked="record.is_active" @change="updateStatus(record.name,record.is_active,record.id,index)"/>
           </template>
           <template v-else-if="column.key === 'CreatedBySearch'">
-            <div>{{ record.CreatedBySearch.username }}</div>
+            <div>{{ record.CreatedBySearch.name }}</div>
           </template>
       </template>
     </a-table>
@@ -69,28 +70,36 @@
   const open = ref<boolean>(false);
   const dataShow = ref<any[]>([]);
   const active = ref<boolean>(true);
+  const allRecord = ref<number>(0);
+  const loading = ref(true);
   
   const showModal = () => {
     open.value = true;
   };
 
-  const columns: TableColumnsType = [
-  { title: 'ทั้งหมด 6 รายการ', children: [
-    { title: 'ชื่อ', width: 100, dataIndex: 'name', key: 'name',  },
-    { title: 'รูป', width: 70, dataIndex: 'image', key: 'image',  },
-    { title: 'ประเภท', width: 100, dataIndex: 'type', key: 'type',  },
-    { title: 'ประเภทโบนัส', width: 100, dataIndex: 'bonus_type', key: 'bonus_type' },
-    { title: 'วันเปิดรับ', width: 100, dataIndex: 'type_open', key: 'type_open' },
-    { title: 'สถานะ', width: 100, dataIndex: 'is_active', key: 'is_active',  },
-    { title: 'วันที่', width: 100, dataIndex: 'date', key: 'date' },
-    { title: 'สร้างโดย', width: 100, dataIndex: 'CreatedBySearch', key: 'CreatedBySearch',  },
-    {
-          title: 'แก้ไข/ลบ',
-          key: 'operation',
-          width: 100,
-      }
-  ]},
-];
+
+const dynamicColumns = computed(() => {
+  return [
+    { 
+      title: `ทั้งหมด ${allRecord.value} รายการ`, 
+      children: [
+        { title: 'ชื่อ', width: 100, dataIndex: 'name', key: 'name',  },
+        { title: 'รูป', width: 70, dataIndex: 'image', key: 'image',  },
+        { title: 'ประเภท', width: 100, dataIndex: 'type', key: 'type',  },
+        { title: 'ประเภทโบนัส', width: 100, dataIndex: 'bonus_type', key: 'bonus_type' },
+        { title: 'วันเปิดรับ', width: 100, dataIndex: 'type_open', key: 'type_open' },
+        { title: 'สถานะ', width: 100, dataIndex: 'is_active', key: 'is_active',  },
+        { title: 'วันที่', width: 100, dataIndex: 'date', key: 'date' },
+        { title: 'สร้างโดย', width: 100, dataIndex: 'CreatedBySearch', key: 'CreatedBySearch',  },
+        {
+              title: 'แก้ไข/ลบ',
+              key: 'operation',
+              width: 100,
+          }
+      ] 
+    },
+  ];
+});
 
 const closeModal = () => {
   open.value = false;
@@ -98,15 +107,6 @@ const closeModal = () => {
 
 const promotionEdit = ref<any>();
 
-
-const getPromotions = async() =>{
-    const data = await getPromotion();
-    if (data.status === "success") {
-        dataShow.value = data.data;
-    } else {
-        Alert('error', data.message);
-    }
-}
 
 const updateStatus = async(name: string,status: boolean,id: number,index: number) =>{
   let is_active = ''; 
@@ -121,6 +121,7 @@ const updateStatus = async(name: string,status: boolean,id: number,index: number
         icon: createVNode(ExclamationCircleOutlined),
         content: createVNode('div', { key: 'content' }, [`เปลี่ยนสถานะของ ${name} เป็น ${is_active}`]),
         async onOk() {
+            loading.value = true;
             const data = await updateStatuPromotion(id, status);
             if (data.status == 'success') {
                 Alert("success", "เปลี่ยนสถานะเรียบร้อย.");
@@ -129,6 +130,7 @@ const updateStatus = async(name: string,status: boolean,id: number,index: number
                 getPromotions();
                 Alert("error", data.message);
             }
+            loading.value = false;
         },
         onCancel() {
           dataShow.value[index].is_active = !status;
@@ -155,6 +157,7 @@ const onDelete = (record:any) => {
         okType: 'danger',
         cancelText: 'No',
         async onOk() {
+            loading.value = true;
             const data = await deletePromotion(record.id);
             if (data.status == 'success') {
                 Alert("success", `ลบโปรโมชั่น ${record.name} เรียบร้อย.`);
@@ -162,11 +165,23 @@ const onDelete = (record:any) => {
             } else {
                 Alert("error", data.message);
             }
+            loading.value = false;
         },
         onCancel() {
             console.log('Cancel');
         },
     });
+}
+
+const getPromotions = async() =>{
+  const data = await getPromotion();
+  if (data.status === "success") {
+      dataShow.value = data.data.data;
+      allRecord.value = data.data.records_total;
+  } else {
+      Alert('error', data.message);
+  }
+  loading.value = false;
 }
 
 onMounted(() => {

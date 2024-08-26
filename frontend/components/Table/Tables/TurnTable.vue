@@ -1,61 +1,64 @@
 <template>
     <a-table 
-    :columns="columns"
-    :data-source="dataShow"
-    bordered
-    :scroll="{ x: 800, y: 700 }"
-    :pagination="{ pageSize: 10 }"
->
-    <template #bodyCell="{ column, record, index }">
-        <template v-if="column.key === 'UsernameAgent'">
-            <div>{{ record.username_agent }}</div>
+        :columns="columns"
+        :data-source="dataShow"
+        bordered
+        :scroll="{ x: 800, y: 700 }"
+        :pagination="{ pageSize: 20 }"
+        :loading="loading"
+    >
+        <template #bodyCell="{ column, record, index }">
+            <template v-if="column.key === 'type'">
+                <div>{{ record.type }}</div>
+            </template>
+            <template v-else-if="column.key === 'turn'">
+                <div>{{ record.turn_play }} / {{ record.turn }}</div>
+            </template>
+            <template v-else-if="column.key === 'trunAfter'">
+                <div>0</div>
+            </template>
         </template>
-        <template v-else-if="column.key === 'username'">
-            <div>{{ record.username }}</div>
-        </template>
-        <template v-else-if="column.key === 'name'">
-            <div>{{ record.firstname+" "+record.lastname }}</div>
-        </template>
-        <template v-else-if="column.key === 'bank'">
-            <div><a-image :src="record.bank.image" :alt="record.bank.name" width="32px" height="32px" :previewMask="false" :preview="false"/></div>
-        </template>
-        <template v-else-if="column.key === 'bankNo'">
-            <div>{{ record.bank_no }}</div>
-        </template>
-        <template v-else-if="column.key === 'marketing'">
-            <div>{{ record.marketing.name }}</div>
-        </template>
-        <template v-else-if="column.key === 'promotion'">
-            <div v-if="record.promotion_id"><a-tag color="red">ไม่รับโปร</a-tag></div>
-            <div v-else="record.promotion_id"><a-tag color="green">รับโปร</a-tag></div>
-        </template>
-    </template>
-</a-table>
+    </a-table>
 </template>
+
 <script lang="ts" setup>
+import { ref, watch } from 'vue';
 import type { TableColumnsType } from 'ant-design-vue';
-//   import dayjs, { Dayjs } from 'dayjs';
-const dataShow = ref<any[]>([]);
+import { getTurnMemberServices } from '~/services/memberServices';
+
+interface TurnMember {
+    type: string;
+    turn_play: number;
+    turn: number;
+    // Add other fields as necessary
+}
+
+const dataShow = ref<TurnMember[]>([]);
+const loading = ref(true);
 
 const columns: TableColumnsType = [
-  { title: 'ประเภท', width: 100, dataIndex: 'name', key: 'name', fixed: 'left' },
-  { title: 'ยอดเล่น', dataIndex: 'address', key: '1', width: 100 },
-  { title: 'ยอดเล่นจริง', dataIndex: 'address', key: '1', width: 100 },
-  { title: 'ยอดได้เสีย', dataIndex: 'address', key: '1', width: 100 },
-  { title: 'เทิร์นปัจจุบัน', dataIndex: 'address', key: '1', width: 100 },
-  { title: 'เดิมพันค้าง', dataIndex: 'address', key: '2', width: 100 },
+  { title: 'ประเภท', width: 100, dataIndex: 'type', key: 'type' },
+  { title: 'เทิร์นปัจจุบัน', dataIndex: 'turn', key: 'turn', width: 100 },
+  { title: 'เดิมพันค้าง', dataIndex: 'trunAfter', key: 'trunAfter', width: 100 },
 ];
 
-//   const getMember= async() =>{
-//     const data = await getMembers();
-//     if (data.status === "success") {
-//         dataShow.value = data.data;
-//     } else {
-//         Alert('error', data.message);
-//     }
-// }
+const props = defineProps<{
+    id: number;
+}>();
 
-// onMounted(() => {
-//     getMember();
-// });
+const getTurnMember = async (id: number) => {
+    loading.value = true;
+    const responseData = await getTurnMemberServices(id);
+    if (responseData.status === "success") {
+        dataShow.value = responseData.data;
+        loading.value = false;
+    }
+};
+
+watch(() => props.id, (newValue: number) => {
+    if (newValue) {
+        getTurnMember(newValue);
+    }
+}, { immediate: true });
+
 </script>

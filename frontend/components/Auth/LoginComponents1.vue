@@ -4,7 +4,7 @@
       <div class="form-login">
         <div class="login-set">
           <div class="login-set-detail" >
-            <img src="https://betflix24hours.imember.cc/img/websetting/1680175806.png" alt="login logo" width="100%" height="auto">
+            <img src="https://cdn.zabbet.com/NRM9/lobby_settings/625f5901-0f8d-4f0f-b959-431179967df9.png" alt="login logo" width="100%" height="auto">
             <div class="center">
               <h1 class="white-text"></h1>
             </div>

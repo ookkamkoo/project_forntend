@@ -24,7 +24,7 @@
                     name="password"
                     :rules="[{ required: role_req, message: 'โปรดกรอกข้อมูล พาสเวิร์ด!' }]"
                 >
-                    <a-input v-model:value="formData.password" placeholder="รหัสผ่าน" :disabled="!role_req"/>
+                    <a-input v-model:value="formData.password" placeholder="รหัสผ่าน" :disabled="!role_req" :readonly="action == 'edit'" />
                 </a-form-item>
             </a-col>
         </a-row>
@@ -47,6 +47,16 @@
                 >
                     <a-input v-model:value="formData.lastName" placeholder="นามสกุล"/>
                 </a-form-item>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="p-1" :span="12" :md="12">
+                <label><b>ชื่อจากธนาคาร</b></label>
+                <a-input v-model:value="formData.nameCheck" placeholder="ชื่อจากธนาคาร"/>
+            </a-col>
+            <a-col class="p-1" :span="12" :md="12">
+                <label><b>รหัสลูกค้า</b></label>
+                    <a-input v-model:value="formData.usernameAgent" placeholder="รหัสลูกค้า" disabled/>
             </a-col>
         </a-row>
         <a-row>
@@ -76,7 +86,7 @@
                     <a-select ref="select" v-model:value="formData.bankId" style="width: 100%">
                         <a-select-option value="">เลือกธนาคาร</a-select-option>
                         <template v-for="option in optionsBank" :key="option.name">
-                        <a-select-option :value="option.id">
+                        <a-select-option :value="option.id" v-if="option.show">
                             <template #default>
                             <a-image :src="option.image" :alt="option.name" width="20px" height="20px" />
                             {{ option.name }}
@@ -92,6 +102,29 @@
                     :rules="[{ required: true, message: 'โปรดกรอกข้อมูล เลขบัญชี!' }]"
                 >
                     <a-input v-model:value="formData.bankNo" placeholder="เลขบัญชี"/>
+                </a-form-item>
+            </a-col>
+            <a-col class="p-1" :span="24">
+                <label><b>ทรูวอเล็ต</b></label>
+                    <a-select ref="select" v-model:value="formData.bankTrueId" style="width: 100%">
+                        <a-select-option value="">เลือกธนาคาร</a-select-option>
+                        <template v-for="option in optionsBank" :key="option.name">
+                        <a-select-option :value="option.id" v-if="!option.show">
+                            <template #default>
+                            <a-image :src="option.image" :alt="option.name" width="20px" height="20px" />
+                            {{ option.name }}
+                            </template>
+                        </a-select-option>
+                        </template>
+                    </a-select>
+            </a-col>
+            <a-col class="p-1" :span="24">
+                <label><b>เลขทรูวอเล็ต</b></label>
+                <a-form-item
+                    name="bankNo"
+                    :rules="[{ required: true, message: 'โปรดกรอกข้อมูล เลขบัญชี!' }]"
+                >
+                    <a-input v-model:value="formData.bankTrueNo" placeholder="เลขบัญชี"/>
                 </a-form-item>
             </a-col>
             <a-col class="p-1 center" :span="8" >
@@ -191,14 +224,15 @@
 </template>
 <script lang="ts" setup>
 import { ref  } from 'vue';
-import { getDetailconfigMember,createMember,getAgent,editMember } from '~/services/memberServices';
+import { getDetailconfigMember,createMember,getAgent,editMember,getMemberSearchServices } from '~/services/memberServices';
 import { Alert } from '../Alert/alertComponent';
 
     const optionsBank = ref<any[]>([]);
     const optionsMarketing = ref<any[]>([]);
     const action = ref("create")
     const data = ref<any[]>([{ label:'ไม่เลือกผู้เเนะนำ', value:0 }]);
-    const value = ref();
+    // const value = ref();
+    const password = ref('');
     const role_req = ref(true)
     // const memberSetting = ref('');
     const props = defineProps<{
@@ -211,13 +245,17 @@ import { Alert } from '../Alert/alertComponent';
     let formData = reactive({
         id: 0,
         username: '0623373068',
-        password: 'Aa123456',
+        password: '',
         firstName: 'นิตยา',
         lastName: 'ชูศรีทอง',
+        nameCheck: '',
+        usernameAgent: '',
         marketingId: 1,
         lineId: '',
         bankId: 1,
         bankNo: '0270057609',
+        bankTrueId:16,
+        bankTrueNo:'',
         refKey: '',
         IsActive: true,
         IsBlock: false,
@@ -244,12 +282,13 @@ import { Alert } from '../Alert/alertComponent';
         
         if (newValue) {
             if(newValue.id == undefined){
-                console.log('111111111111111');
                 action.value ="create";
-                formData.username = '0623373068';
-                formData.password = 'Aa123456';
+                formData.username = '0623373061';
+                formData.password = '';
                 formData.firstName = 'นิตยา';
                 formData.lastName = 'ชูศรีทอง';
+                formData.nameCheck = '';
+                formData.usernameAgent = '';
                 formData.marketingId = 1;
                 formData.IsActive = true;
                 formData.IsBlock = false;
@@ -258,6 +297,8 @@ import { Alert } from '../Alert/alertComponent';
                 formData.lineId = '';
                 formData.bankId = 1;
                 formData.bankNo = '0270057609';
+                formData.bankTrueId = 16;
+                formData.bankTrueNo = '0811111111';
                 formData.refKey = '';
                 formData.agentName = '';
                 formData.IsAgent = false;
@@ -267,15 +308,15 @@ import { Alert } from '../Alert/alertComponent';
                 role_req.value = true;
                 data.value = [{ label:'ไม่เลือกผู้เเนะนำ', value:0 }];
             }else{
-                console.log('22222222222222');
-                console.log(newValue.agent_name);
                 role_req.value = false;
                 action.value ="edit";
                 formData.id = newValue.id;
                 formData.username = newValue.username;
-                formData.password = '';
+                formData.password =  password.value;
                 formData.firstName = newValue.firstname;
                 formData.lastName = newValue.lastname;
+                formData.nameCheck = newValue.name_check;
+                formData.usernameAgent = newValue.username_agent;
                 formData.marketingId = newValue.marketing_id;
                 formData.IsActive = newValue.is_active;
                 formData.IsBlock = newValue.is_block;
@@ -284,6 +325,8 @@ import { Alert } from '../Alert/alertComponent';
                 formData.lineId = newValue.line_id;
                 formData.bankId = newValue.bank_id;
                 formData.bankNo = newValue.bank_no;
+                formData.bankTrueId = newValue.bank_true_id;
+                formData.bankTrueNo = newValue.bank_true_no;
                 formData.refKey = '';
                 formData.agentName = newValue.agent_name;
                 formData.IsAgent = newValue.is_agent;
@@ -319,23 +362,25 @@ import { Alert } from '../Alert/alertComponent';
 
         async function fake() {
             try {
-                const response = await getAgent(formData.id,value);
+                const response = await getMemberSearchServices(formData.id,value);
                 if (currentValue === value) {
-                    const result = response.data;
-                    const data: { label: string; value: number; }[] = [{ label:'ไม่เลือกผู้เเนะนำ', value:0 }];
-                    result.forEach((r: any) => {
-                        data.push({
-                            label: `${r.username_agent}  ${r.agent_name} `,
-                            value: r.id,
+                    if(response.data != ''){
+                        const result = response.data;
+                        const data: { label: string; value: number; }[] = [{ label:'ไม่เลือกผู้เเนะนำ', value:0 }];
+                        result.forEach((r: any) => {
+                            data.push({
+                                label: `${r.username_agent}  ${r.agent_name} `,
+                                value: r.id,
+                            });
                         });
-                    });
-                    console.log(data);
-                    callback(data);
+                        console.log(data);
+                        callback(data);
+                    }
                 }
             } catch (error) {
                 const data: { label: string; value: number; }[] = [{ label:'ไม่เลือกผู้เเนะนำ', value:0 }];
                 callback(data);
-                console.error('Error fetching search results:', error);
+                console.error('Error fetching search results:');
             }
         }
 
@@ -344,16 +389,12 @@ import { Alert } from '../Alert/alertComponent';
 
 
     const handleSearch = (val: any) => {
-        console.log("handleSearch");
-        console.log(val);
         fetch(val as string, (d: any[]) => (data.value = d));
     };
 
-    const handleChange = (val: any) => {
+    const handleChange = async (val: any) => {
         console.log("handleChange");
-        console.log(val);
-        value.value = val as string;
-        fetch(val as string, (d: any[]) => (data.value = d));
+        formData.agentId = val
     };
 
 
@@ -385,7 +426,12 @@ import { Alert } from '../Alert/alertComponent';
         if (data.status === "success") {
             optionsBank.value = data.data.Bank
             optionsMarketing.value = data.data.Marketing
-            // formData.password = data.data.MemberSetting[0].value
+            data.data.MemberSetting.forEach((element :any) => {
+                if(element.config_name == 'passwordCustomer'){
+                    // formData.password = element.config_value
+                    password.value = element.config_value
+                }
+            });
         }
       } catch (error) {
         console.error('Error fetching user roles:', error);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getToken } from '~/auth/authToken'
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import * as Constants from '../components/Constants/Constants';
 
 export interface getResponse {
@@ -10,28 +10,20 @@ export interface getResponse {
     time: string;
   }
 
-// export interface createMember {
-//     username: string;
-//     password: string;
-//     fristName: string;
-//     lastName: string;
-//     marketingId: number;
-//     lineId: string;
-//     bankId: number;
-//     bankNo: string;
-//     refKey: string;
-//   }
-
 export interface dataMember {
     id:number;
     username: string;
     password: string;
     firstName: string;
     lastName: string;
+    nameCheck: string;
+    usernameAgent: string;
     marketingId: number;
     lineId: string;
     bankId: number;
     bankNo: string;
+    bankTrueId: number;
+    bankTrueNo: string;
     refKey: string;
     agentId: number;
     agentName: string;
@@ -49,10 +41,13 @@ export interface createMemberSent {
     password: string;
     firstname: string;
     lastname: string;
+    nameCheck: string;
     marketing_id: number;
     line_id: string;
     bank_id: number;
     bank_no: string;
+    bank_true_id: number;
+    bank_true_no: string;
     key_ref: string;
     agent_id: number;
     agent_name: string;
@@ -70,10 +65,13 @@ export interface editMemberSent {
   password: string;
   firstname: string;
   lastname: string;
+  nameCheck: string;
   marketing_id: number;
   line_id: string;
   bank_id: number;
   bank_no: string;
+  bank_true_id: number;
+  bank_true_no: string;
   agent_id: number;
   agent_name: string;
   is_agent: boolean;
@@ -83,6 +81,25 @@ export interface editMemberSent {
   is_active: boolean;
   is_block: boolean;
   remark_is_black: string;
+}
+
+export interface Bank {
+  id: number;
+  name: string;
+  image: string;
+  code: string;
+  color: string;
+  short: string;
+  priority: number;
+  show: boolean;
+  status: boolean;
+}
+
+export interface Market {
+  id: number;
+  name: string;
+  color: string;
+  status: boolean;
 }
 
 export async function getDetailconfigMember(): Promise<getResponse> {
@@ -101,7 +118,7 @@ export async function getDetailconfigMember(): Promise<getResponse> {
     }
 }
 
-export async function getMembers(): Promise<getResponse> {
+export async function getMembers(data :any): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
 
@@ -109,8 +126,28 @@ export async function getMembers(): Promise<getResponse> {
         Authorization: `Bearer ${getToken()}`
     };
 
+    let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    const queryParams = [
+        `sl_type=${data.sl_type}`,
+        `sl_search=${data.sl_search}`,
+        `data_search=${data.data_search}`,
+        `find_bank_no=${data.find_bank_no}`,
+        `bank=${data.bank}`,
+        `market=${data.market}`,
+        `dateStart=${dateStart}`,
+        `timeStart=${timeStart}`,
+        `dateEnd=${dateEnd}`,
+        `timeEnd=${timeEnd}`,
+        `page=${data.page}`,
+        `pageSize=${data.pageSize}`
+      ];
+      const search = queryParams.join('&');
+
     try {
-        const response = await axios.get<getResponse>(`${url}/member/getMember`, { headers });
+        const response = await axios.get<getResponse>(`${url}/member/getMember?`+search, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;
@@ -177,7 +214,7 @@ export async function updateStatuBlacklist(id:number,status:boolean): Promise<ge
     }
 }
 
-export async function deleteMember(id: number): Promise<getResponse> {
+export async function resetPasswordMemberServices(id: number): Promise<getResponse> {
     const config = useRuntimeConfig()
     const url = config.public.serviceUrls;
   
@@ -204,10 +241,13 @@ export async function createMember(data:dataMember): Promise<getResponse> {
         password: data.password,
         firstname: data.firstName,
         lastname: data.lastName,
+        nameCheck:  data.nameCheck,
         marketing_id: data.marketingId,
         line_id: data.lineId,
         bank_id: data.bankId,
         bank_no: data.bankNo,
+        bank_true_id: data.bankTrueId,
+        bank_true_no: data.bankTrueNo,
         key_ref: data.refKey,
         agent_id: data.agentId,
         agent_name: data.agentName,
@@ -238,10 +278,13 @@ export async function editMember(data:dataMember): Promise<getResponse> {
       password: '',
       firstname: data.firstName,
       lastname: data.lastName,
+      nameCheck:  data.nameCheck,
       marketing_id: data.marketingId,
       line_id: data.lineId,
       bank_id: data.bankId,
       bank_no: data.bankNo,
+      bank_true_id: data.bankTrueId,
+      bank_true_no: data.bankTrueNo,
       agent_id: data.agentId,
       agent_name: data.agentName,
       is_agent: data.IsAgent,
@@ -276,7 +319,7 @@ export async function getAgent(id:number ,search: string): Promise<getResponse> 
     }
   }
 
-export async function getDetailMember(id:number): Promise<getResponse> {
+export async function getDetailMemberById(id:number): Promise<getResponse> {
     const config = useRuntimeConfig()
     const url = config.public.serviceUrls;
   
@@ -285,9 +328,142 @@ export async function getDetailMember(id:number): Promise<getResponse> {
     };
   
     try {
-      const response = await axios.get<getResponse>(`${url}/member/detail/${id}`, { headers });
+      const response = await axios.get<getResponse>(`${url}/member/detailById/${id}`, { headers });
       return response.data;
     } catch (error: any) {
       return error.response.data;
     }
 }
+
+export async function getDetailMemberByName(name:string): Promise<getResponse> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+
+  try {
+    const response = await axios.get<getResponse>(`${url}/member/detailByName/${name}`, { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+export async function getTurnMemberServices(id:number): Promise<getResponse> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+
+  try {
+    const response = await axios.get<getResponse>(`${url}/member/getTurnMember/${id}`, { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+export async function getCreditTransactionServices(id:number): Promise<getResponse> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+
+  try {
+    const response = await axios.get<getResponse>(`${url}/member/getCreditTransaction/${id}`, { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+export async function getDepositServices(data :any): Promise<getResponse> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+
+  let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+  let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+  let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  const queryParams = [
+      `sl_type=${data.sl_type}`,
+      `username=${data.username}`,
+      `adminName=${data.adminName}`,
+      `amount=${data.amount}`,
+      `dateStart=${dateStart}`,
+      `timeStart=${timeStart}`,
+      `dateEnd=${dateEnd}`,
+      `timeEnd=${timeEnd}`,
+      `page=${data.page}`,
+      `pageSize=${data.pageSize}`
+    ];
+    const search = queryParams.join('&');
+
+  try {
+    const response = await axios.get<getResponse>(`${url}/member/getDeposit?`+search , { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+export async function getWithdrawServices(data :any): Promise<getResponse> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+
+  let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+  let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+  let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  const queryParams = [
+      `sl_type=${data.sl_type}`,
+      `username=${data.username}`,
+      `adminName=${data.adminName}`,
+      `amount=${data.amount}`,
+      `dateStart=${dateStart}`,
+      `timeStart=${timeStart}`,
+      `dateEnd=${dateEnd}`,
+      `timeEnd=${timeEnd}`,
+      `page=${data.page}`,
+      `pageSize=${data.pageSize}`
+    ];
+    const search = queryParams.join('&');
+
+  try {
+    const response = await axios.get<getResponse>(`${url}/member/getWithdraw?`+search, { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+export async function getMemberSearchServices(id:number,val:string): Promise<getResponse> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+  try {
+    const response = await axios.get<getResponse>(`${url}/member/getMemberSearch/${id}?search=${val}`, { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+

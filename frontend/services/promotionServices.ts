@@ -8,7 +8,17 @@ export interface getResponse {
     time: string;
   }
 
-export async function getPromotion(): Promise<getResponse> {
+  export interface PromotionResponse {
+    data: {
+      data: any;          
+      records_total: number;
+    };
+    message: string;
+    status: string;
+    time: string;
+  }
+
+export async function getPromotion(): Promise<PromotionResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
 
@@ -17,7 +27,7 @@ export async function getPromotion(): Promise<getResponse> {
     };
 
     try {
-        const response = await axios.get<getResponse>(`${url}/promotion/getPromotion`, { headers });
+        const response = await axios.get<PromotionResponse>(`${url}/promotion/getPromotion`, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;

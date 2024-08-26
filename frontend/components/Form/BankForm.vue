@@ -116,6 +116,7 @@
         </a-row>
         <br>
         <a-row>
+            <h3>QR Code</h3>
             <a-col :span="24">
                 <div v-if="!ImageText" class="close-image" @click="clearPreviewImage">
                     <CloseCircleOutlined />
@@ -296,6 +297,7 @@
         formData.bank_list = 1;
         formData.bank_list_api = 1;
     }
+    
     const ChangeBankList = () =>{
         formData.bank_list_api = 1;
     }

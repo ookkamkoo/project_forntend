@@ -6,20 +6,21 @@
   <a-row class="p-2" justify="end">
     <a-col class="p-1">
       <label><br></label>
-      <a-button class="submit sky" type="primary" @click="showModal"><PlusOutlined /> เพิ่ม</a-button>
+      <a-button class="submit sky" type="primary" @click="showModal"><PlusOutlined /> เพิ่มบัญชี</a-button>
     </a-col>
   </a-row>
   <a-table 
-    :columns="columns" 
+    :columns="dynamicColumns" 
     :data-source="dataShow" 
     :scroll="{ x: 1500, y: 700 }"
     bordered
     :pagination="{ pageSize: 10 }"
+    :loading="loading"
   >
   <template #bodyCell="{ column, record, index }">
           <template v-if="column.key === 'operation'">
               <a-flex gap="small" :justify="'center'" horizontal>
-                  <a-button v-if="record.bank.id==10 && record.typ != 'ParkingAccount'"><LinkOutlined /></a-button>
+                  <!-- <a-button v-if="record.bank.id==10 && record.typ != 'ParkingAccount'"><LinkOutlined /></a-button> -->
                   <a-button class="warning" type="primary" @click="onEdit(record)"><FormOutlined /></a-button>
                   <a-button class="danger" type="primary" @click="onDelete(record)"><DeleteOutlined /></a-button>
               </a-flex>
@@ -50,9 +51,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { TableColumnsType } from 'ant-design-vue';
 import { ref,createVNode } from 'vue';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { getSystemBankServices,updateStatuBankSystem,deleteBankSystemServices } from '~/services/bankServices';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { Alert } from '../Alert/alertComponent';
@@ -61,6 +61,8 @@ const open = ref<boolean>(false);
 const dataShow = ref<any[]>([]);
 const bankSystemEdit = ref<any>();
 const active = ref<boolean>(true);
+const loading = ref(true);
+const allRecord = ref<number>(0);
 
 const showModal = () => {
     open.value = true;
@@ -71,32 +73,40 @@ const closeModal = () => {
 };
 
 
-const columns: TableColumnsType = [
-  { title: 'ทั้งหมด 6 รายการ', children: [
-    { title: 'ประเภท', width:60, dataIndex: 'type', key: 'type' },
-    { title: 'สถานะ', width: 60, dataIndex: 'is_active', key: 'is_active'},
-    { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 60 },
-    { title: 'ชื่อนามสกุล', dataIndex: 'name', key: 'name', width: 100 },
-    { title: 'เลขบัญชี', dataIndex: 'book_number', key: 'book_number', width: 100 },
-    { title: 'ยอดคงเหลือ', dataIndex: 'balance', key: 'balance', width: 80 },
-    { title: 'เช็คการเชื่อมต่อ', dataIndex: 'check-connect', key: 'check-connect', width: 60 },
-    { title: 'Statement', dataIndex: 'statement', key: 'statement', width: 60 },
-    { title: 'วันที่', dataIndex: 'date', key: 'date', width: 80 },
-    {
-            title: 'เชื่อมต่อ / แก้ไข / ลบ',
-            key: 'operation',
-            width: 100,
-        }
-  ] },
-];
+const dynamicColumns = computed(() => {
+    return [
+      { 
+        title: `ทั้งหมด ${allRecord.value} รายการ`, 
+        children: [
+      { title: 'ประเภท', width:60, dataIndex: 'type', key: 'type' },
+      { title: 'สถานะ', width: 60, dataIndex: 'is_active', key: 'is_active'},
+      { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 60 },
+      { title: 'ชื่อนามสกุล', dataIndex: 'name', key: 'name', width: 100 },
+      { title: 'เลขบัญชี', dataIndex: 'book_number', key: 'book_number', width: 100 },
+      { title: 'ยอดคงเหลือ', dataIndex: 'balance', key: 'balance', width: 80 },
+      { title: 'เช็คการเชื่อมต่อ', dataIndex: 'check-connect', key: 'check-connect', width: 60 },
+      { title: 'Statement', dataIndex: 'statement', key: 'statement', width: 60 },
+      { title: 'วันที่', dataIndex: 'date', key: 'date', width: 80 },
+      {
+              title: 'เชื่อมต่อ / แก้ไข / ลบ',
+              key: 'operation',
+              width: 100,
+      }
+      ] 
+    },
+  ];
+});
 
 const getSystemBank = async() =>{
     const data = await getSystemBankServices();
+    loading.value = true;
     if (data.status === "success") {
-        dataShow.value = data.data;
+        dataShow.value = data.data.data;
+        allRecord.value = data.data.recordsTotal;
     } else {
         Alert('error', data.message);
     }
+    loading.value = false;
 }
 
 const onEdit = (data:any) => {
@@ -120,6 +130,7 @@ const updateStatus = async(name: string,status: boolean,id: number,index: number
         content: createVNode('div', { key: 'content' }, [`เปลี่ยนสถานะของ ${name} เป็น ${is_active}`]),
         async onOk() {
             const data = await updateStatuBankSystem(id, status);
+            loading.value = true;
             if (data.status == 'success') {
                 Alert("success", "เปลี่ยนสถานะเรียบร้อย.");
                 getSystemBank();
@@ -127,6 +138,7 @@ const updateStatus = async(name: string,status: boolean,id: number,index: number
                 getSystemBank();
                 Alert("error", data.message);
             }
+            loading.value = false;
         },
         onCancel() {
           dataShow.value[index].is_active = !status;
@@ -146,12 +158,14 @@ const onDelete = (record:any) => {
         cancelText: 'No',
         async onOk() {
             const data = await deleteBankSystemServices(record.id);
+            loading.value = true;
             if (data.status == 'success') {
                 Alert("success", `ลบโปรโมชั่น ${record.book_number} เรียบร้อย.`);
                 getSystemBank();
             } else {
                 Alert("error", data.message);
             }
+            loading.value = false;
         },
         onCancel() {
             console.log('Cancel');

@@ -19,17 +19,23 @@
       </a-col>
     </a-row>
     <a-table 
-    :columns="columns" 
+    :columns="dynamicColumns" 
     :data-source="dataForm" 
     :scroll="{ x: 1500, y: 700 }"
     bordered
     :pagination="{ pageSize: 10 }"
+    :loading="loading"
     >
       <template #bodyCell="{ column, record, index }">
           <template v-if="column.key === 'operation'">
             <a-flex gap="small" :justify="'center'" horizontal>
                 <a-button v-if="column.key" class="warning" type="primary" @click="onEdit(record.id,record.name,record.username,record.role.id)"><FormOutlined /></a-button>
                 <a-button class="danger" type="primary" @click="onDelete(record.id,record.name)"><DeleteOutlined /></a-button>
+            </a-flex>
+          </template>
+          <template v-else-if="column.key === 'key2'">
+            <a-flex gap="small" :justify="'center'" horizontal>
+                <a-button v-if="column.key" class="edit2pass" @click="reset2Pass(record.id,record.name)">รีเซ็ต</a-button>
             </a-flex>
           </template>
           <template v-else-if="column.key === 'id'">
@@ -70,18 +76,17 @@
           </template>
           <template v-else>
             <div v-if="record.is_auth"> <a-tag color="green">เปิดใช้งาน</a-tag> </div>
-            <div v-else><a-tag color="red">ปิดใช้งาน</a-tag></div>
+            <div v-else><a-tag color="red">ยังไม่ได้ยืนยัน</a-tag></div>
           </template>
       </template>
     </a-table>
   </template>
   
 <script lang="ts" setup>
-import type { TableColumnsType } from 'ant-design-vue';
 import { ref,createVNode  } from 'vue';
 import dayjs from 'dayjs';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-import { getUser,updateStatus,deleteUser } from '~/services/userServices';
+import { getUser,updateStatus,deleteUser,reset2PassUser } from '~/services/userServices';
 import { Alert } from '../Alert/alertComponent';
 
 const open = ref<boolean>(false);
@@ -90,9 +95,14 @@ const active = ref<boolean>(true);
 const dataForm = ref<any[]>([]);
 const editData = ref<any>();
 const permissionId = ref<number>(0);
+const loading = ref(true);
+const allRecord = ref<number>(0);
 
-const columns: TableColumnsType = [
-    { title: 'ทั้งหมด 6 รายการ', children: [
+const dynamicColumns = computed(() => {
+  return [
+    { 
+      title: `ทั้งหมด ${allRecord.value} รายการ`, 
+      children: [
         { title: 'ID', width: 80, dataIndex: 'id', key: 'id' },
         { title: 'ชื่อ', width: 80, dataIndex: 'name', key: 'name' },
         { title: 'ชื่อผู้ใช้งาน', width: 80, dataIndex: 'username', key: 'username' },
@@ -102,10 +112,13 @@ const columns: TableColumnsType = [
         { title: 'IP ที่ใช้งานล่าสุด', width: 120, dataIndex: 'last_ip_login', key: 'last_ip_login' },
         { title: 'สถานะ', width: 80, dataIndex: 'is_active', key: 'status'},
         { title: 'สิทธิ์ใช้งาน', width: 80, dataIndex: 'role-permission', key: 'role-permission' },
-        { title: 'ยืนยันตัวตน	', width: 80, dataIndex: 'is_auth', key: 'is_auth' },
+        { title: 'ยืนยันตัวตน', width: 80, dataIndex: 'is_auth', key: 'is_auth' },
+        { title: 'รหัสสองชั้น', width: 80, key: 'key2' },
         { title: 'แก้ไข/ลบ', key: 'operation', fixed: 'right', width: 80 }
-    ] },
-];
+        ] 
+    },
+  ];
+});
 
 const showModal = () => {
     open.value = true;
@@ -150,12 +163,39 @@ const onDelete = (id: number, name: string) => {
         cancelText: 'No',
         async onOk() {
             const data = await deleteUser(id);
+            loading.value = true;
             if (data.status == 'success') {
                 getUsers();
                 Alert("success", `ลบพนักงาน ${name} เรียบร้อย.`);
             } else {
                 Alert("error", data.message);
             }
+            loading.value = false;
+        },
+        onCancel() {
+            console.log('Cancel');
+        },
+    });
+};
+
+const reset2Pass = (id: number, name: string) => {
+    Modal.confirm({
+        title: 'คุณต้องการรีเซตรหัสยืนยันตัวตนของพนักงานใช่หรือไหม?',
+        icon: createVNode(ExclamationCircleOutlined),
+        content: `คุณต้องการรีเซตรหัสยืนยันตัวตนของพนักงาน ${name}`,
+        okText: 'OK',
+        okType: 'danger',
+        cancelText: 'No',
+        async onOk() {
+            const data = await reset2PassUser(id);
+            loading.value = true;
+            if (data.status == 'success') {
+                getUsers();
+                Alert("success", `รีเซตรหัสยืนยันตัวตน ${name} เรียบร้อย.`);
+            } else {
+                Alert("error", data.message);
+            }
+            loading.value = false;
         },
         onCancel() {
             console.log('Cancel');
@@ -176,12 +216,14 @@ const update_status = async (id: number, status: boolean, name: string) => {
         content: createVNode('div', { key: 'content' }, [`เปลี่ยนสถานะของ ${name} เป็น ${is_active}`]),
         async onOk() {
             const data = await updateStatus(id, status);
+            loading.value = true;
             if (data.status == 'success') {
                 Alert("success", "เปลี่ยนสถานะเรียบร้อย.");
             } else {
                 getUsers();
                 Alert("error", data.message);
             }
+            loading.value = false;
         },
         onCancel() {
             console.log('Cancel');
@@ -192,11 +234,14 @@ const update_status = async (id: number, status: boolean, name: string) => {
 
 const getUsers = async () => {
     const data = await getUser();
+    loading.value = true;
     if (data.status === "success") {
-        dataForm.value = data.data;
+        dataForm.value = data.data.data;
+        allRecord.value = data.data.recordsTotal;
     } else {
         Alert('error', data.message);
     }
+    loading.value = false;
 };
 
 onMounted(() => {

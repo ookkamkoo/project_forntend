@@ -1,0 +1,3 @@
+<template>
+    <PagesCreditHistoryComponent/>
+</template>

@@ -26,6 +26,22 @@ export async function getSettingGameServices(): Promise<getResponse> {
     }
 }
 
+export async function getGamePGListServices(): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    
+    try {
+        const response = await axios.get<getResponse>(`${url}/pg-game/getPgList`, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 export async function setSettingGameMenu(data:any): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
@@ -71,10 +87,59 @@ export async function setSettingGame(data:any,type:string): Promise<getResponse>
         }
     });
 
-    
-
     try {
         const response = await axios.post<getResponse>(`${url}/setting-game/updateGame`,body, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export async function setSettingGamePgServices(data:any): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    try {
+        const response = await axios.post<getResponse>(`${url}/setting-game/updateGamePG`,data, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export async function editSettingPG100Services(data:any,number:number): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    try {
+        const  body = {
+            "data":number,
+            "detail":data
+        }
+        const response = await axios.post<getResponse>(`${url}/pg-game/updateSettingPG`,body, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+
+export async function getGamePGSettingServices(): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    
+    try {
+        const response = await axios.get<getResponse>(`${url}/pg-game/getSettingPG`, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;

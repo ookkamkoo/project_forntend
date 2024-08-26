@@ -209,6 +209,22 @@ $m-5: 2.5rem;
   margin-left: $m-5;
 }
 
+.mb-1 {
+  margin-bottom: $m-1;
+}
+.mb-2 {
+  margin-bottom: $m-2;
+}
+.mb-3 {
+  margin-bottom: $m-3;
+}
+.mb-4 {
+  margin-bottom: $m-4;
+}
+.mb-5 {
+  margin-bottom: $m-5;
+}
+
 // fornt size
 .fs-1 {
   font-size: 0.3125rem;
@@ -311,6 +327,9 @@ hr {
   width: 100%; 
   overflow: hidden;
   text-overflow: ellipsis; 
+}
+.ant-form-item-explain-error{
+  position: absolute;
 }
 // response
 @media screen and (max-width: 952px) {

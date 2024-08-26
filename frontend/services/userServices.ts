@@ -41,10 +41,16 @@ export interface userEdit {
   roleId: number;
 }
 
+export interface ResponseUsers {
+  status: string;
+  data: any;
+  message: string;
+  time: string;
+}
 
 
 
-export async function getUser(): Promise<getRoleUserResponse> {
+export async function getUser(): Promise<ResponseUsers> {
   const config = useRuntimeConfig()
   const url = config.public.serviceUrls;
 
@@ -53,7 +59,7 @@ export async function getUser(): Promise<getRoleUserResponse> {
   };
 
   try {
-    const response = await axios.get<getRoleUserResponse>(`${url}/user/`, { headers });
+    const response = await axios.get<ResponseUsers>(`${url}/user/`, { headers });
     return response.data;
   } catch (error: any) {
     return error.response.data;
@@ -206,6 +212,23 @@ export async function updatePermissionParent(id:number,data: any): Promise<any> 
 
   try {
     const response = await axios.post<any>(`${url}/role/update-permission-parent/${id}`, { data }, { headers });
+
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+export async function reset2PassUser(id:number): Promise<any> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+
+  try {
+    const response = await axios.post<any>(`${url}/user/reset-2pass-users/${id}`,{}, { headers });
 
     return response.data;
   } catch (error: any) {

@@ -170,6 +170,18 @@
                     <a-switch v-model:checked="formData.showUsername" />
                     </a-col>
                 </a-row>
+                <h2>การยืนยันตัวตนหลังบ้าน</h2>
+                <a-row>
+                    <a-col :span="12" :md="12" class="p-3">
+                        <label for="pinType"><b  class="request">การยืนยันตัวตน</b></label>
+                        <a-select
+                            v-model:value="formData.type2Factor"
+                            style="width: 100%"
+                            :options="Constants.optionsSystemLogin"
+                        ></a-select>
+                    </a-col>
+                </a-row>
+
                 <h2>ระบบสมัครสมาชิก</h2>
                 <a-row>
                     <a-col :span="12" :md="12" class="p-3">
@@ -662,13 +674,13 @@
                         <b>สถานะเเนะนำเพื่อน</b> 
                     </a-col>
                     <a-col :span="24" :md="24" >
-                        <a-switch v-model:checked="formData.refundLost" />
+                        <a-switch v-model:checked="formData.recommend" />
                     </a-col>
                 </a-col>
                 <a-col :span="12" :md="12" class="p-3">
                     <label for="ประเภทการคืน"><b class="request">ประเภทการคืน</b></label>
                     <a-select
-                        v-model:value="formData.typeAffiliate"
+                        v-model:value="formData.typeRecommend"
                         style="width: 100%"
                         :options="Constants.optionsLose"
                     ></a-select>
@@ -676,27 +688,27 @@
                 <a-col :span="12" :md="12" class="p-3">
                     <label for="เปอร์เซ็นต์"><b class="request">เปอร์เซ็นต์</b></label>
                     <a-form-item 
-                        ref="affiliatePercent" 
-                        name="affiliatePercent"
+                        ref="recommendPercent" 
+                        name="recommendPercent"
                         :rules="[{ required: true, message: 'โปรดกรอกชื่อบัญชี!' }]"
                         >
-                        <a-input v-model:value="formData.affiliatePercent"/>
+                        <a-input v-model:value="formData.recommendPercent"/>
                     </a-form-item>
                 </a-col>
                 <a-col :span="12" :md="12" class="p-3">
                     <label for="เทิร์น"><b class="request">เทิร์น</b></label>
                     <a-form-item 
-                        ref="affiliateTurn" 
-                        name="affiliateTurn"
+                        ref="recommendTurn" 
+                        name="recommendTurn"
                         :rules="[{ required: true, message: 'โปรดกรอกชื่อบัญชี!' }]"
                         >
-                        <a-input v-model:value="formData.affiliateTurn"/>
+                        <a-input v-model:value="formData.recommendTurn"/>
                     </a-form-item>
                 </a-col>
                 <a-col :span="12" :md="12" class="p-3">
-                    <label for="วิธีคืนยอดเสียให้ลูกค้า"><b class="request">วิธีคืนยอดเเนะนำเพื่อน</b></label>
+                    <label for="วิธีคืนยอดเเนะนำเพื่อน"><b class="request">วิธีคืนยอดเเนะนำเพื่อน</b></label>
                     <a-select
-                        v-model:value="formData.affiliateTypeMemberGet"
+                        v-model:value="formData.recommendTypeMemberGet"
                         style="width: 100%"
                         :options="Constants.optionsLoseTypeMember"
                         :disabled="true"
@@ -705,40 +717,40 @@
                 <a-col :span="12" :md="12" class="p-3">
                     <label for="คืนสูงสุด"><b  class="request">คืนต่ำสุด</b></label>
                     <a-form-item 
-                        ref="affiliateMin" 
-                        name="affiliateMin"
+                        ref="recommendMin" 
+                        name="recommendMin"
                         :rules="[{ required: true, message: 'โปรดกรอกชื่อบัญชี!' }]"
                         >
-                        <a-input v-model:value="formData.affiliateMin"/>
+                        <a-input v-model:value="formData.recommendMin"/>
                     </a-form-item>
                 </a-col>
                 <a-col :span="12" :md="12" class="p-3">
                     <label for="คืนสูงสุด"><b  class="request">คืนสูงสุด</b></label>
                     <a-form-item 
-                        ref="affiliateMax" 
-                        name="affiliateMax"
+                        ref="recommendMax" 
+                        name="recommendMax"
                         :rules="[{ required: true, message: 'โปรดกรอกชื่อบัญชี!' }]"
                         >
-                        <a-input v-model:value="formData.affiliateMax"/>
+                        <a-input v-model:value="formData.recommendMax"/>
                     </a-form-item>
                 </a-col>
                 <a-col :span="12" :md="12" class="p-3">
                     <label for="สถานะคืนยอดเสีย"><b class="request">สถานะคืนยอดเสีย</b></label>
                     <a-select
-                        v-model:value="formData.typeAffiliateDate"
+                        v-model:value="formData.typeRecommendDate"
                         style="width: 100%"
                         :options="Constants.optionsDayOpen"
                     ></a-select>
                 </a-col>
                 </a-row>
-                <a-row v-if="formData.typeAffiliateDate == '2'">
+                <a-row v-if="formData.typeRecommendDate == '2'">
                     <a-col :span="24" :md="12">
                         <div class="select-day">
                             <h3>
                                 เลือกวัน
-                                <a-checkbox v-model:checked="all" style="float: inline-end;" @change="selectAllAffiliate">เลือกทั้งหมด</a-checkbox>
+                                <a-checkbox v-model:checked="all" style="float: inline-end;" @change="selectAllRecommend">เลือกทั้งหมด</a-checkbox>
                             </h3>
-                            <a-checkbox-group v-model:value="formData.affiliateDate" :options="Constants.optionWeek" class="model-week">
+                            <a-checkbox-group v-model:value="formData.recommendDate" :options="Constants.optionWeek" class="model-week">
                                 <template #label="{ label }">
                                     <p>{{ label }}</p>
                                 </template>
@@ -746,14 +758,14 @@
                         </div>
                     </a-col>
                 </a-row>
-                <a-row v-if="formData.typeAffiliateDate == '3'">
+                <a-row v-if="formData.typeRecommendDate == '3'">
                     <a-col :span="24" :md="12">
                         <div class="select-day">
                             <h3>
                                 เลือกวันที่
-                                <a-checkbox v-model:checked="all" style="float: inline-end;" @change="selectAllAffiliate">เลือกทั้งหมด</a-checkbox>
+                                <a-checkbox v-model:checked="all" style="float: inline-end;" @change="selectAllRecommend">เลือกทั้งหมด</a-checkbox>
                             </h3>
-                            <a-checkbox-group v-model:value="formData.affiliateDate" :options="Constants.optionDay" class="model-week">
+                            <a-checkbox-group v-model:value="formData.recommendDate" :options="Constants.optionDay" class="model-week">
                                 <template #label="{ label }">
                                     <p>{{ label }}</p>
                                 </template>
@@ -909,7 +921,7 @@
 
   const all = ref(false);
 
-  const activeKey = ref('1');
+  const activeKey = ref('3');
   const fileList = ref([]);
   const fileListLogo = ref([]);
   const previewImage = ref('');
@@ -930,6 +942,7 @@
       clearWithdrawMin:5,
       turnWithdrawNormal:0,
       password: 'asdf123456',
+      type2Factor: 1,
       registerStatus:true,
       showUsername: true,
       getNameMember: false,
@@ -972,15 +985,15 @@
       typeRefundLostdate:'1',
       optionRefundLostDate: [] as string[],
 
-      affiliate:true,
-      typeAffiliate:1,
-      affiliatePercent:1,
-      affiliateTurn:1,
-      affiliateTypeMemberGet:1,
-      affiliateMin:0,
-      affiliateMax:1000,
-      typeAffiliateDate:'1',
-      affiliateDate: [] as string[],
+      recommend:true,
+      typeRecommend:'1',
+      recommendPercent:'1',
+      recommendTurn:'1',
+      recommendTypeMemberGet:'1',
+      recommendMin:0,
+      recommendMax:1000,
+      typeRecommendDate:'1',
+      recommendDate: [] as string[],
       
       // page 4 
       notifyLineStatus:true,
@@ -1082,18 +1095,18 @@
         }
     }
 
-    const selectAllAffiliate = () =>{
-        if(formData.typeAffiliateDate == '2'){
+    const selectAllRecommend = () =>{
+        if(formData.typeRecommendDate == '2'){
             if(all.value){
-                formData.affiliateDate = ['อา','จ','อ','พ','พฤ','ศ','ส'];
+                formData.recommendDate = ['อา','จ','อ','พ','พฤ','ศ','ส'];
             }else{
-                formData.affiliateDate = []
+                formData.recommendDate = []
             }
-        }else if(formData.typeAffiliateDate == '3'){
+        }else if(formData.typeRecommendDate == '3'){
             if(all.value){
-            formData.affiliateDate = Array.from({ length: 31 }, (_, index) => (index + 1).toString());
+            formData.recommendDate = Array.from({ length: 31 }, (_, index) => (index + 1).toString());
             }else{
-                formData.affiliateDate = []
+                formData.recommendDate = []
             }
         }
     }
@@ -1190,21 +1203,22 @@
             formData.refundLost = data.data.refundLost=='true'?true:false
             formData.typeRefundLost = data.data.typeRefundLost
             formData.refundLostPercent = data.data.refundLostPercent
-            formData.refundLostTurn = data.data.typeRefundLostSet
-            formData.typeRefundLostSet = data.data.refundLostTurn
+            formData.refundLostTurn = data.data.refundLostTurn
+            formData.typeRefundLostSet = data.data.typeRefundLostSet
             formData.refundLostMin = data.data.refundLostMin
             formData.refundLostMax = data.data.refundLostMax
             formData.typeRefundLostdate = data.data.typeRefundLostdate
             formData.optionRefundLostDate = data.data.refundLostdate
             
-            formData.affiliate = data.data.affiliate=='true'?true:false
-            formData.typeAffiliate = data.data.typeAffiliate
-            formData.affiliatePercent = data.data.affiliatePercent
-            formData.affiliateTurn = data.data.affiliateTurn
-            formData.affiliateMin = data.data.affiliateMin
-            formData.affiliateMax = data.data.affiliateMax
-            formData.typeAffiliateDate = data.data.typeAffiliateDate
-            formData.affiliateDate = data.data.affiliateDate
+            
+            formData.recommend = data.data.recommend=='true'?true:false
+            formData.typeRecommend = data.data.typeRecommend
+            formData.recommendPercent = data.data.recommendPercent
+            formData.recommendTurn = data.data.recommendTurn
+            formData.recommendMin = data.data.recommendMin
+            formData.recommendMax = data.data.recommendMax
+            formData.typeRecommendDate = data.data.typeRecommendDate
+            formData.recommendDate = data.data.recommendDate
 
             // page 4
             formData.notifyLineStatus = data.data.notifyLineStatus=='true'?true:false

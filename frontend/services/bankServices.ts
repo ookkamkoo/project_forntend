@@ -49,14 +49,15 @@ export async function createBank(data :any): Promise<getResponse> {
     const headers = {
         Authorization: `Bearer ${getToken()}`
     };
-
+    console.log(data);
+    
     const body = {
         type:Constants.optionsBankType[data.bank_type-1].labelEN,
         bank_short:Constants.optionsBankType[data.bank_type-1].bank[data.bank_list-1].short,
         bank_type:Constants.optionsBankType[data.bank_type-1].bank[data.bank_list-1].action[data.bank_list_api-1].name,
         name:data.bankName,
         book_number:data.bankNo,
-        image:data.image,
+        image:data.Image,
         detail:{
             bankPin:data.bankPin,
             devicesID:data.devicesID,

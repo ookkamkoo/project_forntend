@@ -210,7 +210,7 @@
                     </a-col>
                     <a-col :span="12" :md="6">
                         <div class="mx-1 my-1">
-                            <label for="โบนัสสูงสุด"><b>โบนัส ({{ Constants.optionsTypeBonus?.[Number(formData.bonusType)]?.label ?? 'ประเภทโบนัส' }}) {{index+1}} 
+                            <label for="โบนัสสูงสุด"><b>โบนัส ({{ Constants.optionsTypeBonus?.[Number(formData.bonusType)-1]?.label ?? 'ประเภทโบนัส' }}) {{index+1}} 
                                 <a-popover>
                                     <template #content>
                                     <p>เปอร์เซ็นต์ หรือ จำนวนเงิน จากการเลือก "ประเภทโบนัส" </p>

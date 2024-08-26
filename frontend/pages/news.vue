@@ -1,0 +1,3 @@
+<template>
+    <PagesNewComponent/>
+</template>

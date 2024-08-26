@@ -24,12 +24,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 console.log(check);
                 
                 if(check){
-                    // return navigateTo('/dashboard');
-                    return navigateTo('/setting/game-provider');
+                    // return navigateTo('/deposit-withdraw/credit-custom');
+                    return navigateTo('/history/report-game');
+                }else{
+                    Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
+                    // logout();
                 }
-                
-                Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
-                logout();
             }
         }
     } catch (error) {

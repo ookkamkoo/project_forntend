@@ -33,6 +33,7 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
     const headers = {
         Authorization: `Bearer ${getToken()}`
     };
+
     
     let setting = '';
     let body = {};
@@ -51,6 +52,7 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
             passwordCustomer: data.password ? data.password.toString() : "",
             registerStatus: data.registerStatus ? data.registerStatus.toString() : "false",
             showUsername: data.showUsername ? data.showUsername.toString() : "false",
+            type2factor:data.type2Factor ? data.type2Factor.toString() : "",
             getName: data.getNameMember ? data.getNameMember.toString() : "false",
             checkDuplicateName: data.checkName ? data.checkName.toString() : "false",
             registerTruewallet: data.regisTrue ? data.regisTrue.toString() : "false",
@@ -106,14 +108,14 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
             refundLostMax: data.refundLostMax ? data.refundLostMax.toString() : "",
             typeRefundLostdate: data.typeRefundLostdate ? data.typeRefundLostdate.toString() : "",
             refundLostdate: data.optionRefundLostDate ? data.optionRefundLostDate.toString() : "",
-            affiliate: data.affiliate ? data.affiliate.toString() : "",
-            typeAffiliate: data.typeAffiliate ? data.typeAffiliate.toString() : "",
-            affiliatePercent: data.affiliatePercent ? data.affiliatePercent.toString() : "",
-            affiliateTurn: data.affiliateTurn ? data.affiliateTurn.toString() : "",
-            affiliateMin: data.affiliateMin ? data.affiliateMin.toString() : "",
-            affiliateMax: data.affiliateMax ? data.affiliateMax.toString() : "",
-            typeAffiliateDate: data.typeAffiliateDate ? data.typeAffiliateDate.toString() : "",
-            affiliateDate: data.affiliateDate ? data.affiliateDate.toString() : "",
+            recommend: data.recommend ? data.recommend.toString() : "",
+            typeRecommend: data.typeRecommend ? data.typeRecommend.toString() : "",
+            recommendPercent: data.recommendPercent ? data.recommendPercent.toString() : "",
+            recommendTurn: data.recommendTurn ? data.recommendTurn.toString() : "",
+            recommendMin: data.recommendMin ? data.recommendMin.toString() : "",
+            recommendMax: data.recommendMax ? data.recommendMax.toString() : "",
+            typeRecommendDate: data.typeRecommendDate ? data.typeRecommendDate.toString() : "",
+            recommendDate: data.recommendDate ? data.recommendDate.toString() : "",
         };
     }else if(page == '4'){
         setting = "notify";

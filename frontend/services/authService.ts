@@ -20,10 +20,8 @@ export async function login(Username: string, Password: string, Twofactor: strin
     const config = useRuntimeConfig()
     const url = config.public.serviceUrls;
     
-    // const url = 'http://128.199.218.147:3001';
-    
     try {
-        const response = await axios.post<LoginResponse>(`${url}/login`, { Username, Password, Twofactor });
+        const response = await axios.post<LoginResponse>(`${url}/auth/login`, { Username, Password, Twofactor });
         return response.data;
     } catch (error : any) {
         return error.response.data;
@@ -36,7 +34,7 @@ export async function checkToken(token: string): Promise<boolean> {
 
   try {
         await axios.get<{ token: string }>(
-            `${url}/check-token`,
+            `${url}/auth/check-token`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -48,3 +46,20 @@ export async function checkToken(token: string): Promise<boolean> {
         return false;
   }
 }
+
+export async function setPinUser(keyRef:string,pin:string): Promise<any> {
+    const config = useRuntimeConfig()
+    const url = config.public.serviceUrls;
+  
+    const body = {
+      pin:pin,
+      ref_key:keyRef
+    }
+    try {
+        const response = await axios.post<LoginResponse>(`${url}/setPinUser`, body);
+        return response.data;
+    } catch (error : any) {
+        return error.response.data;
+    }
+  }
+  

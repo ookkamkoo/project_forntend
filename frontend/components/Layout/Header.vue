@@ -1,88 +1,89 @@
 <template>
     <a-flex class="status-web">
-        <a-flex class="status-web-check border-right" vertical>
+        <!-- Button to close server -->
+        <a-flex class="status-web-check" vertical>
             <a-button type="primary" size="small" class="m-auto danger">ปิดเซิร์ฟ</a-button>
         </a-flex>
-        <a-flex class="status-web-check border-right" vertical>
+
+        <!-- Language selection component -->
+        <a-flex class="status-web-check" vertical>
             <div class="m-auto">
-                <LanguagesLanguageComponent :language=false />
+                <LanguagesLanguageComponent :language="false" />
             </div>
         </a-flex>
-        <a-flex class="status-web-check border-right p-rl-2" vertical>
-            <div class="white-text text-name">{{ name }}</div>
-            <div class="p-rl-1 white-text">{{ permission }}</div>
-        </a-flex>
-        <!-- <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
-            <div class="">ออนไลน์</div>
+
+        <!-- System statuses -->
+        <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
+            <div>ออนไลน์</div>
             <a-tag color="green" class="m-auto">อัตโนมัติ</a-tag>
         </a-flex>
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
-            <div class="">ฝาก</div>
+            <div>ฝาก</div>
             <a-tag color="green" class="m-auto">อัตโนมัติ</a-tag>
         </a-flex>
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
-            <div class="">ถอน</div>
+            <div>ถอน</div>
             <a-tag color="green" class="m-auto">อัตโนมัติ</a-tag>
         </a-flex>
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
-            <div class="">เว็บ</div>
+            <div>เว็บ</div>
             <a-tag color="green" class="m-auto">เปิด</a-tag>
         </a-flex>
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
-            <div class="">ฝาก</div>
+            <div>ฝาก</div>
             <a-tag color="green" class="m-auto">เปิด</a-tag>
-        </a-flex> -->
-        <div class="m-auto p-rl-2 mobile">
-            <a-avatar size="large"  @click="showDrawer">
+        </a-flex>
+
+        <!-- Avatar and dropdown -->
+        <!-- <div class="m-auto p-rl-2 mobile">
+            <a-avatar size="large" @click="showDrawer">
                 <template #icon><UserOutlined /></template>
             </a-avatar>
+        </div> -->
+        <div class="m-auto p-3">
+            <a-dropdown v-model:open="visible" :trigger="['click']" class="profile">
+                <a-badge :count="10">
+                    <a-avatar style="color: #f56a00; background-color: #fde3cf" >{{ name?.charAt(0).toUpperCase() || 'U' }}</a-avatar>
+                </a-badge>
+                <template #overlay>
+                    <a-menu @click="handleMenuClick">
+                        <div class="dropdown-header">
+                            <a-avatar size="large" style="color: #f56a00; background-color: #fde3cf">{{ name?.charAt(0).toUpperCase() || 'U' }}</a-avatar>
+                            <div class="profile-info">
+                                <div class="profile-name">{{ name }}</div>
+                                <div class="profile-role">{{ permission }}</div>
+                            </div>
+                        </div>
+                        <a-menu-item><router-link to="/dashboard">หน้าเเรก</router-link></a-menu-item>
+                        <a-menu-item><router-link to="/profile">ข้อมูลส่วนตัว</router-link></a-menu-item>
+                        <a-menu-item><router-link to="/deposit-withdraw/deposit">รายการฝากเงิน</router-link></a-menu-item>
+                        <a-menu-item><router-link to="/deposit-withdraw/withdraw">รายการถอนเงิน</router-link></a-menu-item>
+                        <a-menu-item @click="logout">
+                            <router-link to="/">
+                                <span>ออกจากระบบ</span>
+                            </router-link
+                        ></a-menu-item>
+                    </a-menu>
+                </template>
+            </a-dropdown>
         </div>
-        <div class="m-auto mobile-none">
-            <LogoutOutlined  class="large-font p-rl-2 white-smoke-text"/>
-        </div>
-        <!-- <Space align="center" class="mobile-none">
-            <LogoutOutlined  class="large-font p-rl-2 white-smoke-text"/>
-        </Space> -->
-
-        <a-drawer
-            title="Basic Drawer"
-            placement="top"
-            :closable="false"
-            :visible="visible"
-            @close="onClose"
-        >
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-        </a-drawer>
     </a-flex>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { getName,getUsername,getPermission } from '~/auth/authToken';
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { getName, getPermission, logout } from '~/auth/authToken';
 
-export default defineComponent({
-  setup() {
-    const visible = ref<boolean>(false);
-    const showDrawer = () => {
-      visible.value = true;
-    };
-    const onClose = () => {
+const visible = ref(false);
+const name = getName();
+const permission = getPermission();
+
+const handleMenuClick = () => {
       visible.value = false;
+      console.log("sssssssss");
+      
     };
-    const name = getName();
-    const permission = getPermission();
-    
-    return {
-        visible,
-        showDrawer,
-        onClose,
-        name,
-        permission
-    };
-  },
-});
+
 </script>
 
 <style lang="scss">
@@ -96,4 +97,30 @@ export default defineComponent({
 .danger:hover {
     background-color: darken($danger, 10%) !important;
 }
+
+.profile {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.profile-info {
+    margin-left: 10px;
+}
+
+.profile-name {
+    font-weight: bold;
+}
+
+.profile-role {
+    font-size: 12px;
+    color: gray;
+}
+
 </style>

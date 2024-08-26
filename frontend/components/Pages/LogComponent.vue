@@ -4,11 +4,11 @@
         <a-row >
             <a-col class="p-1" :span="15">
             <label>เริ่มต้นวันที่</label>
-            <a-date-picker v-model:value="dateStart" />
+            <a-date-picker v-model:value="formData.dateStart" />
             </a-col>
             <a-col class="p-1" :span="8">
             <label><br></label>
-            <a-time-picker v-model:value="timeStart" format="HH:mm" />
+            <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
             </a-col>
         </a-row>
       </a-col>
@@ -16,11 +16,11 @@
         <a-row>
             <a-col class="p-1" :span="15">
             <label>ถึงวันที่</label>
-            <a-date-picker v-model:value="dateEnd" />
+            <a-date-picker v-model:value="formData.dateEnd" />
             </a-col>
             <a-col class="p-1" :span="8">
             <label><br></label>
-            <a-time-picker v-model:value="timeEnd" format="HH:mm" />
+            <a-time-picker v-model:value="formData.timeEnd" format="HH:mm" />
             </a-col>
         </a-row>
       </a-col>
@@ -31,7 +31,7 @@
     </a-row>
     <a-row class="p-2">
         <div>
-        <a-radio-group v-model:value="dateSelect">
+        <a-radio-group v-model:value="formData.dateSelect">
             <a-radio-button value="Today">วันนี้</a-radio-button>
             <a-radio-button value="Yesterday">เมื่อวาน</a-radio-button>
             <a-radio-button value="ThisMonth">เดือนนี้</a-radio-button>
@@ -39,13 +39,59 @@
         </div>
     </a-row>
     <a-table 
-      :columns="columns" 
-      :data-source="data" 
-      :scroll="{ x: 1500, y: 700 }"
-      bordered
-      :pagination="{ pageSize: 10 }"
-    >
-    </a-table>
+    :columns="dynamicColumns"
+    :data-source="dataShow"
+    bordered
+    size="small"
+    :scroll="{ x: 1500, y: 700 }"
+    :pagination="{ pageSize: 10 }"
+  >
+    <template #bodyCell="{ column, record }">
+      <template v-if="column.key === 'id'">
+        <div>{{ record.id }}</div>
+      </template>
+      <template v-if="column.key === 'name'">
+        <div>{{ record.name }}</div>
+      </template>
+      <template v-if="column.key === 'amount_before'">
+        <div>{{ record.amount_before }}</div>
+      </template>
+      <template v-if="column.key === 'amount'">
+        <div>{{ record.amount }}</div>
+      </template>
+      <template v-if="column.key === 'amount_after'">
+        <div>{{ record.amount_after }}</div>
+      </template>
+      <template v-if="column.key === 'bank'">
+        <a-image
+          width="35px"
+          :src="record.bank.image"
+          :preview="false"
+        />
+      </template>
+      <template v-if="column.key === 'booknumber'">
+        <div>{{ record.bank_no }}</div>
+      </template>
+      <template v-if="column.key === 'image_bank'">
+        <a-button type="primary" ghost><ScanOutlined /></a-button>
+      </template>
+      <template v-if="column.key === 'remark'">
+        <div>{{ record.remark }}</div>
+      </template>
+      <template v-if="column.key === 'status'">
+        <a-tag color="orange" v-if="record.status == 1">รอทำรายการ</a-tag>
+        <a-tag color="green" v-else-if="record.status == 2">สำเร็จ</a-tag>
+        <a-tag color="red" v-else-if="record.status == 3">ยกเลิก</a-tag>
+        <a-tag color="red" v-else-if="record.status == 4">หมดเวลา</a-tag>
+      </template>
+      <template v-if="column.key === 'created_by'">
+        <div>{{ record.CreatedBySearch.username }}</div>
+      </template>
+      <template v-else-if="column.key === 'created_at'">
+        <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
+      </template>
+    </template>
+  </a-table>
     
   </template>
   
@@ -54,46 +100,86 @@
   import { ref } from 'vue';
   import dayjs, { Dayjs } from 'dayjs';
   
-  const columns: TableColumnsType = [
-    { title: 'ทั้งหมด 6 รายการ', children: [
-      { title: 'ประเภท', width:80, dataIndex: 'name', key: 'name' },
-      { title: 'สถานะ', width: 150, dataIndex: 'name', key: 'name', fixed: 'left' },
-      { title: 'ธนาคาร', dataIndex: 'address', key: '1', width: 100 },
-      { title: 'ชื่อนามสกุล', dataIndex: 'address', key: '1', width: 150 },
-      { title: 'เลขบัญชี', dataIndex: 'address', key: '1', width: 150 },
-      { title: 'sms', dataIndex: 'address', key: '1', width: 150 },
-      { title: 'ยอดคงเหลือ', dataIndex: 'address', key: '1', width: 150 },
-    ] },
-  ];
+  const dataShow = ref<any[]>([]);
+  const allRecord = ref<number>(0);
   
-  interface DataItem {
-    id: number;
-    key: number;
-    name: string;
-    age: number;
-    address: string;
-  }
+  const dynamicColumns = computed(() => {
+    return [
+      { 
+        title: `ทั้งหมด ${allRecord.value} รายการ`, 
+        children: [
+          { title: '#', width: 60, dataIndex: 'id', key: 'id' },
+          { title: 'ชื่อพนักงาน', width: 120, dataIndex: 'name', key: 'name' },
+          { title: 'เมนู', dataIndex: 'menu', key: 'menu', width: 80 },
+          { title: 'รายการ', dataIndex: 'list', key: 'list', width: 100 },
+          { title: 'รายละเอียด', dataIndex: 'detail', key: 'detail', width: 100 },
+          { title: 'ip', dataIndex: 'ip', key: 'ip', width: 80 },
+          { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
+          { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 150 },
+        ] 
+      },
+    ];
+  });
   
-  const data: DataItem[] = [];
-  for (let i = 0; i < 100; i++) {
-    data.push({
-      id: i+1,
-      key: i,
-      name: `cbf00018${i}`,
-      age: 32,
-      address: `London Park no. ${i}`
-    });
-  }
   
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const day = String(currentDate.getDate()).padStart(2, '0');
-  
-  const timeStart = ref(dayjs('00:00', 'HH:mm'));
-  const timeEnd= ref(dayjs('23:59', 'HH:mm'));
-  const dateStart = ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD'));
-  const dateEnd = ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD'));
-  const dateSelect = ref<string>('Today');
-  
+
+  let formData = reactive({
+      timeStart:ref(dayjs('00:00', 'HH:mm')),
+      timeEnd:ref(dayjs('23:59', 'HH:mm')),
+      dateStart:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
+      dateEnd:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
+      username:ref<string>(''),
+      adminName:ref<string>(''),
+      amount:ref<string>(''),
+      dateSelect:ref<string>('Today'),
+      sl_type:"all"
+    });
+
+  const getCreditCustom = () => {
+  dataShow.value = [
+    {
+      id: "1",
+      name: "admin",
+      menu: "ฝาก - ถอน",
+      list: "ฝาก",
+      detail: "กดอนุมัติ รายการ 6 ",
+      ip: "127.0.0.1",
+      status: 2,
+      CreatedBySearch: { username: 'Admin' },
+      created_at: dayjs().toISOString(),
+    },
+    {
+      id: "1",
+      name: "admin",
+      menu: "ฝาก - ถอน",
+      list: "ฝาก",
+      detail: "กดอนุมัติ รายการ 7 ",
+      ip: "127.0.0.1",
+      status: 2,
+      CreatedBySearch: { username: 'Admin' },
+      created_at: dayjs().toISOString(),
+    },
+    {
+      id: "1",
+      name: "admin",
+      menu: "ฝาก - ถอน",
+      list: "ฝาก",
+      detail: "กดอนุมัติ รายการ 8 ",
+      ip: "127.0.0.1",
+      status: 2,
+      CreatedBySearch: { username: 'Admin' },
+      created_at: dayjs().toISOString(),
+    },
+  ];
+
+  allRecord.value = dataShow.value.length;
+}
+
+onMounted(() => {
+  getCreditCustom();
+});
   </script>

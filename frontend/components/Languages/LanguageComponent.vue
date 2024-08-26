@@ -1,6 +1,6 @@
 <template>
   <div class="menu-wrapper">
-    <a-dropdown>
+    <a-dropdown :trigger="['click']">
       <template #overlay>
         <a-menu @click="handleMenuClick">
           <a-menu-item key="1">

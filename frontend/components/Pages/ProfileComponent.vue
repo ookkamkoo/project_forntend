@@ -31,7 +31,7 @@
                         <label><b>รหัสผ่านเดิม</b></label>
                         <a-form-item
                             name="passwordOld"
-                            :rules="[{ required: true, message: 'Please input your password!' }]"
+                            :rules="[{ required: true, message: 'Please input your old password!' }]"
                         >
                             <a-input-password v-model:value="formState.passwordOld" />
                         </a-form-item>
@@ -41,7 +41,7 @@
                         <label><b>รหัสผ่านใหม่</b></label>
                         <a-form-item
                             name="password"
-                            :rules="[{ required: true, message: 'Please input your password!' }]"
+                            :rules="[{ required: true, message: 'Please input your new password!' }]"
                         >
                             <a-input-password v-model:value="formState.password" />
                         </a-form-item>
@@ -51,7 +51,7 @@
                         <label><b>ยืนยันรหัสผ่านใหม่</b></label>
                         <a-form-item
                             name="passwordAgain"
-                            :rules="[{ required: true, message: 'Please input your password!' }]"
+                            :rules="[{ required: true, message: 'Please input your new password again!' }]"
                         >
                             <a-input-password v-model:value="formState.passwordAgain" />
                         </a-form-item>

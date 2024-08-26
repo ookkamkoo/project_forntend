@@ -1,6 +1,6 @@
 <template>
   <div class="layout-logo">
-      <img src="https://betflix24hours.imember.cc/img/websetting/1680175806.png" alt="AdminLTE Logo" width="50%">
+      <img src="https://cdn.zabbet.com/NRM9/lobby_settings/625f5901-0f8d-4f0f-b959-431179967df9.png" alt="AdminLTE Logo" width="50%">
   </div>
   <div class="sidebar-layout">
     <div class="sidebar-list">
@@ -11,13 +11,13 @@
                   <a-menu-item :key="'menu-item-' + index" @click="handleMenuItemClick(item)">
                   <component :is="item.icon" :style="{ margin: '0 10px' }" />
                   <router-link :to="item.path">
-                      <span>{{ item.name }}</span>
+                      <span> {{ item.name }}</span>
                   </router-link>
-                  <span class="new" v-if="item.notify !== 0">
+                  <!-- <span class="new" v-if="item.notify !== 0">
                     <span class="badge padding-1 ">
                       {{item.notify}}
                     </span>
-                  </span>
+                  </span> -->
                   </a-menu-item>
               </template>
               <template v-else>
@@ -25,6 +25,7 @@
                   <template #title>
                       <component :is="item.icon" :style="{ margin: '0 10px' }" />
                       <span class="sub-link">{{ item.name }}</span>
+                      <span v-if="item.notify != 0" class="notify"> <a-tag :bordered="false" color="error" > New </a-tag></span>
                   </template>
                   <template v-for="(child, childIndex) in item.children" :key="child.path">
                       <a-menu-item @click="handleMenuItemClick(child)">
@@ -34,7 +35,8 @@
                       </router-link>
                       <span class="new" v-if="child.notify !== 0">
                         <span class="badge padding-1 ">
-                          {{child.notify}}
+                          <a-tag :bordered="false" color="error">{{ child.notify }}</a-tag>
+                          <!-- {{child.notify}} -->
                         </span>
                       </span>
                       </a-menu-item>
@@ -56,22 +58,14 @@
 <script lang="ts" setup>
 import { ref, defineEmits } from 'vue';
 import sidebarData from '@/data/sidebarData.js';
+import { logout } from '~/auth/authToken';
 
-
-  interface SidebarItem {
+interface SidebarItem {
   path: string;
   name: string;
 }
 
-
 const selectedKeys = ref<string[]>(['1']);
-
-
-const logout = () => {
-  // const router = useRouter();
-  localStorage.removeItem('token');
-  // window.location.reload();
-};
 
 const emits = defineEmits<{
   (event: 'name-updated', item: SidebarItem): void;
@@ -105,7 +99,7 @@ const handleMenuItemClick = (item: SidebarItem) => {
   margin-left: 0 !important;
 }
 .sidebar-layout{
-  height: 90vh;
+  height: 85vh;
   overflow-x: hidden;
   overflow-y: initial;
   padding: 0 0 0 0.5rem;
@@ -156,4 +150,19 @@ const handleMenuItemClick = (item: SidebarItem) => {
 .ant-layout-sider-trigger{
   background: linear-gradient(88deg,#13b4ca,#18cabe) !important;
 }
+
+.notify {
+    animation: blinking 2s linear infinite;
+    float: right;
+}
+
+@keyframes blinking {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+}
+
 </style>
