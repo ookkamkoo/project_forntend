@@ -10,16 +10,21 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     try {
         console.log(to.path);
         if (to.path !== '/') {
+            console.log("aaaaaaaaaaaaaa");
+            
             if (token) {
+                console.log("a1");
                 const check = await checkToken(token);
                 if(!check){
                     logout()
                     return navigateTo('/');
                 }
             } else {
+                console.log("a2");
                 return navigateTo('/');
             }
         } else {
+            console.log("bbbbbbbbbbbbbbbbb");
             if (token) {
                 const check = await checkToken(token);
                 console.log(check);
