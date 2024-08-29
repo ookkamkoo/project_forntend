@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   css: ['~/assets/set.less'],
-  devtools: { enabled: process.env.DEVTOOLS === 'true' },
+  devtools: { enabled: process.env.DEVTOOLS === 'false' },
   vite: {
     css: {
       preprocessorOptions: {
