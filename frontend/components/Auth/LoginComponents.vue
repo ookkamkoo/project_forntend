@@ -1,4 +1,12 @@
 <template>
+   <h3 @click="ssss()">asdasdasd</h3>
+</template>
+<script setup lang="ts">
+  const ssss = () =>{
+    console.log("aaaaaaaaaaaa"); 
+  }
+</script>
+<!-- <template>
   <a-flex gap="middle" vertical>
     <div className="login-container">
       <div class="form-login">
@@ -197,7 +205,7 @@
     return !(formState.username && formState.password);
   });
 
-</script>
+</>
 
   <style>
   .login-container {
@@ -304,4 +312,4 @@
       padding-bottom: 1rem;
     }
   }
-  </style>
+  </style> -->
