@@ -105,11 +105,6 @@
   import { login,setPinUser } from '~/services/authService';
   import { setToken,setName,setUsername,setPermission } from '~/auth/authToken';
   import { Alert } from '../Alert/alertComponent';
-  // import { connectWebSocket, sendMessage } from '~/services/socketService';
-
-  // import { connectWebSocket } from '~/services/socketService';
-  // emitEvent('aa', 'logn');
-  // connectWebSocket();
   const open = ref<boolean>(false);
   const openPin = ref<boolean>(false);
   const text = ref('');
