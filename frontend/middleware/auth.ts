@@ -34,7 +34,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             }
         }
     } catch (error) {
-        logout();
+        // logout();
+        console.log(error);
+        
         return navigateTo('/');
     }
 });
