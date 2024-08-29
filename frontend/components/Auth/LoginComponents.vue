@@ -2,6 +2,10 @@
    <h3 @click="ssss()">asdasdasd</h3>
 </template>
 <script setup lang="ts">
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+  console.log(url);
+    
   const ssss = () =>{
     console.log("aaaaaaaaaaaa"); 
   }
