@@ -24,7 +24,9 @@
     "vue": "^3.4.15",
     "vue-chart-3": "^3.1.8",
     "vue-mq": "^1.0.1",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "websocket": "^1.0.35",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@ant-design-vue/nuxt": "^1.4.1",
