@@ -1,5 +1,5 @@
 <template>
-  <a-flex gap="middle" vertical>
+  <!-- <a-flex gap="middle" vertical>
     <div className="login-container">
       <div class="form-login">
         <a-flex gap="middle" horizontal>
@@ -97,7 +97,7 @@
         <a-input v-model:value="valuePin" placeholder="Input Pin" :maxlength="6" @input="validatePin"/>
       </div>
     </a-modal>
-  </a-flex>
+  </a-flex> -->
   </template>
   <script setup lang="ts">
   import { reactive, computed } from 'vue';
