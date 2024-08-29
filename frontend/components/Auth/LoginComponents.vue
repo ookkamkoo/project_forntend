@@ -28,7 +28,6 @@
                 :model="formState"
                 name="normal_login"
                 class="login-form"
-                @finish="onFinish"
               >
                 <a-form-item
                   name="username"
@@ -76,7 +75,7 @@
                 </a-form-item>
           
                 <a-form-item>
-                  <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" size="large" >
+                  <a-button :disabled="disabled" type="primary" @click="onFinish()" class="login-form-button" size="large" >
                     เข้าสู่ระบบ
                   </a-button>
                 </a-form-item>
@@ -106,9 +105,6 @@
   import { setToken,setName,setUsername,setPermission } from '~/auth/authToken';
   import { Alert } from '../Alert/alertComponent';
   // import { connectWebSocket, sendMessage } from '~/services/socketService';
-  const config = useRuntimeConfig()
-  const url = config.public.serviceUrls;
-  console.log(url);
   
   // import { connectWebSocket } from '~/services/socketService';
   // emitEvent('aa', 'logn');
@@ -136,6 +132,10 @@
 
   // login
   const onFinish = async () => {
+      const config = useRuntimeConfig()
+      const url = config.public.serviceUrls;
+      console.log(url);
+      
       const data = await login(formState.username, formState.password, formState.twofactor);
       if(data.token != undefined){
         // connectWebSocket();
