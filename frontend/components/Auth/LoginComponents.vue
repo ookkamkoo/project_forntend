@@ -1,12 +1,4 @@
 <template>
-    <h3 @click="aaa()">sdsdsd</h3>
-</template>
-<script>
-const aaa = () => {
-  console.log("sdsdsd");
-}
-</script>
-<!-- <template>
   <a-flex gap="middle" vertical>
     <div className="login-container">
       <div class="form-login">
@@ -301,4 +293,4 @@ const aaa = () => {
       padding-bottom: 1rem;
     }
   }
-  </style> -->
+  </style>
