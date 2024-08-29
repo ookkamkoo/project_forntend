@@ -1,8 +1,8 @@
 <template>
-    <h3 @click="aaa">sdsdsd</h3>
+    <h3 @click="aaa()">sdsdsd</h3>
 </template>
 <script>
-const aaa =() =>{
+const aaa = () => {
   console.log("sdsdsd");
 }
 </script>
