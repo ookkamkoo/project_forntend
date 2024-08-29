@@ -1,4 +1,3 @@
-
 <template>
   <a-flex gap="middle" vertical>
     <div className="login-container">
@@ -29,6 +28,7 @@
                 :model="formState"
                 name="normal_login"
                 class="login-form"
+                @finish="onFinish"
               >
                 <a-form-item
                   name="username"
@@ -76,7 +76,7 @@
                 </a-form-item>
           
                 <a-form-item>
-                  <a-button :disabled="disabled" type="primary" @click="onFinish()" class="login-form-button" size="large" >
+                  <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" size="large" >
                     เข้าสู่ระบบ
                   </a-button>
                 </a-form-item>
@@ -105,7 +105,11 @@
   import { login,setPinUser } from '~/services/authService';
   import { setToken,setName,setUsername,setPermission } from '~/auth/authToken';
   import { Alert } from '../Alert/alertComponent';
-  
+  // import { connectWebSocket, sendMessage } from '~/services/socketService';
+
+  // import { connectWebSocket } from '~/services/socketService';
+  // emitEvent('aa', 'logn');
+  // connectWebSocket();
   const open = ref<boolean>(false);
   const openPin = ref<boolean>(false);
   const text = ref('');
@@ -129,10 +133,6 @@
 
   // login
   const onFinish = async () => {
-      const config = useRuntimeConfig()
-      const url = config.public.serviceUrls;
-      console.log(url);
-
       const data = await login(formState.username, formState.password, formState.twofactor);
       if(data.token != undefined){
         // connectWebSocket();
@@ -140,9 +140,6 @@
         setName(data.name);
         setUsername(data.username);
         setPermission(data.permission);
-        
-        console.log();
-        
 
         router.push('/dashboard');
       }else{
