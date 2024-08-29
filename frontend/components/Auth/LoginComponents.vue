@@ -124,8 +124,8 @@
   }
   const formState = reactive<FormState>({
     username: "programer",
-    password: "aa112233",
-    twofactor: "aa123456789.",
+    password: "aa123456789.",
+    twofactor: "123456",
     remember: true,
   });
   
@@ -134,7 +134,6 @@
   // login
   const onFinish = async () => {
     // try {
-      console.log("222dddsdsd");
       
       const data = await login(formState.username, formState.password, formState.twofactor);
       if(data.token != undefined){
