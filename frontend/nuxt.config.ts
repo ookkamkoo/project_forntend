@@ -17,12 +17,18 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    // public:{
+    //   webName:process.env.WEB_NAME,
+    //   webUrl:process.env.WEB_URL,
+    //   VARIABLE_NAME:process.env.VARIABLE_NAME,
+    //   serviceUrls: process.env.NUXT_PUBLIC_SERVICE_URLS
+    // },
     public:{
-      webName:process.env.WEB_NAME,
-      webUrl:process.env.WEB_URL,
-      VARIABLE_NAME:process.env.VARIABLE_NAME,
-      serviceUrls: process.env.NUXT_PUBLIC_SERVICE_URLS
-    }
+      webName: '',
+      webUrl: '',
+      VARIABLE_NAME: '',
+      serviceUrls: ''
+    },
   },
   hooks: {
     'pages:extend' (pages) {
