@@ -1,6 +1,6 @@
 # ----------------- serve ----------------------
 # Use Node.js Alpine image as the base image for the build stage
-FROM node:18-alpine
+FROM node:20.11-alpine
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
@@ -13,7 +13,7 @@ COPY frontend .
 # Build the Nuxt.js application
 RUN npm run build
 # Stage for serving the built application
-FROM node:18-alpine
+FROM node:20.11-alpine
 # Set the working directory
 WORKDIR /usr/src/app
 # Copy the built application from the build stage
