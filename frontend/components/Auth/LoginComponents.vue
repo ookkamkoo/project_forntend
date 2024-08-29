@@ -77,7 +77,7 @@
           
                 <a-form-item>
                   <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" size="large" >
-                    เข้าสู่ระบบ
+                    เข้าสู่ระบบss
                   </a-button>
                 </a-form-item>
                 <p class="white-text center">ในกรณีลูกค้าลืมรหัสผ่านหรือไม่สามารถเข้าสู่ระบบได้ให้ติดต่อพนักงาน</p>
