@@ -26,7 +26,7 @@ export default defineNuxtConfig({
     public:{
       webName: '',
       webUrl: '',
-      VARIABLE_NAME: '',
+      variableName: '',
       serviceUrls: ''
     },
   },
