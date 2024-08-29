@@ -56,6 +56,9 @@
 
                 <span v-if="show_data == 4"><a-button type="primary" class="select-member-detail" @click="show_data = 4">ประวัติการทำรายการลูกค้า</a-button></span>
                 <span v-else><a-button type="primary" class="select-member-detail" @click="show_data = 4" ghost>ประวัติการทำรายการลูกค้า</a-button></span>
+
+                <span v-if="show_data == 5"><a-button type="primary" class="select-member-detail" @click="show_data = 5">รายการเล่นเกมส์</a-button></span>
+                <span v-else><a-button type="primary" class="select-member-detail" @click="show_data = 5" ghost>รายการเล่นเกมส์</a-button></span>
             </a-row>
         </a-col>
     </a-row>
@@ -186,6 +189,9 @@
     </a-row>
     <a-row v-if="show_data == 4">
         <TableTablesMemberPostListCredit :id="data.id"/>
+    </a-row>
+    <a-row v-if="show_data == 5">
+        <TableTablesMemberPlay :id="data.id"/>
     </a-row>
 </template>
 <script lang="ts" setup>

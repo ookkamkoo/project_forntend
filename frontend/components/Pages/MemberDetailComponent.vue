@@ -55,8 +55,9 @@
         <a-tabs v-model:activeKey="show_data" type="card">
             <a-tab-pane key="1" tab="ข้อมูลลูกค้า"></a-tab-pane>
             <a-tab-pane key="2" tab="เทิร์นการเล่น"></a-tab-pane>
-            <a-tab-pane key="3" tab="รายการเครดิตลูกค้า"></a-tab-pane>
-            <a-tab-pane key="4" tab="การทำรายการลูกค้า"></a-tab-pane>
+            <a-tab-pane key="3" tab="รายการเครดิต"></a-tab-pane>
+            <a-tab-pane key="4" tab="รายการทำรายการลูกค้า"></a-tab-pane>
+            <a-tab-pane key="5" tab="รายการเล่นเกมส์"></a-tab-pane>
         </a-tabs>
     </a-row>
     <a-row v-if="show_data == '1' && data.id != 0">
@@ -192,6 +193,9 @@
     <a-row v-if="show_data == '4'">
         <TableTablesMemberPostListCredit :id="data.id"/>
     </a-row>
+    <a-row v-if="show_data == '5'">
+        <TableTablesMemberPlay :id="data.id"/>
+    </a-row>
 </template>
 
 <script lang="ts" setup>
@@ -199,7 +203,7 @@ import { ref } from 'vue';
 import { getDetailMemberByName } from '~/services/memberServices';
 import dayjs, { Dayjs } from 'dayjs';
 
-const show_data = ref('1');
+const show_data = ref('5');
 
 const data = reactive({
         id: 0,

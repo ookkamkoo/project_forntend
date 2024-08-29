@@ -32,7 +32,13 @@
               <a-tag color="cyan" v-if="record.type == 'ParkingAccount'">บัญชีพักเงิน</a-tag>
           </template>
           <template v-else-if="column.key === 'is_active'">
-            <a-switch v-model:checked="record.is_active" @change="updateStatus(record.name,record.is_active,record.id,index)"/>
+            <a-switch v-model:checked="record.is_active" @change="updateStatus(record.name,record.is_active,record.id,index,'status')"/>
+          </template>
+          <template v-else-if="column.key === 'is_api'">
+            <a-switch v-model:checked="record.is_api" @change="updateStatus(record.name,record.is_api,record.id,index,'api')"/>
+          </template>
+          <template v-else-if="column.key === 'is_sms'">
+            <a-switch v-model:checked="record.is_sms" @change="updateStatus(record.name,record.is_sms,record.id,index,'sms')"/>
           </template>
           <template v-else-if="column.key === 'bank'">
             <a-image width="30px" :src="record.bank.image" :preview="false"/>
@@ -84,6 +90,8 @@ const dynamicColumns = computed(() => {
       { title: 'ชื่อนามสกุล', dataIndex: 'name', key: 'name', width: 100 },
       { title: 'เลขบัญชี', dataIndex: 'book_number', key: 'book_number', width: 100 },
       { title: 'ยอดคงเหลือ', dataIndex: 'balance', key: 'balance', width: 80 },
+      { title: 'Api', width: 60, dataIndex: 'is_api', key: 'is_api'},
+      { title: 'Sms', width: 60, dataIndex: 'is_sms', key: 'is_sms'},
       { title: 'เช็คการเชื่อมต่อ', dataIndex: 'check-connect', key: 'check-connect', width: 60 },
       { title: 'Statement', dataIndex: 'statement', key: 'statement', width: 60 },
       { title: 'วันที่', dataIndex: 'date', key: 'date', width: 80 },
@@ -116,20 +124,20 @@ const onEdit = (data:any) => {
     showModal();
 }
 
-const updateStatus = async(name: string,status: boolean,id: number,index: number) =>{
+const updateStatus = async(name: string,status: boolean,id: number,index: number,active:string) =>{
   let is_active = ''; 
     if (status) {
-        is_active = 'เปิดใช้งาน';
+        is_active = 'เปิดใช้งาน ' + active;
     } else {
-        is_active = 'ปิดใช้งาน';
+        is_active = 'ปิดใช้งาน ' + active;
     }
 
     Modal.confirm({
         title: 'คุณต้องการที่จะเปลี่ยนสถานะใช่ไหม?',
         icon: createVNode(ExclamationCircleOutlined),
-        content: createVNode('div', { key: 'content' }, [`เปลี่ยนสถานะของ ${name} เป็น ${is_active}`]),
+        content: createVNode('div', { key: 'content' }, [`เปลี่ยนสถานะ ${active} ของ ${name} เป็น ${is_active}`]),
         async onOk() {
-            const data = await updateStatuBankSystem(id, status);
+            const data = await updateStatuBankSystem(id, status,active);
             loading.value = true;
             if (data.status == 'success') {
                 Alert("success", "เปลี่ยนสถานะเรียบร้อย.");

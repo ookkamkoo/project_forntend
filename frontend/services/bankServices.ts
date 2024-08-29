@@ -25,7 +25,7 @@ export async function getSystemBankServices(): Promise<getResponse> {
     }
 }
 
-export async function updateStatuBankSystem(id:number,status: boolean): Promise<getResponse> {
+export async function updateStatuBankSystem(id:number,status: boolean,active:string): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
 
@@ -34,7 +34,7 @@ export async function updateStatuBankSystem(id:number,status: boolean): Promise<
     };
 
     try {
-        const response = await axios.post<getResponse>(`${url}/bank/update-status/${id}`,{'status':status}, { headers });
+        const response = await axios.post<getResponse>(`${url}/bank/update-status/${id}`,{'status':status,'active':active }, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;
@@ -58,6 +58,9 @@ export async function createBank(data :any): Promise<getResponse> {
         name:data.bankName,
         book_number:data.bankNo,
         image:data.Image,
+        is_api:data.is_api,
+        is_active:data.is_active,
+        is_sms:data.is_sms,
         detail:{
             bankPin:data.bankPin,
             devicesID:data.devicesID,
@@ -90,6 +93,9 @@ export async function editSystemBank(data :any): Promise<getResponse> {
         bank_type:Constants.optionsBankType[data.bank_type-1].bank[data.bank_list-1].action[data.bank_list_api-1].name,
         name:data.bankName,
         book_number:data.bankNo,
+        is_api:data.is_api,
+        is_active:data.is_active,
+        is_sms:data.is_sms,
         image:data.image,
         detail:{
             bankPin:data.bankPin,

@@ -114,7 +114,26 @@
                 </a-form-item>
             </a-col>
         </a-row>
-        <br>
+        <a-row class="my-2">
+            <a-col span="8" class="p-1">
+                <label for="Password"><b>สถานะการใช้งาน</b></label>
+                <a-col>
+                    <a-switch v-model:checked="formData.is_active" />
+                </a-col>
+            </a-col>
+            <a-col span="8" class="p-1">
+                <label for="Password"><b>ใช้งาน API</b></label>
+                <a-col>
+                    <a-switch v-model:checked="formData.is_api" />
+                </a-col>
+            </a-col>
+            <a-col span="8" class="p-1">
+                <label for="Password"><b>ใช้งาน SMS</b></label>
+                <a-col>
+                    <a-switch v-model:checked="formData.is_sms" />
+                </a-col>
+            </a-col>
+        </a-row>
         <a-row>
             <h3>QR Code</h3>
             <a-col :span="24">
@@ -207,6 +226,9 @@
         TureID:'TureID-1',
         Username:'sdDDD',
         Password:'asdf123456',
+        is_api: true,
+        is_active: true,
+        is_sms: true,
         Image: null as any
     });
 
@@ -235,6 +257,7 @@
                 formData.bank_list = 1;
                 formData.bank_list_api = 1;
                 formData.bank_connect = 1;
+                formData.bank_connect = 1;
                 formData.bankName = '';
                 formData.bankNo = '';
                 formData.bankPin = '';
@@ -243,6 +266,9 @@
                 formData.TureID = '';
                 formData.Username = '';
                 formData.Password = '';
+                formData.is_api= true;
+                formData.is_active=true;
+                formData.is_sms=true;
             }else{
                 console.log('22222222222222');
                 action.value ="edit";
@@ -284,6 +310,9 @@
                 formData.Username = newValue.detail.Username;
                 formData.Password = newValue.detail.Password;
                 formData.Image = newValue.image;
+                formData.is_api= newValue.is_api;
+                formData.is_active=newValue.is_active;
+                formData.is_sms=newValue.is_sms;
 
             }
             
