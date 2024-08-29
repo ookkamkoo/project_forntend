@@ -15,20 +15,20 @@ export default defineNuxtConfig({
       }
     }
   },
-  // runtimeConfig: {
-  //   // public:{
-  //   //   webName:process.env.WEB_NAME,
-  //   //   webUrl:process.env.WEB_URL,
-  //   //   VARIABLE_NAME:process.env.VARIABLE_NAME,
-  //   //   serviceUrls: process.env.NUXT_PUBLIC_SERVICE_URLS
-  //   // },
-  //   public:{
-  //     webName:"aaaaaaaaa",
-  //     webUrl:"bbbbbbbbbbbbbbbb",
-  //     VARIABLE_NAME:"cccccccccccccc",
-  //     serviceUrls:"dddddddddddddddddddd"
-  //   },
-  // },
+  runtimeConfig: {
+    // public:{
+    //   webName:process.env.WEB_NAME,
+    //   webUrl:process.env.WEB_URL,
+    //   VARIABLE_NAME:process.env.VARIABLE_NAME,
+    //   serviceUrls: process.env.NUXT_PUBLIC_SERVICE_URLS
+    // },
+    public:{
+      webName:"aaaaaaaaa",
+      webUrl:"bbbbbbbbbbbbbbbb",
+      VARIABLE_NAME:"cccccccccccccc",
+      serviceUrls:"dddddddddddddddddddd"
+    },
+  },
   hooks: {
     'pages:extend' (pages) {
       function setMiddleware (pages: NuxtPage[]) {
