@@ -8,6 +8,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         token = getToken();
     }
     try {
+        console.log(to.path);
         if (to.path !== '/') {
             if (token) {
                 const check = await checkToken(token);
