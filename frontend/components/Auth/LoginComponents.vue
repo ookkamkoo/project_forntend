@@ -106,7 +106,10 @@
   import { setToken,setName,setUsername,setPermission } from '~/auth/authToken';
   import { Alert } from '../Alert/alertComponent';
   // import { connectWebSocket, sendMessage } from '~/services/socketService';
-
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+  console.log(url);
+  
   // import { connectWebSocket } from '~/services/socketService';
   // emitEvent('aa', 'logn');
   // connectWebSocket();
@@ -140,6 +143,9 @@
         setName(data.name);
         setUsername(data.username);
         setPermission(data.permission);
+        
+        console.log();
+        
 
         router.push('/dashboard');
       }else{
