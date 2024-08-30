@@ -17,10 +17,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public:{
-      webName:process.env.WEB_NAME,
-      webUrl:process.env.WEB_URL,
-      variableName:process.env.VARIABLE_NAME,
-      serviceUrls: process.env.SERVICE_URLS
+      webName:process.env.webName,
+      webUrl:process.env.webUrl,
+      variableName:process.env.variableName,
+      serviceUrls: process.env.serviceUrls
     },
   },
   hooks: {
