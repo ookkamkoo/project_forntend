@@ -1,12 +1,12 @@
 <template>
-  <div class="loader-overlay" v-if="loading">
+  <!-- <div class="loader-overlay" v-if="loading">
     <a-spin size="large">
       <template #indicator>
         <div type="loading" style="font-size: 24px;"></div>
         <span>Loading...</span>
       </template>
     </a-spin>
-  </div>
+  </div> -->
 
   <div>
     <NuxtLayout>
