@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     public:{
         webName:"demo_project",
         webUrl:"WEB_URL",
-        variableName:process.env.variableName,
+        variableName:"",
         serviceUrls: "https://backend.scbbbb.com/"
       },
   },
