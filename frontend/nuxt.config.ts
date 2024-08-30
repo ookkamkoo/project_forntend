@@ -26,7 +26,7 @@ export default defineNuxtConfig({
         webName:"demo_project",
         webUrl:"WEB_URL",
         variableName:"",
-        serviceUrls: "https://backend.scbbbb.com/"
+        serviceUrls: "https://backend.scbbbb.com"
       },
   },
   hooks: {
