@@ -16,12 +16,18 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    // public:{
+    //   webName:process.env.webName,
+    //   webUrl:process.env.webUrl,
+    //   variableName:process.env.variableName,
+    //   serviceUrls: process.env.serviceUrls
+    // },
     public:{
-      webName:process.env.webName,
-      webUrl:process.env.webUrl,
-      variableName:process.env.variableName,
-      serviceUrls: process.env.serviceUrls
-    },
+        webName:"demo_project",
+        webUrl:"WEB_URL",
+        variableName:process.env.variableName,
+        serviceUrls: "https://backend.scbbbb.com/"
+      },
   },
   hooks: {
     'pages:extend' (pages) {
