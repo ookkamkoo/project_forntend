@@ -111,6 +111,9 @@
   const valuePin = ref('');
   const refKey = ref<string>('');
 
+  const config = useRuntimeConfig();
+  console.log(config.public.webName);
+
   interface FormState {
     username: string;
     password: string;
