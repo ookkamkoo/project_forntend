@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   css: ['~/assets/set.less'],
-  devtools: { enabled: process.env.DEVTOOLS === 'true' },
+  devtools: { enabled: process.env.DEVTOOLS === 'false' },
   vite: {
     css: {
       preprocessorOptions: {
@@ -16,12 +16,6 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
-    // public:{
-    //   webName:process.env.webName,
-    //   webUrl:process.env.webUrl,
-    //   variableName:process.env.variableName,
-    //   serviceUrls: process.env.serviceUrls
-    // },
     public:{
         webName:"demo_project",
         webUrl:"WEB_URL",
