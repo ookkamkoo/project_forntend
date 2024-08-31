@@ -19,9 +19,20 @@
 import { ref } from 'vue'; // Import ref from Vue
 const loading = ref(true);
 
-setTimeout(() => {
-      loading.value = false;
-    }, 200);
+const handleBeforeUnload = () => {
+  loading.value = true;
+};
+
+// setTimeout(() => {
+//       loading.value = false;
+//     }, 200);
+onMounted(() => {
+  window.addEventListener('beforeunload', handleBeforeUnload);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
 </script>
 
 <style>
