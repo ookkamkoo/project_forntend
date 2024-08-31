@@ -18,20 +18,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'; // Import ref from Vue
 const loading = ref(false);
+let timeoutId: number;
 
 const handleBeforeUnload = () => {
-  loading.value = true;
+  // Delay showing the loader by 200ms
+  timeoutId = window.setTimeout(() => {
+    loading.value = true;
+  }, 200);
 };
 
-// setTimeout(() => {
-//       loading.value = false;
-//     }, 200);
 onMounted(() => {
   window.addEventListener('beforeunload', handleBeforeUnload);
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('beforeunload', handleBeforeUnload);
+  clearTimeout(timeoutId);
 });
 </script>
 
