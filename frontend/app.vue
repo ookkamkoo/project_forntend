@@ -24,7 +24,7 @@ const handleBeforeUnload = () => {
   // Delay showing the loader by 200ms
   timeoutId = window.setTimeout(() => {
     loading.value = true;
-  }, 200);
+  }, 400);
 };
 
 onMounted(() => {
