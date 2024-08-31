@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'; // Import ref from Vue
-const loading = ref(true);
+const loading = ref(false);
 
 const handleBeforeUnload = () => {
   loading.value = true;
