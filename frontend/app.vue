@@ -27,7 +27,7 @@ const router = useRouter();
 const handleBeforeUnload = () => {
   timeoutId = window.setTimeout(() => {
     loading.value = true;
-  }, 200); // Set delay to 200ms
+  }, 1000); // Set delay to 200ms
 };
 
 router.beforeEach((to, from, next) => {
