@@ -1,14 +1,16 @@
 <template>
-  <div class="loader-overlay" v-if="loading">
-    <a-spin size="large">
-      <template #indicator>
-        <div class="custom-spinner" style="font-size: 24px;"></div>
-        <span>Loading...</span>
-      </template>
-    </a-spin>
-  </div>
-
   <div>
+    <!-- Overlay that covers the screen -->
+    <div class="loader-overlay" v-if="loading">
+      <a-spin size="large">
+        <template #indicator>
+          <div class="custom-spinner" style="font-size: 24px;"></div>
+          <span>Loading...</span>
+        </template>
+      </a-spin>
+    </div>
+
+    <!-- Main content of the page -->
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -16,39 +18,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
 
-const loading = ref(false);
-let timeoutId: number;
-
-const router = useRouter();
-
-const handleBeforeUnload = () => {
-  timeoutId = window.setTimeout(() => {
-    loading.value = true;
-  }, 1000); // Set delay to 200ms
-};
-
-router.beforeEach((to, from, next) => {
-  timeoutId = window.setTimeout(() => {
-    loading.value = true;
-  }, 200); // Set delay to 200ms
-  next();
-});
-
-router.afterEach(() => {
-  clearTimeout(timeoutId);
-  loading.value = false;
-});
+const loading = ref(true);
 
 onMounted(() => {
-  window.addEventListener('beforeunload', handleBeforeUnload);
-});
+  const hideLoader = () => {
+    setTimeout(() => {
+      loading.value = false;
+    }, 200); // Delay of 200ms after load
+  };
 
-onBeforeUnmount(() => {
-  window.removeEventListener('beforeunload', handleBeforeUnload);
-  clearTimeout(timeoutId);
+  if (document.readyState === 'complete') {
+    hideLoader();
+  } else {
+    window.addEventListener('load', hideLoader);
+  }
 });
 </script>
 
