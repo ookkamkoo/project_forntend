@@ -9,7 +9,6 @@
         </template>
       </a-spin>
     </div>
-
     <!-- Main content of the page -->
     <NuxtLayout>
       <NuxtPage />
@@ -39,13 +38,13 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style>
 html, body {
   margin: 0 !important;
 }
 
-@keyframes spin {
+/* @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
+} */
 </style>
