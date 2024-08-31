@@ -1,0 +1,12 @@
+services:
+  backOfice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NUXT_PUBLIC_DEVTOOLS: "true"
+      NUXT_PUBLIC_WEB_NAME: "demo_project"
+      NUXT_PUBLIC_WEB_URL: "https://your-web-url.com"
+      NUXT_PUBLIC_SERVICE_URLS: "https://backend.scbbbb.com"
+    ports:
+      - "3000:3000"
