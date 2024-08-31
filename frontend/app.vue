@@ -30,8 +30,10 @@ onMounted(() => {
   };
 
   if (document.readyState === 'complete') {
+    // If the document is already fully loaded
     hideLoader();
   } else {
+    // If the document is not yet fully loaded, listen for the load event
     window.addEventListener('load', hideLoader);
   }
 });
