@@ -135,9 +135,11 @@ const filteredOptions = computed(() => {
 
 const fetchSystemBankServices = async () => {
     const data = await getSystemBankServices();
+    // console.log(data.data.data);
     if (data.status) {
-        fileList.value = data.data;
-        fileListSelect.value = data.data;
+        fileList.value = data.data.data;
+        fileListSelect.value = data.data.data;
+        
     } else {
         console.log("TransferAuto error");
     }

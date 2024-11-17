@@ -28,13 +28,83 @@
   </a-layout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import type { NotificationPlacement } from 'ant-design-vue';
+import { notifyStore } from '~/store/index';
+const notify = notifyStore();
+
 const collapsed = ref(false);
-const collapsed_togle = ref(false);
+const collapsed_togle = ref<boolean | null>(false);
 const selectName = ref({
   path:"/dashboard",
   name:"หน้าเเรก"
+});
+
+const { $socket } = useNuxtApp();
+const socket = $socket as WebSocket;
+const audio = ref(new Audio(notify.setting.notifySoundWithdraw));
+const isSoundEnabled = ref(true);
+
+const playNotificationSound = () => {
+  if (notify.setting.notifySoundWithdrawStatus == "false") {
+    console.warn("เสียงยังไม่ได้รับการเปิดใช้งาน");
+    return;
+  }
+
+  audio.value
+    .play()
+    .then(() => {
+      console.log("เล่นเสียงสำเร็จ");
+    })
+    .catch((error) => {
+      console.error("ไม่สามารถเล่นเสียงได้:", error);
+    });
+};
+
+const openNotification = (placement: NotificationPlacement, message: string) => {
+      notification.success({
+        message: `เเจ้งเตือนรายการ ถอน`,
+        description: message,
+        placement,
+      });
+    };
+
+const messageContent = ref('');
+
+
+onMounted(() => {
+  if ($socket) {
+    socket.onmessage = (event: MessageEvent) => {
+      try {
+        // แปลงข้อความ JSON ที่ได้รับเป็น object
+        const data = JSON.parse(event.data);
+        
+        // เก็บข้อมูลข้อความใน messageContent
+        messageContent.value = data;
+        
+        console.log("ข้อความจากเซิร์ฟเวอร์:", data);
+        console.log(data.status); // เข้าถึง status จาก object ที่แปลงแล้ว
+        
+        if (data.status === "success") {
+          // เรียก openNotification และแปลง data.data เป็นสตริงหากจำเป็น
+          playNotificationSound();
+          openNotification('bottomRight', String(data.message));
+          notify.notify = data.data
+          
+        }
+      } catch (error) {
+        console.error("Error parsing WebSocket message:", error);
+      }
+    };
+  } else {
+    console.warn("WebSocket connection is not available.");
+  }
+
+  if (window.innerWidth < 750) {
+    collapsed.value = true;
+    collapsed_togle.value = null;
+  }
 });
 
 const toggleCollapsed = () => {
@@ -46,12 +116,12 @@ const toggleCollapsed = () => {
   }
 };
 
-const handleNameUpdate = (newName) => {
+const handleNameUpdate = (newName: { path: string; name: string }) => {
   console.log(newName);
   selectName.value = newName;
 };
 
-const handleLayoutClick = (event) => {
+const handleLayoutClick = (event: Event) => {
   if(window.innerWidth < 750){
     if (!collapsed.value) {
       toggleCollapsed();
@@ -59,12 +129,6 @@ const handleLayoutClick = (event) => {
   }
 };
 
-onMounted(() => {
-  if (window.innerWidth < 750) {
-    collapsed.value = true;
-    collapsed_togle.value = null;
-  }
-});
 </script>
 
 <style>

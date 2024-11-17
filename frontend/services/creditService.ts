@@ -1,11 +1,16 @@
 import axios from 'axios';
 import { getToken } from '~/auth/authToken'
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 export interface UserData {
     name: string;
     refkey: string;
 }
+
+dayjs.extend(utc);
+dayjs.extend(timezone)
 
 
 export async function creditCustom(data: any): Promise<any> {
@@ -14,15 +19,17 @@ export async function creditCustom(data: any): Promise<any> {
 
     const headers = {
         Authorization: `Bearer ${getToken()}`
-      };
-    
-    // data.date = dayjs(data.date).format('YYYY-MM-DD');
-    // data.time = dayjs(data.time).format('HH:mm:ss');
+    };
 
+    // แปลงเขตเวลาเป็น Asia/Bangkok
+    data.date = dayjs(data.date).tz('Asia/Bangkok').format('YYYY-MM-DD');
+    data.time = dayjs(data.time).tz('Asia/Bangkok').format('HH:mm:ss');
+    console.log(data);
+    
     try {
-        const response = await axios.post<any>(`${url}/credit/credit-custom`, data,{ headers });
+        const response = await axios.post<any>(`${url}/credit/credit-custom`, data, { headers });
         return response.data;
-    } catch (error : any) {
+    } catch (error: any) {
         return error.response.data;
     }
 }

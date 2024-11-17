@@ -159,3 +159,41 @@ export async function getMemberTransactionHistoryByIdServices(data :any,id :numb
         return error.response.data;
     }
 }
+
+export async function cancelPostServices(id :number): Promise<getResponse> {
+  const config = useRuntimeConfig();
+  const url = config.public.serviceUrls;
+
+  const headers = {
+      Authorization: `Bearer ${getToken()}`
+  };
+
+
+  try {
+      const response = await axios.post<getResponse>(`${url}/post/cancal-post/${id}`,{}, { headers });
+      return response.data;
+  } catch (error: any) {
+      return error.response.data;
+  }
+}
+
+export async function addMemberToList(formData:any,id :number): Promise<getResponse> {
+  const config = useRuntimeConfig();
+  const url = config.public.serviceUrls;
+
+  const headers = {
+      Authorization: `Bearer ${getToken()}`
+  };
+
+  const body = {
+    "memberId":formData.memberId,
+    "cheangeData":formData.cheangeData
+  }
+
+  try {
+      const response = await axios.post<getResponse>(`${url}/post/addMemberToPost/${id}`,body, { headers });
+      return response.data;
+  } catch (error: any) {
+      return error.response.data;
+  }
+}

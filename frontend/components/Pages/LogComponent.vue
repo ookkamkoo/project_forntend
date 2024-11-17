@@ -99,6 +99,7 @@
   import type { TableColumnsType } from 'ant-design-vue';
   import { ref } from 'vue';
   import dayjs, { Dayjs } from 'dayjs';
+  import { ScanOutlined } from '@ant-design/icons';
   
   const dataShow = ref<any[]>([]);
   const allRecord = ref<number>(0);

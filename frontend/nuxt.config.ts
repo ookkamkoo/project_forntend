@@ -4,8 +4,10 @@ export default defineNuxtConfig({
     '@ant-design-vue/nuxt',
     '@pinia/nuxt',
   ],
+
   css: ['~/assets/set.less'],
   devtools: { enabled: process.env.DEVTOOLS === 'false' },
+
   vite: {
     css: {
       preprocessorOptions: {
@@ -15,6 +17,7 @@ export default defineNuxtConfig({
       }
     }
   },
+
   runtimeConfig: {
     public:{
       webName:process.env.webName,
@@ -29,6 +32,7 @@ export default defineNuxtConfig({
     //     serviceUrls: "https://backend.scbbbb.com"
     //   },
   },
+
   hooks: {
     'pages:extend' (pages) {
       function setMiddleware (pages: NuxtPage[]) {
@@ -46,6 +50,7 @@ export default defineNuxtConfig({
       setMiddleware(pages)
     }
   },
+
   app: {
     head: {
       meta: [
@@ -57,4 +62,6 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  compatibilityDate: '2024-10-31',
 })

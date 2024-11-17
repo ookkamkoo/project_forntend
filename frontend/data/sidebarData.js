@@ -19,6 +19,12 @@ import {
   SoundOutlined
 
 } from '@ant-design/icons-vue';
+import { notifyStore } from '~/store/index';
+const notify = notifyStore();
+console.log(notify.notify.withdraw);
+console.log(notify.notify.deposit);
+console.log("aaaaa");
+console.log(notify.notify.withdraw + notify.notify.deposit);
 
 const sidebarData = [
   { path: '/guide', name: '1. คู่มือ', icon: MenuUnfoldOutlined, notify: 1 },
@@ -27,10 +33,10 @@ const sidebarData = [
     path: '#',
     name: '3. ฝาก-ถอน',
     icon: DollarOutlined,
-    notify: 3,
+    notify: (Number(notify.notify.withdraw) || 0) + (Number(notify.notify.deposit) || 0),
     children: [
-      { path: '/deposit-withdraw/deposit', name: '3.1. ฝาก', icon: DollarOutlined, notify: 1 },
-      { path: '/deposit-withdraw/withdraw', name: '3.2. ถอน', icon: DollarOutlined, notify: 2 },
+      { path: '/deposit-withdraw/deposit', name: '3.1. ฝาก', icon: DollarOutlined, notify: notify.notify.deposit },
+      { path: '/deposit-withdraw/withdraw', name: '3.2. ถอน', icon: DollarOutlined, notify: notify.notify.withdraw },
       // { path: '/deposit-withdraw/commission', name: 'เเนะนำเพื่อน', icon: DollarOutlined, notify: 0 },
       { path: '/deposit-withdraw/credit-custom', name: '3.3. เเก้ไขเครดิต', icon: DollarOutlined, notify: 0 },
     ]
@@ -46,31 +52,40 @@ const sidebarData = [
       { path: '/tranfer/transfer-money-summary', name: '4.3. สรุปโยกเงิน', icon: SwapOutlined, notify: 0 },
     ]
   },
-  { path: '/recommend', name: '4.4. เเนะนำเพื่อน', icon: DollarOutlined, notify: 0 },
-  { path: '/promote', name: '4.5. โปรโมชั่น', icon: CrownOutlined, notify: 0 },
   {
     path: '#',
-    name: '5. สมาชิก',
+    name: '5. โบนัส',
+    icon: SwapOutlined,
+    notify: 0,
+    children: [
+      { path: '/recommend', name: '5.1. เเนะนำเพื่อน', icon: SwapOutlined, notify: 0 },
+      { path: '/member/cashback-list', name: '5.3. ยอดเสีย', icon: SwapOutlined, notify: 0 },
+    ]
+  },
+  { path: '/promote', name: '6. โปรโมชั่น', icon: CrownOutlined, notify: 0 },
+  {
+    path: '#',
+    name: '7. สมาชิก',
     icon: TeamOutlined,
     notify: 0,
     children: [
-      { path: '/member/member', name: '5.1. สมาชิก', icon: TeamOutlined, notify: 0 },
-      { path: '/member/member-detail', name: '5.2. เช็คข้อมูลสมาชิก', icon: TeamOutlined, notify: 0 },
+      { path: '/member/member', name: '7.1. สมาชิก', icon: TeamOutlined, notify: 0 },
+      { path: '/member/member-detail', name: '7.2. เช็คข้อมูลสมาชิก', icon: TeamOutlined, notify: 0 },
       // { path: '/cashback', name: 'คืนยอดเสีย', icon: TeamOutlined, notify: 0 },
-      { path: '/member/cashback-list', name: '5.3. รายการคืนยอดเสีย', icon: TeamOutlined, notify: 0 },
+      // { path: '/member/cashback-list', name: '7.3. รายการคืนยอดเสีย', icon: TeamOutlined, notify: 0 },
     ]
   },
   {
     path: '#',
-    name: '6. ประวัติการทำรายการ',
+    name: '8. ประวัติการทำรายการ',
     icon: HistoryOutlined,
     notify: 0,
     children: [
-      { path: '/history/deposit-history', name: '6.1. ประวัติการฝาก', icon: HistoryOutlined, notify: 0 },
-      { path: '/history/withdraw-history', name: '6.2. ประวัติการถอน', icon: HistoryOutlined, notify: 0 },
-      { path: '/history/member-credit-history', name: '6.3. ประวิติรายการเครดิตลูกค้า', icon: HistoryOutlined, notify: 0 },
-      { path: '/history/member-transaction-history', name: '6.4. ประวัติการทำรายการลูกค้า', icon: HistoryOutlined, notify: 0 },
-      { path: '/history/report-game', name: '6.5. ประวัติการเล่นเกมส์', icon: HistoryOutlined, notify: 0 },
+      { path: '/history/deposit-history', name: '8.1. ประวัติการฝาก', icon: HistoryOutlined, notify: 0 },
+      { path: '/history/withdraw-history', name: '8.2. ประวัติการถอน', icon: HistoryOutlined, notify: 0 },
+      { path: '/history/member-credit-history', name: '8.3. ประวิติรายการเครดิตลูกค้า', icon: HistoryOutlined, notify: 0 },
+      { path: '/history/member-transaction-history', name: '8.4. ประวัติการทำรายการลูกค้า', icon: HistoryOutlined, notify: 0 },
+      { path: '/history/report-game', name: '8.5. ประวัติการเล่นเกมส์', icon: HistoryOutlined, notify: 0 },
       // { path: '/history/commission1', name: 'ประวัติรายการเครดิตมือ', icon: HistoryOutlined, notify: 0 },
       // { path: '/history/commission2', name: 'ประวัติการใช้เหรียญ', icon: HistoryOutlined, notify: 0 },
     ]
@@ -85,33 +100,45 @@ const sidebarData = [
   //     // { path: '/bank/bank-statement', name: 'Statement จากธนาคาร', icon: WalletOutlined, notify: 0 },
   //   ]
   // },
-  { path: '/bank/bank-list', name: '7. บัญชี', icon: CreditCardOutlined, notify: 0 },
+  { path: '#', name: '9. บัญชีธนาคาร', icon: CreditCardOutlined, notify: 0,
+    children: [
+      { path: '/bank/bank-list', name: '9.1. ตั้งค่าธนาคาร', icon: CreditCardOutlined, notify: 0 },
+      { path: '/bank/bank-statement', name: '9.2. รายการธนาคาร', icon: WalletOutlined, notify: 0 },
+      { path: '/bank/bank-summary', name: '9.3. สรุปรายการธนาคาร', icon: WalletOutlined, notify: 0 },
+    ]
+  },
   {
     path: '#',
-    name: '8. รายงาน',
+    name: '10. รายงานสรุป',
     icon: FileOutlined,
     notify: 0,
     children: [
-      { path: '/report/member-summary', name: '8.1. สรุปยูส/ค่าคอมมิชชั่น', icon: FileOutlined, notify: 0 },
-      { path: '/report/summary', name: '8.2. สรุปยอด', icon: FileOutlined, notify: 0 },
-      { path: '/report/bonus-summary', name: '8.3. สรุปโบนัส', icon: FileOutlined, notify: 0 },
-      { path: '/report/game', name: '8.4. สรุปการเล่นเกมส์', icon: FileOutlined, notify: 0 },
-      { path: '/report/past-dashboard', name: '8.5. สรุปภาพรวมย้อนหลัง', icon: FileOutlined, notify: 0 },
+      // { path: '/report/member-summary', name: '10.1. สรุปยูส/ค่าคอมมิชชั่น', icon: FileOutlined, notify: 0 },
+      { path: '/report/summary', name: '10.1. สรุปยอด', icon: FileOutlined, notify: 0 },
+      { path: '/report/promotion-summary', name: '10.2. สรุปโปรโมชั่น', icon: FileOutlined, notify: 0 },
+      { path: '/report/game', name: '10.3. สรุปการเล่นเกมส์', icon: FileOutlined, notify: 0 },
+      { path: '/report/past-dashboard', name: '10.4. สรุปภาพรวม', icon: FileOutlined, notify: 0 },
     ]
   },
-  { path: '/admin', name: '9. พนักงาน', icon: AndroidOutlined, notify: 0 },
-  { path: '/news', name: '10 เเจ้งข่าวสาร', icon: SoundOutlined, notify: 0 },
-  { path: '/alliance', name: '11. จัดการพันธมิตร', icon: UsergroupAddOutlined, notify: 0 },
+  { path: '/admin', name: '11. พนักงาน', icon: AndroidOutlined, notify: 0 },
+  // { path: '/news', name: '12 เเจ้งข่าวสาร', icon: SoundOutlined, notify: 0 },
+  { path: '#', name: '12 เเจ้งเตือนข่าวสาร', icon: CreditCardOutlined, notify: 0,
+    children: [
+      { path: '/notify/news', name: '12.1. เเจ้งข่าวสาร', icon: CreditCardOutlined, notify: 0 },
+      { path: '/notify/notify', name: '12.1. ประกาศ', icon: CreditCardOutlined, notify: 0 },
+    ]
+  },
+  // { path: '/alliance', name: '13. จัดการพันธมิตร', icon: UsergroupAddOutlined, notify: 0 },
   // { path: '/dashboard', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
   {
     path: '#',
-    name: '12. ตั้งค่า',
+    name: '13. ตั้งค่า',
     icon: SettingOutlined,
     notify: 0,
     children: [
       // { path: '/setting/member', name: 'ตั้งค่าลูกค้า', icon: SettingOutlined, notify: 0 },
-      { path: '/setting/system', name: '12.1. ตั้งค่าระบบ', icon: SettingOutlined, notify: 0 },
-      { path: '/setting/game-provider', name: '12.2. ตั้งค่ายเกมส์', icon: SettingOutlined, notify: 0 },
+      { path: '/setting/system', name: '14.1. ตั้งค่าระบบ', icon: SettingOutlined, notify: 0 },
+      { path: '/setting/game-provider', name: '14.2. ตั้งค่ายเกมส์', icon: SettingOutlined, notify: 0 },
     ]
   },
   // { 
@@ -123,9 +150,9 @@ const sidebarData = [
   //       { path: '/deposit', name: 'ตั้งค่ากงล้อ' , icon:MenuUnfoldOutlined},
   //     ]
   // },
-  { path: '/profile', name: '13. ข้อมูลส่วนตัว', icon: UserOutlined,notify: 0 },
-  { path: '/log', name: '14. Log', icon: MenuUnfoldOutlined,notify: 0 },
-  { path: '/blacklist', name: '15. บัญชีดำ', icon: LockOutlined,notify: 0 },
+  { path: '/profile', name: '14. ข้อมูลส่วนตัว', icon: UserOutlined,notify: 0 },
+  { path: '/log', name: '15. Log', icon: MenuUnfoldOutlined,notify: 0 },
+  { path: '/blacklist', name: '16. บัญชีดำ', icon: LockOutlined,notify: 0 },
 ];
 
 export default sidebarData;

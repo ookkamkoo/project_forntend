@@ -3,6 +3,10 @@
     <FormBankForm :closeModal="closeModal" :bankSystemEdit="bankSystemEdit" :getSystemBank="getSystemBank"/>
     <template #footer></template>
   </a-modal>
+  <a-modal v-model:open="statement" width="1300px" title="รายการจากทางธนาคาร" :closable="true">
+    <TableTablesStatement :closeModal="closeModal" :id="idGetStatement"/>
+    <template #footer></template>
+  </a-modal>
   <a-row class="p-2" justify="end">
     <a-col class="p-1">
       <label><br></label>
@@ -34,20 +38,27 @@
           <template v-else-if="column.key === 'is_active'">
             <a-switch v-model:checked="record.is_active" @change="updateStatus(record.name,record.is_active,record.id,index,'status')"/>
           </template>
+          <template v-else-if="column.key === 'is_qrcode'">
+            <a-switch v-model:checked="record.is_qrcode" @change="updateStatus(record.name,record.is_qrcode,record.id,index,'qrcode')"/>
+          </template>
           <template v-else-if="column.key === 'is_api'">
             <a-switch v-model:checked="record.is_api" @change="updateStatus(record.name,record.is_api,record.id,index,'api')"/>
           </template>
           <template v-else-if="column.key === 'is_sms'">
-            <a-switch v-model:checked="record.is_sms" @change="updateStatus(record.name,record.is_sms,record.id,index,'sms')"/>
+            <a-switch 
+                v-model:checked="record.is_sms" 
+                @change="updateStatus(record.name, record.is_sms, record.id, index, 'sms')" 
+                :disabled="(record.type !== 'deposit' || record.type !== 'SingleAccount') && record.bank.name !== 'ธนาคารไทยพาณิชย์'" 
+            />
           </template>
           <template v-else-if="column.key === 'bank'">
             <a-image width="30px" :src="record.bank.image" :preview="false"/>
           </template>
           <template v-else-if="column.key === 'check-connect'">
-            <a-button type="dashed"><SwapOutlined /></a-button>
+            <a-button type="dashed" @click="CheckConnect(record.id)" :disabled="isLoadingCheckConnect[record.id]"><a-spin size="small" v-if="isLoadingCheckConnect[record.id]"/> <SwapOutlined v-else/></a-button>
           </template>
           <template v-else-if="column.key === 'statement'">
-            <a-button class="sky" type="primary"><BarsOutlined /></a-button>
+            <a-button class="sky" type="primary" @click="Statement(record.id)"><a-spin size="small" v-if="isLoadingStatement"/><BarsOutlined v-else/></a-button>
           </template>
           <template v-else-if="column.key === 'date'">
             <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
@@ -59,16 +70,20 @@
 <script lang="ts" setup>
 import { ref,createVNode } from 'vue';
 import dayjs from 'dayjs';
-import { getSystemBankServices,updateStatuBankSystem,deleteBankSystemServices } from '~/services/bankServices';
+import { getSystemBankServices,updateStatuBankSystem,deleteBankSystemServices,CheckConnectBankSystemServices } from '~/services/bankServices';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { Alert } from '../Alert/alertComponent';
 
 const open = ref<boolean>(false);
+const statement = ref<boolean>(false);
 const dataShow = ref<any[]>([]);
 const bankSystemEdit = ref<any>();
 const active = ref<boolean>(true);
 const loading = ref(true);
 const allRecord = ref<number>(0);
+const isLoadingCheckConnect = ref<Record<number, boolean>>({});
+const isLoadingStatement = ref(false);
+const idGetStatement = ref(0);
 
 const showModal = () => {
     open.value = true;
@@ -90,13 +105,14 @@ const dynamicColumns = computed(() => {
       { title: 'ชื่อนามสกุล', dataIndex: 'name', key: 'name', width: 100 },
       { title: 'เลขบัญชี', dataIndex: 'book_number', key: 'book_number', width: 100 },
       { title: 'ยอดคงเหลือ', dataIndex: 'balance', key: 'balance', width: 80 },
+      { title: 'Qrcode', width: 60, dataIndex: 'is_qrcode', key: 'is_qrcode'},
       { title: 'Api', width: 60, dataIndex: 'is_api', key: 'is_api'},
       { title: 'Sms', width: 60, dataIndex: 'is_sms', key: 'is_sms'},
       { title: 'เช็คการเชื่อมต่อ', dataIndex: 'check-connect', key: 'check-connect', width: 60 },
       { title: 'Statement', dataIndex: 'statement', key: 'statement', width: 60 },
       { title: 'วันที่', dataIndex: 'date', key: 'date', width: 80 },
       {
-              title: 'เชื่อมต่อ / แก้ไข / ลบ',
+              title: 'แก้ไข / ลบ',
               key: 'operation',
               width: 100,
       }
@@ -149,7 +165,15 @@ const updateStatus = async(name: string,status: boolean,id: number,index: number
             loading.value = false;
         },
         onCancel() {
-          dataShow.value[index].is_active = !status;
+          if(active == "status"){
+            dataShow.value[index].is_active = !status;
+          }else if(active == "api"){
+            dataShow.value[index].is_api = !status;
+          }else if(active == "sms"){
+            dataShow.value[index].is_sms = !status;
+          }else if(active == "qrcode"){
+            dataShow.value[index].is_qrcode = !status;
+          }
           console.log('Cancel');
         },
         class: 'test',
@@ -185,4 +209,22 @@ onMounted(() => {
   getSystemBank();
 });
 
+const CheckConnect = async(id: number) =>{
+  isLoadingCheckConnect.value[id] = true;
+  const data = await CheckConnectBankSystemServices(id);
+    if (data.status === "success") {
+      getSystemBank();
+        Alert("success", `บัญชีธนาคารเชื่อมต่อกับทางธนาคาร`);
+    } else {
+        Alert('error', data.message);
+    }
+    isLoadingCheckConnect.value[id] = false;
+}
+
+const Statement = async(id: number) =>{
+  isLoadingStatement.value = true
+  idGetStatement.value = id
+  isLoadingStatement.value = false
+  statement.value = true
+}
 </script>

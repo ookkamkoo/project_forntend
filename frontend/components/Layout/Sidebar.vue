@@ -1,6 +1,10 @@
 <template>
   <div class="layout-logo">
-      <img src="https://cdn.zabbet.com/NRM9/lobby_settings/625f5901-0f8d-4f0f-b959-431179967df9.png" alt="AdminLTE Logo" width="50%">
+    <a-image
+      :width="'50%'"
+      :preview="false"
+      :src="config.public.serviceUrls +'/'+ store.setting.imageWebsite"
+    />
   </div>
   <div class="sidebar-layout">
     <div class="sidebar-list">
@@ -25,7 +29,8 @@
                   <template #title>
                       <component :is="item.icon" :style="{ margin: '0 10px' }" />
                       <span class="sub-link">{{ item.name }}</span>
-                      <span v-if="item.notify != 0" class="notify"> <a-tag :bordered="false" color="error" > New </a-tag></span>
+                      <!-- {{store.notify}} -->
+                      <span v-if="Number(store.notify.deposit + store.notify.withdraw) > 0 && item.name =='3. ฝาก-ถอน'" class="notify"> <a-tag :bordered="false" color="error" > New </a-tag></span>
                   </template>
                   <template v-for="(child, childIndex) in item.children" :key="child.path">
                       <a-menu-item @click="handleMenuItemClick(child)">
@@ -35,8 +40,9 @@
                       </router-link>
                       <span class="new" v-if="child.notify !== 0">
                         <span class="badge padding-1 ">
-                          <a-tag :bordered="false" color="error">{{ child.notify }}</a-tag>
-                          <!-- {{child.notify}} -->
+                          <a-tag :bordered="false" color="error" v-if=" Number(store.notify.deposit) > 0 &&child.name=='3.1. ฝาก'">{{ Number(store.notify.deposit) }}</a-tag>
+                          <a-tag :bordered="false" color="error" v-else-if="Number(store.notify.withdraw) > 0 && child.name=='3.2. ถอน'">{{ Number(store.notify.withdraw) }}</a-tag>
+  
                         </span>
                       </span>
                       </a-menu-item>
@@ -59,6 +65,9 @@
 import { ref, defineEmits } from 'vue';
 import sidebarData from '@/data/sidebarData.js';
 import { logout } from '~/auth/authToken';
+import { notifyStore } from '~/store/index';
+const store = notifyStore();
+const config = useRuntimeConfig()
 
 interface SidebarItem {
   path: string;

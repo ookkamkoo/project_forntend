@@ -35,50 +35,42 @@
                 </a-form-item>
             </a-col>
         </a-row>
-        <a-row v-if="formData.creditCustomType == 1">
+        <a-row v-if="formData.creditCustomType == 1" :justify="'center'">
             <a-col :span="8" :md="6" class="p-1 my-1">
-                <label for="ประเภทการใช้งาน"><b  class="request">FOOTBALL</b></label>
-                <a-input-number v-model:value="formData.turn.football" placeholder="จำนวนเงิน" />
-            </a-col>
-            <a-col :span="8" :md="6" class="p-1 my-1">
-                <label for="ประเภทการใช้งาน"><b  class="request">STEP</b></label>
-                <a-input-number v-model:value="formData.turn.step" placeholder="จำนวนเงิน" />
-            </a-col>
-            <a-col :span="8" :md="6" class="p-1 my-1">
-                <label for="ประเภทการใช้งาน"><b  class="request">PARLAY</b></label>
-                <a-input-number v-model:value="formData.turn.parlay" placeholder="จำนวนเงิน" />
+                <label for="ประเภทการใช้งาน"><b  class="request">CASINO</b></label>
+                <a-input-number v-model:value="formData.turn.casino" placeholder="จำนวนเงิน" />
             </a-col>
             <a-col :span="8" :md="6" class="p-1 my-1">
                 <label for="ประเภทการใช้งาน"><b  class="request">GAME</b></label>
                 <a-input-number v-model:value="formData.turn.game" placeholder="จำนวนเงิน" />
             </a-col>
             <a-col :span="8" :md="6" class="p-1 my-1">
-                <label for="ประเภทการใช้งาน"><b  class="request">CASINO</b></label>
-                <a-input-number v-model:value="formData.turn.casino" placeholder="จำนวนเงิน" />
+                <label for="ประเภทการใช้งาน"><b  class="request">FISHING</b></label>
+                <a-input-number v-model:value="formData.turn.fishing" placeholder="จำนวนเงิน" />
+            </a-col>
+            <a-col :span="8" :md="6" class="p-1 my-1">
+                <label for="ประเภทการใช้งาน"><b  class="request">SPORTSBOOK</b></label>
+                <a-input-number v-model:value="formData.turn.sportsbook" placeholder="จำนวนเงิน" />
+            </a-col>
+            <a-col :span="8" :md="6" class="p-1 my-1">
+                <label for="ประเภทการใช้งาน"><b  class="request">TRADING</b></label>
+                <a-input-number v-model:value="formData.turn.trading" placeholder="จำนวนเงิน" />
+            </a-col>
+            <a-col :span="8" :md="6" class="p-1 my-1">
+                <label for="ประเภทการใช้งาน"><b  class="request">CARD</b></label>
+                <a-input-number v-model:value="formData.turn.card" placeholder="จำนวนเงิน" />
             </a-col>
             <a-col :span="8" :md="6" class="p-1 my-1">
                 <label for="ประเภทการใช้งาน"><b  class="request">LOTTO</b></label>
                 <a-input-number v-model:value="formData.turn.lotto" placeholder="จำนวนเงิน" />
             </a-col>
             <a-col :span="8" :md="6" class="p-1 my-1">
-                <label for="ประเภทการใช้งาน"><b  class="request">M2</b></label>
-                <a-input-number v-model:value="formData.turn.m2" placeholder="จำนวนเงิน" />
-            </a-col>
-            <a-col :span="8" :md="6" class="p-1 my-1">
-                <label for="ประเภทการใช้งาน"><b  class="request">MULTI_PLAYER</b></label>
-                <a-input-number v-model:value="formData.turn.multi_player" placeholder="จำนวนเงิน" />
-            </a-col>
-            <a-col :span="8" :md="6" class="p-1 my-1">
                 <label for="ประเภทการใช้งาน"><b  class="request">KENO</b></label>
                 <a-input-number v-model:value="formData.turn.keno" placeholder="จำนวนเงิน" />
             </a-col>
             <a-col :span="8" :md="6" class="p-1 my-1">
-                <label for="ประเภทการใช้งาน"><b  class="request">E_SPORT</b></label>
+                <label for="ประเภทการใช้งาน"><b  class="request">ESPORT</b></label>
                 <a-input-number v-model:value="formData.turn.esport" placeholder="จำนวนเงิน" />
-            </a-col>
-            <a-col :span="8" :md="6" class="p-1 my-1">
-                <label for="ประเภทการใช้งาน"><b  class="request">TRADING</b></label>
-                <a-input-number v-model:value="formData.turn.tranding" placeholder="จำนวนเงิน" />
             </a-col>
             <a-col :span="8" :md="6" class="p-1 my-1">
                 <label for="ประเภทการใช้งาน"><b  class="request">POKER</b></label>
@@ -152,7 +144,9 @@
     const year = currentDate.getFullYear();
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const day = String(currentDate.getDate()).padStart(2, '0');
-
+    console.log("day = ");
+    console.log(day);
+    
     const dataShow = ref<any[]>([]);
 
     let formData = reactive({
@@ -161,17 +155,15 @@
         username:'',
         amount:'',
         turn:{
-            football:1,
-            step:1,
-            parlay:1,
-            game:1,
             casino:1,
+            game:1,
+            fishing:1,
+            sportsbook:1,
+            trading:1,
+            card:1,
             lotto:1,
-            m2:1,
-            multi_player:1,
             keno:1,
             esport:1,
-            tranding:1,
             poker:1,
         },
         bank_receives_id:1,
@@ -179,7 +171,8 @@
         time:dayjs('00:00', 'HH:mm'),
         remark:'',
     });
-
+    console.log(formData.date);
+    
     const props = defineProps<{
         closeModal:Function,
         getCreditCustom:Function,
@@ -225,7 +218,7 @@
       try {
         const data = await getSystemBankServices();
         if (data.status === "success") {
-            dataShow.value = data.data;
+            dataShow.value = data.data.data;
         } else {
             Alert('error', data.message);
         }

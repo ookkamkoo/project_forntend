@@ -1,0 +1,77 @@
+export interface Notify {
+    withdraw: string;
+    deposit: string;
+  }
+
+  export interface Setting {
+    bgColor: string;
+    bgImage: string;
+    bgImageSw: string;
+    checkDuplicateName: string;
+    clearWithdrawMin: string;
+    depositFee: string;
+    depositMax: string;
+    depositMin: string;
+    depositStatus: string;
+    depostDetail: string;
+    description: string;
+    getName: string;
+    imageLogoWebsite: string;
+    imageWebsite: string;
+    keyword: string;
+    memberCreateDeposit: string;
+    notifyLineDeposit: string;
+    notifyLineDepositList: string;
+    notifyLineRegismember: string;
+    notifyLineStatus: string;
+    notifyLineSummary: string;
+    notifyLineWithdraw: string;
+    notifyLineWithdrawList: string;
+    notifySoundDeposit: string;
+    notifySoundDepositStatus: string;
+    notifySoundWithdraw: string;
+    notifySoundWithdrawStatus: string;
+    passwordCustomer: string;
+    product: string;
+    recommend: string;
+    recommendDate: string;
+    recommendMax: string;
+    recommendMin: string;
+    recommendPercent: string;
+    recommendTurn: string;
+    refundLost: string;
+    refundLostMax: string;
+    refundLostMin: string;
+    refundLostPercent: string;
+    refundLostTurn: string;
+    refundLostdate: string;
+    registerStatus: string;
+    registerTruewallet: string;
+    showUsername: string;
+    serverStatus: string;
+    title: string;
+    tranferAuto: string;
+    turnWithdrawNormal: string;
+    type2factor: string;
+    typeDepositFee: string;
+    typeDepositFeeAmountOrPerCent: string;
+    typeRecommend: string;
+    typeRecommendDate: string;
+    typeRefundLost: string;
+    typeRefundLostSet: string;
+    typeRefundLostdate: string;
+    typeWithdrawFee: string;
+    typeWithdrawFeeAmountOrPerCent: string;
+    websiteLine: string;
+    websiteUrl: string;
+    withdrawAll: string;
+    withdrawAround: string;
+    withdrawAuto: string;
+    withdrawDetail: string;
+    withdrawFee: string;
+    withdrawMax: string;
+    withdrawMaxDay: string;
+    withdrawMin: string;
+    withdrawStatus: string;
+  }
+  

@@ -129,6 +129,25 @@ export async function editSettingPG100Services(data:any,number:number): Promise<
     }
 }
 
+export async function editSettingPG100ServicesByUser(data:any,number:number,id:number): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    try {
+        const  body = {
+            "data":number,
+            "detail":data
+        }
+        const response = await axios.post<getResponse>(`${url}/pg-game/updateSettingPGByUser/`+id,body, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 
 export async function getGamePGSettingServices(): Promise<getResponse> {
     const config = useRuntimeConfig();
@@ -140,6 +159,22 @@ export async function getGamePGSettingServices(): Promise<getResponse> {
     
     try {
         const response = await axios.get<getResponse>(`${url}/pg-game/getSettingPG`, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export async function getGamePGSettingByUserServices(id:number): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    
+    try {
+        const response = await axios.get<getResponse>(`${url}/pg-game/getSettingPGByUser/`+id, { headers });
         return response.data;
     } catch (error: any) {
         return error.response.data;

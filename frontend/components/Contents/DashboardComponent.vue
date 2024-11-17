@@ -147,7 +147,7 @@
                     <div class="my-1">
                         <span v-if="v.type=='deposit'">บัญชีฝากเงิน</span>
                         <span v-else-if="v.type=='withdraw'">บัญชีถอนเงิน</span>
-                        <!-- <span v-if="v.type=='deposit'">บัญชีฝากเงิน</span> -->
+                        <span v-if="v.type=='SingleAccount'">บัญชีเดียว</span>
                     </div>
                     <div class="my-1">
                         <a-row :align="'middle'" :justify="'center'">

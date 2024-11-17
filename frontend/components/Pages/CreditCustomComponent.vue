@@ -85,15 +85,15 @@
           <template v-if="column.key === 'username'">
             <div>{{ record.username }}</div>
           </template>
-          <template v-if="column.key === 'amount_before'">
+          <!-- <template v-if="column.key === 'amount_before'">
             <div>{{ record.amount_before }}</div>
-          </template>
+          </template> -->
           <template v-if="column.key === 'amount'">
             <div>{{ record.amount }}</div>
           </template>
-          <template v-if="column.key === 'amount_after'">
+          <!-- <template v-if="column.key === 'amount_after'">
             <div>{{ record.amount_after }}</div>
-          </template>
+          </template> -->
           <template v-if="column.key === 'bank'">
             <a-image
               width="35px"
@@ -221,11 +221,7 @@ const dynamicColumns = computed(() => {
           { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 100 },
           { title: 'เลชบัญชี', dataIndex: 'booknumber', key: 'booknumber', width: 150 },
         ]},
-        { title: 'เครดิต', width: 100,children: [
-          { title: 'เครดิตก่อนหน้า', dataIndex: 'amount', key: 'amount', width: 100 },
-          { title: 'ยอดเงิน', dataIndex: 'amount_before', key: 'amount_before', width: 100 },
-          { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 100 },
-        ] },
+        { title: 'ยอดเงิน', dataIndex: 'amount', key: 'amount', width: 100 },
         { title: 'เวลาสลิป', dataIndex: 'bank_slip', key: 'bank_slip', width: 130 },
         { title: 'เพิ่มเติม', dataIndex: 'remark', key: 'remark', width: 250 },
         { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 120 },

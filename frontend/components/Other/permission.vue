@@ -6,10 +6,10 @@
                     <b>เเอดมิน</b>
                 </a-col>
                 <a-col :span="24" :md="8">
-                    <b>โปรโมชั่น</b>
+                    <b>ฝาก-ถอน</b>
                 </a-col>
                 <a-col :span="24" :md="8">
-                    <b>ประวัติ</b>
+                    <b>โยกเงิน</b>
                 </a-col>
             </a-row>
         </a-col>
@@ -19,12 +19,12 @@
             </div>
         </a-col>
         <a-col :span="24" :md="8">
-            <div v-for="permission in dataPermission?.promotion" :key="permission.id">
+            <div v-for="permission in dataPermission?.depositWithdraw" :key="permission.id">
                 <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
             </div>
         </a-col>
         <a-col :span="24" :md="8">
-            <div v-for="permission in dataPermission?.histoty" :key="permission.id">
+            <div v-for="permission in dataPermission?.tranfer" :key="permission.id">
                 <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
             </div>
         </a-col>
@@ -34,23 +34,54 @@
         <a-col :span="24" :md="24">
             <a-row :gutter="16">
                 <a-col :span="24" :md="8">
+                    <b>โบนัส</b>
+                </a-col>
+                <a-col :span="24" :md="8">
+                    <b>โปรโมชั่น</b>
+                </a-col>
+                <a-col :span="24" :md="8">
                     <b>ลูกค้า</b>
-                </a-col>
-                <a-col :span="24" :md="8">
-                    <b>พันธมิตร</b>
-                </a-col>
-                <a-col :span="24" :md="8">
-                    <b>สรุปยอด</b>
                 </a-col>
             </a-row>
         </a-col>
         <a-col :span="24" :md="8">
-            <div v-for="permission in dataPermission?.member" :key="permission.id">
+            <div v-for="permission in dataPermission?.bonus" :key="permission.id">
                 <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
             </div>
         </a-col>
         <a-col :span="24" :md="8">
-            <div v-for="permission in dataPermission?.agent" :key="permission.id">
+            <div v-for="permission in dataPermission?.promotion" :key="permission.id">
+                <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
+            </div>
+        </a-col>
+        <a-col :span="24" :md="8">
+            <div v-for="permission in dataPermission?.customer" :key="permission.id">
+                <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
+            </div>
+        </a-col>
+    </a-row>
+    <br>
+    <a-row :gutter="16" clas="m-1">
+        <a-col :span="24" :md="24">
+            <a-row :gutter="16">
+                <a-col :span="24" :md="8">
+                    <b>ประวิติรายการ</b>
+                </a-col>
+                <a-col :span="24" :md="8">
+                    <b>ธนาคาร</b>
+                </a-col>
+                <a-col :span="24" :md="8">
+                    <b>สรุป</b>
+                </a-col>
+            </a-row>
+        </a-col>
+        <a-col :span="24" :md="8">
+            <div v-for="permission in dataPermission?.history" :key="permission.id">
+                <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
+            </div>
+        </a-col>
+        <a-col :span="24" :md="8">
+            <div v-for="permission in dataPermission?.bank" :key="permission.id">
                 <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
             </div>
         </a-col>
@@ -65,15 +96,20 @@
         <a-col :span="24" :md="24">
             <a-row :gutter="16">
                 <a-col :span="24" :md="8">
+                    <b>ข่าวสาร</b>
+                </a-col>
+                <a-col :span="24" :md="8">
                     <b>ตั้งค่า</b>
                 </a-col>
                 <a-col :span="24" :md="8">
-                    <b>จัดการธนาคาร</b>
-                </a-col>
-                <a-col :span="24" :md="8">
-                    <b>ธนาคาร</b>
+                    <b>โปรไฟล์</b>
                 </a-col>
             </a-row>
+        </a-col>
+        <a-col :span="24" :md="8">
+            <div v-for="permission in dataPermission?.news" :key="permission.id">
+                <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
+            </div>
         </a-col>
         <a-col :span="24" :md="8">
             <div v-for="permission in dataPermission?.setting" :key="permission.id">
@@ -81,43 +117,8 @@
             </div>
         </a-col>
         <a-col :span="24" :md="8">
-            <div v-for="permission in dataPermission?.bankAction" :key="permission.id">
-                <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
-            </div>
-        </a-col>
-        <a-col :span="24" :md="8">
-            <div v-for="permission in dataPermission?.bank" :key="permission.id">
-                <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
-            </div>
-        </a-col>
-    </a-row>
-    <br>
-    <a-row :gutter="16" clas="m-1">
-        <a-col :span="24" :md="24">
-            <a-row :gutter="16">
-                <a-col :span="24" :md="8">
-                    <b>โบนัส</b>
-                </a-col>
-                <a-col :span="24" :md="8">
-                    <b>ข้อมูลส่วนตัว</b>
-                </a-col>
-            </a-row>
-        </a-col>
-        <a-col :span="24" :md="8">
-            <div v-for="permission in dataPermission?.bonus" :key="permission.id">
-                <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
-            </div>
-        </a-col>
-        <a-col :span="24" :md="8">
             <div v-for="permission in dataPermission?.profile" :key="permission.id">
                 <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
-            </div>
-        </a-col>
-    </a-row>
-    <a-row :gutter="16" v-for="permission in dataPermission?.prmotion" :key="permission.id">
-        <a-col :span="24" :md="8" >
-            <div>
-            <a-switch v-model:checked.sync="permission.is_active" size="small" /> <span>{{ permission.auth_permission.name }}</span>
             </div>
         </a-col>
     </a-row>

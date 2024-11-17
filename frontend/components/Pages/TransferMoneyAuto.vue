@@ -141,7 +141,7 @@ const day = String(currentDate.getDate()).padStart(2, '0');
         return [
     { title: `ทั้งหมด ${allRecord.value} รายการ`, children: [
         { title: 'No', width: 100, dataIndex: 'id', key: 'id',  },
-        { title: 'ช้อมูลการโยกเงิน', children:[
+        { title: 'ข้อมูลการโยกเงิน', children:[
             { title: 'บัญชีต้นทาง',children:[
                 { title: 'ธนาคาร', width: 80, dataIndex: 'bank', key: 'bank',  },
                 { title: 'ชื่อบัญชี', width: 150, dataIndex: 'bank_name', key: 'bank_name',  },

@@ -1,6 +1,6 @@
 <template>
   <a-row class="p-2">
-      <a-col class="p-1" :span="6">
+      <a-col class="p-1" :span="4">
         <label>ประเภท</label>
         <a-select
             ref="select"
@@ -14,11 +14,23 @@
             <a-select-option value="4">หมดเวลา</a-select-option>
         </a-select>
       </a-col>
-      <a-col class="p-1" :span="6">
+      <a-col class="p-1" :span="4">
+        <label>รายการฝาก</label>
+        <a-select
+            ref="select"
+            v-model:value="formData.de_type"
+            style="width: 100%"
+            >
+            <a-select-option value="all">ทั้งหมด</a-select-option>
+            <a-select-option value="1">ฝากเเรก</a-select-option>
+            <a-select-option value="2">ฝากปกติ</a-select-option>
+        </a-select>
+      </a-col>
+      <a-col class="p-1" :span="5">
         <label>ยูสเซอร์เนม</label>
         <a-input v-model:value="formData.username" placeholder="username" />
       </a-col>
-      <a-col class="p-1" :span="6">
+      <a-col class="p-1" :span="5">
         <label>ทำรายการโดย</label>
         <a-input v-model:value="formData.adminName" placeholder="name" />
       </a-col>
@@ -111,6 +123,10 @@
       <template v-if="column.key === 'remark'">
         <div>{{ record.remark }}</div>
       </template>
+      <template v-if="column.key === 'is_first_deposit'">
+        <a-tag color="green" v-if="record.is_first_deposit">ฝากเเรก</a-tag>
+        <a-tag color="blue" v-else>ฝากปกติ</a-tag>
+      </template>
       <template v-if="column.key === 'status'">
         <a-tag color="orange" v-if="record.status == 1">รอทำรายการ</a-tag>
         <a-tag color="green" v-else-if="record.status == 2">สำเร็จ</a-tag>
@@ -138,6 +154,7 @@
 import { ref, computed, onMounted } from 'vue';
 import dayjs, { Dayjs } from 'dayjs';
 import { getDepositServices } from '~/services/memberServices';
+import { ScanOutlined } from '@ant-design/icons';
 
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
@@ -159,6 +176,7 @@ let formData = reactive({
     amount:ref<string>(''),
     dateSelect:ref<string>('Today'),
     sl_type:"all",
+    de_type:"all",
     page:ref<number>(1),
     pageSize:ref<number>(10),
   });
@@ -198,6 +216,7 @@ const dynamicColumns = computed(() => {
         { title: 'รูปสลิป', dataIndex: 'image', key: 'image', width: 80 },
         { title: 'โปรโมชั่น', dataIndex: 'remark', key: 'remark', width: 200 },
         { title: 'โดย', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 80 },
+        { title: 'รายการ', dataIndex: 'is_first_deposit', key: 'is_first_deposit', width: 100 },
         { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
         { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 150 },
         { title: 'จัดการ',key: 'operation',width: 110,},

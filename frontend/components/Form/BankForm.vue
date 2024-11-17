@@ -7,7 +7,7 @@
         @finish="handleFinish"
     >
         <a-row>
-            <a-col :span="24" :md="12" class="p-1">
+            <a-col :span="24" :md="12" class="p-2">
                 <label for="ประเภทบัญชี"><b class="request">ประเภทบัญชี</b></label>
                 <a-select
                     v-model:value="formData.bank_type"
@@ -17,7 +17,7 @@
                 ></a-select>
             </a-col>
             
-            <a-col :span="24" :md="12" class="p-1">
+            <a-col :span="24" :md="12" class="p-2">
                 <label for="ชื่อธนาคาร"><b  class="request">ชื่อธนาคาร</b></label>
                 <a-select ref="select" v-model:value="formData.bank_list" style="width: 100%" @change="ChangeBankList">
                     <a-select-option value="" disabled>เลือกธนาคาร</a-select-option>
@@ -31,7 +31,7 @@
                     </template>
                 </a-select>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1">
+            <a-col :span="24" :md="12" class="p-2">
                 <label for="ประเภทการใช้งาน"><b  class="request">ประเภทการใช้งาน</b></label>
                 <a-select ref="select" v-model:value="formData.bank_list_api" style="width: 100%">
                     <a-select-option value="" disabled>เลือกประเภทการใช้งาน</a-select-option>
@@ -44,7 +44,7 @@
                     </template>
                 </a-select>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1">
+            <a-col :span="24" :md="12" class="p-2">
                 <label for="ประเภทการใช้งาน"><b  class="request">เชื่อมบัญชี</b></label>
                 <a-select ref="select" v-model:value="formData.bank_connect" style="width: 100%">
                     <a-select-option value="" disabled>เลือกประเภทการใช้งาน</a-select-option>
@@ -57,7 +57,7 @@
                     </template>
                 </a-select>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1">
+            <a-col :span="24" :md="12" class="p-2">
                 <label for="ชื่อบัญชี"><b  class="request">ชื่อบัญชี</b></label>
                 <a-form-item 
                     ref="bankName" 
@@ -67,7 +67,7 @@
                     <a-input v-model:value="formData.bankName"/>
                 </a-form-item>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1">
+            <a-col :span="24" :md="12" class="p-2">
                 <label for="เลขบัญชี"><b  class="request">{{Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].bankNo ? 'เลขบัญชี' : 'เบอร์โทรศัพท์' }}</b></label>
                 <a-form-item 
                     ref="bankNo" 
@@ -77,64 +77,84 @@
                     <a-input v-model:value="formData.bankNo"/>
                 </a-form-item>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1" v-if="((formData.bank_type != 4) && Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].pin) && (Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].bankConnect[formData.bank_connect-1].label == 'เชื่อมเอง')">
+            <!-- ฟิลด์ Pin -->
+            <a-col :span="24" :md="12" class="p-2">
                 <label for="Pin"><b>Pin ตัวเลข 6 ตัว</b></label>
-                <a-form-item ref="bankPin" name="bankPin">
-                    <a-input v-model:value="formData.bankPin"/>
+                <a-form-item
+                    ref="bankPin" 
+                    name="bankPin"
+                >
+                    <a-input v-model:value="formData.bankPin" :maxlength="6" />
                 </a-form-item>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1" v-if="((formData.bank_type != 4) && Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].deviceId) && (Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].bankConnect[formData.bank_connect-1].label == 'เชื่อมเอง')">
-                <label for="DevicesID"><b>{{Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].bankNo ? 'DevicesID' : 'Login-Token' }}</b></label>
-                <a-form-item ref="DevicesID" name="DevicesID">
-                    <a-input v-model:value="formData.devicesID"/>
+
+            <!-- ฟิลด์ DevicesID หรือ Login-Token -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showDevicesIdField">
+                <label for="DevicesID"><b>{{ getDevicesIDLabel }}</b></label>
+                <a-form-item ref="devicesID" name="devicesID" >
+                <a-input v-model:value="formData.devicesID" />
                 </a-form-item>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1" v-if="((formData.bank_type != 4) && Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].keyID)">
+
+            <!-- ฟิลด์ KeyID -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showKeyIdField">
                 <label for="keyID"><b>keyID</b></label>
-                <a-form-item ref="keyID" name="keyID">
-                    <a-input v-model:value="formData.keyID"/>
+                <a-form-item ref="keyID" name="keyID" >
+                <a-input v-model:value="formData.keyID" />
                 </a-form-item>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1" v-if="((formData.bank_type != 4) && Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].keyID)">
+
+            <!-- ฟิลด์ TureID -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showTureIdField">
                 <label for="TureID"><b>TureID</b></label>
-                <a-form-item ref="TureID" name="TureID">
-                    <a-input v-model:value="formData.TureID"/>
+                <a-form-item ref="TureID" name="TureID" >
+                <a-input v-model:value="formData.TureID" />
                 </a-form-item>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1" v-if="((formData.bank_type != 4) && Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].UnP)">
+
+            <!-- ฟิลด์ Username -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showUsernameField">
                 <label for="Username"><b>Username</b></label>
-                <a-form-item ref="Username" name="Username">
-                    <a-input v-model:value="formData.Username"/>
+                <a-form-item ref="Username" name="Username" >
+                <a-input v-model:value="formData.Username" />
                 </a-form-item>
             </a-col>
-            <a-col :span="24" :md="12" class="p-1" v-if="((formData.bank_type != 4) && Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].UnP)">
+
+            <!-- ฟิลด์ Password -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showPasswordField">
                 <label for="Password"><b>Password</b></label>
-                <a-form-item ref="Password" name="Password">
-                    <a-input v-model:value="formData.Password"/>
+                <a-form-item ref="Password" name="Password" >
+                <a-input type="password" v-model:value="formData.Password" />
                 </a-form-item>
             </a-col>
         </a-row>
         <a-row class="my-2">
-            <a-col span="8" class="p-1">
+            <a-col span="6" class="p-2">
                 <label for="Password"><b>สถานะการใช้งาน</b></label>
                 <a-col>
                     <a-switch v-model:checked="formData.is_active" />
                 </a-col>
             </a-col>
-            <a-col span="8" class="p-1">
+            <a-col span="6" class="p-2">
+                <label for="Password"><b>ใช้งาน QRCODE</b></label>
+                <a-col>
+                    <a-switch v-model:checked="formData.is_qrcode" />
+                </a-col>
+            </a-col>
+            <a-col span="6" class="p-2" v-if="((formData.bank_type != 4) && Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].api)">
                 <label for="Password"><b>ใช้งาน API</b></label>
                 <a-col>
                     <a-switch v-model:checked="formData.is_api" />
                 </a-col>
             </a-col>
-            <a-col span="8" class="p-1">
+            <a-col span="6" class="p-2" v-if="((formData.bank_type != 4) && Constants.optionsBankType[formData.bank_type-1].bank[formData.bank_list-1].action[formData.bank_list_api-1].sms)">
                 <label for="Password"><b>ใช้งาน SMS</b></label>
                 <a-col>
                     <a-switch v-model:checked="formData.is_sms" />
                 </a-col>
             </a-col>
         </a-row>
-        <a-row>
+        <a-row v-if="formData.is_qrcode">
             <h3>QR Code</h3>
             <a-col :span="24">
                 <div v-if="!ImageText" class="close-image" @click="clearPreviewImage">
@@ -164,7 +184,7 @@
                     </a-upload-dragger>
             </a-col>
         </a-row>
-        <a-row justify="center">
+        <a-row justify="center" class="p-2">
             <a-button @click="props.closeModal()" class="m-1">Cancel</a-button>
             <a-button type="primary" html-type="submit" class="m-1 sky">เพิ่ม</a-button>
         </a-row>
@@ -177,6 +197,7 @@
     import type { UploadChangeParam } from 'ant-design-vue';
     import * as Constants from '../Constants/Constants';
     const action = ref("create")
+    const config = useRuntimeConfig()
 
     const fileList = ref([]);
     const previewImage = ref('');
@@ -215,6 +236,7 @@
     let formData = reactive({
         id: 0,
         bank_type:1,
+        bank_old_type:1,
         bank_list:1,
         bank_list_api:1,
         bank_connect:1,
@@ -227,8 +249,9 @@
         Username:'sdDDD',
         Password:'asdf123456',
         is_api: true,
+        is_qrcode: true,
         is_active: true,
-        is_sms: true,
+        is_sms: false,
         Image: null as any
     });
 
@@ -254,6 +277,7 @@
 
                 formData.id = 0;
                 formData.bank_type = 1;
+                formData.bank_old_type = 1;
                 formData.bank_list = 1;
                 formData.bank_list_api = 1;
                 formData.bank_connect = 1;
@@ -267,8 +291,9 @@
                 formData.Username = '';
                 formData.Password = '';
                 formData.is_api= true;
+                formData.is_qrcode=true;
                 formData.is_active=true;
-                formData.is_sms=true;
+                formData.is_sms=false;
             }else{
                 console.log('22222222222222');
                 action.value ="edit";
@@ -298,33 +323,58 @@
 
                 formData.id = newValue.id;
                 formData.bank_type = bank_type;
+                formData.bank_old_type = bank_type;
                 formData.bank_list = bank_list;
                 formData.bank_list_api = bank_list_api;
                 formData.bank_connect = 1;
                 formData.bankName = newValue.name;
                 formData.bankNo = newValue.book_number;
-                formData.bankPin = newValue.detail.bankPin;
-                formData.devicesID = newValue.detail.devicesID;
-                formData.keyID = newValue.detail.keyID;
-                formData.TureID = newValue.detail.TureID;
-                formData.Username = newValue.detail.Username;
-                formData.Password = newValue.detail.Password;
-                formData.Image = newValue.image;
+                formData.bankPin = "";
+                formData.devicesID = "";
+                formData.keyID = "";
+                formData.TureID = "";
+                formData.Username = "";
+                formData.Password = "";
                 formData.is_api= newValue.is_api;
+                formData.is_qrcode=newValue.is_qrcode;
                 formData.is_active=newValue.is_active;
                 formData.is_sms=newValue.is_sms;
-
+                if(newValue.image != ""){
+                    formData.Image = newValue.image;
+                }else{
+                    formData.Image = ""
+                }
             }
-            
-            ImageText.value = false;
-            previewImage.value = newValue.image
+            if(newValue.image != ""){
+                ImageText.value = false;
+                previewImage.value = config.public.serviceUrls +'/'+newValue.image
+            }
         } 
     }, { immediate: true });
 
 
     const ChangeBankType = () =>{
-        formData.bank_list = 1;
-        formData.bank_list_api = 1;
+        console.log("aaaaa");
+        console.log(formData.bank_type-1);
+        console.log(formData.bank_type-1);
+        console.log(formData.bank_list);
+        console.log(formData.bank_old_type);
+        let check = true
+        Constants.optionsBankType[formData.bank_type-1].bank.forEach(element => {
+            console.log(element);
+            console.log(Constants.optionsBankType[formData.bank_old_type-1].bank[formData.bank_list-1].name);
+            if(Constants.optionsBankType[formData.bank_old_type-1].bank[formData.bank_list-1].name == element.name){
+                check = false
+                formData.bank_list = element.value
+                formData.bank_list_api = 1
+            }
+        });
+        if(check){
+            Alert("warning","ธนาคารมีการเปลี่ยนเเปลงเนื่องจากไม่พบเงื่อนไขที่ท่านเลือก กรุณาตรวจสอบธนาคาร")
+            formData.bank_list = 1;
+            formData.bank_list_api = 1;
+        }
+        formData.bank_old_type = formData.bank_type
     }
     
     const ChangeBankList = () =>{
@@ -340,7 +390,7 @@
         if(action.value == "create"){
             const data = await createBank(formData);
             if(data.status == "success"){
-                Alert('success','เพิ่มพนักงาน หรือ ผู้ดูเเลระบบเรียบร้อย.')
+                Alert('success','เพิ่มบัญชีธนาคารเรียบร้อย.')
                 props.closeModal()
                 props.getSystemBank();
             }else{
@@ -349,7 +399,7 @@
         }else{
             const data = await editSystemBank(formData);
             if(data.status == "success"){
-                Alert('success','เเก้ไขพนักงาน หรือ ผู้ดูเเลระบบเรียบร้อย.')
+                Alert('success','เเก้ไขบัญชีธนาคารเรียบร้อย.')
                 props.closeModal()
                 props.getSystemBank();
             }else{
@@ -365,13 +415,53 @@
             Constants.optionsBankType[3].bank = data.data.Bank
             Constants.optionsBankType[3].bank.forEach((element,index) => {
                 element.value = index+1;
-                element.action = [{value:1,name:'api',show:1,bankNo:0,pin:0,deviceId:0,keyID:0,UnP:0}];
+                element.action = [{value:1,name:'api',show:1,bankNo:0,pin:0,deviceId:0,keyID:0,UnP:0,status:1,api:0,sms:0}];
             });
         }
       } catch (error) {
         console.error('Error fetching user roles:', error);
       }
 
+    });
+
+    const showPinField = computed(() => {
+    return (
+        formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.pin &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.bankConnect[formData.bank_connect - 1]?.label === 'เชื่อมเอง'
+    );
+    });
+
+    const showDevicesIdField = computed(() => {
+    return (
+        formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.deviceId &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.bankConnect[formData.bank_connect - 1]?.label === 'เชื่อมเอง'
+    );
+    });
+
+    const getDevicesIDLabel = computed(() => {
+    return Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.bankNo ? 'DevicesID' : 'Login-Token';
+    });
+
+    const showKeyIdField = computed(() => {
+    return formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.keyID;
+    });
+
+    const showTureIdField = computed(() => {
+    return formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.keyID;
+    });
+
+    const showUsernameField = computed(() => {
+    return formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.UnP;
+    });
+
+    const showPasswordField = computed(() => {
+    return formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.UnP;
     });
 </script>
 <style>

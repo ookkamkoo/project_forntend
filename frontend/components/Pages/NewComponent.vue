@@ -1,6 +1,6 @@
 <template>
     <div>
-      <a-modal v-model:open="open" width="900px" :title="active ? 'เพิ่มโปรโมชั่น' : 'แก้ไขโปรโมชั่น'" :closable="true">
+      <a-modal v-model:open="open" width="900px" :title="active ? 'เพิ่มเเจ้งข่าวสาร' : 'แก้ไขเเจ้งข่าวสาร'" :closable="true">
          <FormNewForm :closeModal="closeModal" :newEdit="newEdit" :getNews="getNews"/>
          <template #footer></template>
       </a-modal>
@@ -33,7 +33,7 @@
           <template v-else-if="column.key === 'image'">
             <a-image
               width="100%"
-              :src="record.image"
+              :src="config.public.serviceUrls +'/'+ record.image"
             />
           </template>
           <template v-else-if="column.key === 'date'">
@@ -55,6 +55,7 @@
   import dayjs, { Dayjs } from 'dayjs';
   import { getNewServices,updateStatuNews,deleteNewServices } from '~/services/newServices';
   import { Alert } from '../Alert/alertComponent';
+  const config = useRuntimeConfig()
 
   const open = ref<boolean>(false);
   const dataShow = ref<any[]>([]);

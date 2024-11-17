@@ -102,10 +102,10 @@
       <template v-if="column.key === 'bank_no'">
         <div>{{ record.bank_no }}</div>
       </template>
-      <template v-if="column.key === 'action'">
-        <a-tag color="green" v-if="record.action == 1">ฝากเงิน</a-tag>
-        <a-tag color="red" v-else-if="record.action == 2">ถอนเงิน</a-tag>
-        <a-tag color="orange" v-else-if="record.action == 3">ฝากเงินไม่เข้า</a-tag>
+      <template v-if="column.key === 'type'">
+        <a-tag color="green" v-if="record.type == 1">ฝากเงิน</a-tag>
+        <a-tag color="red" v-else-if="record.type == 2">ถอนเงิน</a-tag>
+        <a-tag color="orange" v-else-if="record.type == 3">ฝากเงินไม่เข้า</a-tag>
       </template>
       <template v-if="column.key === 'amount_before'">
         <div>{{ record.amount_before }}</div>
@@ -136,6 +136,14 @@
         <div v-if="record.UpdatedBySearch.name != ''">{{ record.UpdatedBySearch.name }}</div>
         <div v-else> - </div>
       </template> -->
+      <template v-if="column.key === 'created_by_name'">
+        <div v-if="record.created_by_name != ''">{{ record.created_by_name }}</div>
+        <div v-else> - </div>
+      </template>
+      <template v-if="column.key === 'updated_by_name'">
+        <div v-if="record.updated_by_name != ''">{{ record.updated_by_name }}</div>
+        <div v-else> - </div>
+      </template>
       <template v-else-if="column.key === 'created_at'">
         <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
       </template>
@@ -151,6 +159,7 @@
 import { ref, computed, onMounted } from 'vue';
 import dayjs, { Dayjs } from 'dayjs';
 import { getMemberTransactionHistoryServices } from '~/services/postCreditService';
+import { ScanOutlined } from '@ant-design/icons';
 
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
@@ -186,7 +195,7 @@ const dynamicColumns = computed(() => {
         { title: 'ยูสเซอร์เนม', width: 120, dataIndex: 'username', key: 'username' },
         { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 80 },
         { title: 'เลขบัญชี', dataIndex: 'bank_no', key: 'bank_no', width: 100 },
-        { title: 'สถานะ', dataIndex: 'action', key: 'action', width: 100 },
+        { title: 'สถานะ', dataIndex: 'type', key: 'type', width: 100 },
         { title: 'เครดิต', width: 100, children: [
           { title: 'ยอดเงิน', dataIndex: 'amount', key: 'amount', width: 80 },
           { title: 'โบนัส', dataIndex: 'bonus', key: 'bonus', width: 80 },
@@ -194,8 +203,9 @@ const dynamicColumns = computed(() => {
           { title: 'เครดิตก่อนหน้า', dataIndex: 'amount_before', key: 'amount_before', width: 80 },
           { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 80 },
         ] },
-        { title: 'เพิ่มเติม', dataIndex: 'remark', key: 'remark', width: 200 },
-        { title: 'โดย', dataIndex: 'create_by_name', key: 'create_by_name', width: 80 },
+        { title: 'รายละเอียด', dataIndex: 'remark', key: 'remark', width: 200 },
+        { title: 'สร้าง', dataIndex: 'created_by_name', key: 'created_by_name', width: 80 },
+        { title: 'เเก้ไข', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 80 },
         { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
         { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 150 },
         { title: 'เพิ่มเติม',key: 'operation',width: 110,},

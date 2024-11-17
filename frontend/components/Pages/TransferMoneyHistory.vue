@@ -103,6 +103,7 @@
 import { ref, computed, onMounted } from 'vue';
 import dayjs, { Dayjs } from 'dayjs';
 import { getBankTranferHistory } from '~/services/bankTranferAuto';
+import { ScanOutlined } from '@ant-design/icons';
 
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);

@@ -50,28 +50,117 @@
     @change="handleTableChange"
   >
     <template #bodyCell="{ column, record }">
+      <!-- date -->
       <template v-if="column.key === 'date'">
         <div >{{ dayjs(record.date).format('YYYY-MM-DD') }}</div>
       </template>
-      <template v-if="column.key === 'status'">
-        <a-tag color="green" >สำเร็จ</a-tag>
+      <!-- รายการฝาก -->
+      <template v-if="column.key === 'deposit_count'">
+        <div >{{ record.deposit_count }}</div>
       </template>
+      <template v-if="column.key === 'deposit'">
+        <div >{{ record.deposit }}</div>
+      </template>
+
+      <!-- ฝากไม่เข้า -->
+      <template v-if="column.key === 'edit_credit_count'">
+        <div >{{ record.edit_credit_count }}</div>
+      </template>
+      <template v-if="column.key === 'edit_credit'">
+        <div >{{ record.edit_credit }}</div>
+      </template>
+
+      <!-- รวม -->
+      <template v-if="column.key === 'deposit_count_total'">
+        <div >{{ record.edit_credit_count + record.deposit_count}}</div>
+      </template>
+
+      <template v-if="column.key === 'deposit_total'">
+        <div >{{ record.deposit + record.edit_credit }}</div>
+      </template>
+
+      <!-- รายการถอน  ออโต้ -->
+      <template v-if="column.key === 'withdraw_count'">
+        <div >{{ Math.abs(record.withdraw_count - record.withdraw_manual_count) }}</div>
+      </template>
+      <template v-if="column.key === 'withdraw'">
+        <div >{{ Math.abs(record.withdraw - record.withdraw_manual) }}</div>
+      </template>
+
+      <!-- ถอนมือ -->
+      <template v-if="column.key === 'withdraw_manual_count'">
+        <div >{{ record.withdraw_manual_count }}</div>
+      </template>
+      <template v-if="column.key === 'withdraw_manual'">
+        <div >{{ record.withdraw_manual }}</div>
+      </template>
+
+      <!-- รวม -->
+      <template v-if="column.key === 'withdraw_count_total'">
+        <div >{{ record.withdraw_count}}</div>
+      </template>
+      <template v-if="column.key === 'withdraw_total'">
+        <div >{{ record.withdraw}}</div>
+      </template>
+
+      <!-- เพิ่มเครดิต -->
+      <template v-if="column.key === 'add_credit_count'">
+        <div >{{ record.add_credit_count}}</div>
+      </template>
+      <template v-if="column.key === 'add_credit'">
+        <div >{{ record.add_credit}}</div>
+      </template>
+
+      <!-- ลดเครดิต -->
+      <template v-if="column.key === 'remove_credit_count'">
+        <div >{{ record.remove_credit_count}}</div>
+      </template>
+      <template v-if="column.key === 'remove_credit'">
+        <div >{{ record.remove_credit}}</div>
+      </template>
+
+      <!-- กำไรขาดทุน -->
+      <template v-if="column.key === 'profit_and_loss'">
+        <div >{{ record.profit_and_loss}}</div>
+      </template>
+      
     </template>
     <template #summary>
         <tr class="center">
             <td ><strong>รวม</strong></td>
-            <td><strong>{{sumSummary.sum_deposit}}</strong></td>
+            <!-- ฝากปกติ -->
             <td><strong>{{sumSummary.sum_deposit_count}}</strong></td>
-            <td><strong>{{sumSummary.sum_withdraw}}</strong></td>
-            <td><strong>{{sumSummary.sum_withdraw_count}}</strong></td>
-            <td><strong>{{sumSummary.sum_edit_credit}}</strong></td>
+            <td><strong>{{sumSummary.sum_deposit}}</strong></td>
+
+            <!-- ฝากไม่เข้า -->
             <td><strong>{{sumSummary.sum_edit_credit_count}}</strong></td>
-            <td><strong>{{sumSummary.sum_add_credit}}</strong></td>
+            <td><strong>{{sumSummary.sum_edit_credit}}</strong></td>
+
+            <!-- รวม -->
+            <td><strong>{{sumSummary.sum_deposit_count + sumSummary.sum_edit_credit_count}}</strong></td>
+            <td><strong>{{sumSummary.sum_deposit + sumSummary.sum_edit_credit}}</strong></td>
+
+            <!-- ออโต้ -->
+            <td><strong>{{ Math.abs(sumSummary.sum_withdraw_count - sumSummary.sum_withdraw_manual_count)}}</strong></td>
+            <td><strong>{{ Math.abs(sumSummary.sum_withdraw - sumSummary.sum_withdraw_manual) }}</strong></td>
+
+            <!-- ถอนมือ -->
+            <td><strong>{{sumSummary.sum_withdraw_manual_count}}</strong></td>
+            <td><strong>{{sumSummary.sum_withdraw_manual}}</strong></td>
+
+            <!-- รวม -->
+            <td><strong>{{sumSummary.sum_withdraw_count}}</strong></td>
+            <td><strong>{{sumSummary.sum_withdraw}}</strong></td>
+
+            <!-- เพิ่มเครดิต -->
             <td><strong>{{sumSummary.sum_add_credit_count}}</strong></td>
-            <td><strong>{{sumSummary.sum_remove_credit}}</strong></td>
+            <td><strong>{{sumSummary.sum_add_credit}}</strong></td>
+
+            <!-- ลดเครดิต -->
             <td><strong>{{sumSummary.sum_remove_credit_count}}</strong></td>
-            <td><strong>{{sumSummary.sum_recommend}}</strong></td>
-            <td><strong>{{sumSummary.sum_win_lost}}</strong></td>
+            <td><strong>{{sumSummary.sum_remove_credit}}</strong></td>
+
+            <!-- กำไรขาดทุน -->
             <td><strong>{{sumSummary.profit_and_loss}}</strong></td>
         </tr>
     </template>
@@ -92,28 +181,43 @@
   const dynamicColumns = computed(() => [
     {  title: `ทั้งหมด ${allRecord.value} รายการ`, children: [
       { title: 'วันที่', width:80, dataIndex: 'date', key: 'date' },
-      { title: 'ยอดฝาก', children:[
-        { title: 'ยอด', width: 100, dataIndex: 'deposit', key: 'deposit',  },
-        { title: 'รายการ', width: 100, dataIndex: 'deposit_count', key: 'deposit_count',  },
+      { title: 'รายการฝาก', children:[
+        { title: 'ฝากปกติ', children:[
+            { title: 'รายการ', width: 100, dataIndex: 'deposit_count', key: 'deposit_count',  },
+            { title: 'จำนวน', width: 100, dataIndex: 'deposit', key: 'deposit',  },
+        ]},
+        { title: 'ฝากไม่เข้า', children:[
+          { title: 'รายการ', width: 100, dataIndex: 'edit_credit_count', key: 'edit_credit_count',  },
+          { title: 'จำนวน', width: 100, dataIndex: 'edit_credit', key: 'edit_credit',  },
+        ]},
+        { title: 'รวม', children:[
+          { title: 'รายการ', width: 100, dataIndex: 'deposit_count_total', key: 'deposit_count_total',  },
+          { title: 'จำนวน', width: 100, dataIndex: 'deposit_total', key: 'deposit_total',  },
+        ]},
+        
       ]},
-      { title: 'ยอดถอน', children:[
-        { title: 'ยอด', width: 100, dataIndex: 'withdraw', key: 'withdraw',  },
-        { title: 'รายการ', width: 100, dataIndex: 'withdraw_count', key: 'withdraw_count',  },
-      ]},
-      { title: 'ฝากไม่เข้า', children:[
-        { title: 'ยอด', width: 80, dataIndex: 'edit_credit', key: 'edit_credit',  },
-        { title: 'รายการ', width: 80, dataIndex: 'edit_credit_count', key: 'edit_credit_count',  },
+      { title: 'รายการถอน', children:[
+        { title: 'ออโต้', children:[
+            { title: 'รายการ', width: 100, dataIndex: 'withdraw_count', key: 'withdraw_count',  },
+            { title: 'จำนวน', width: 100, dataIndex: 'withdraw', key: 'withdraw',  },
+        ]},
+        { title: 'ถอนมือ', children:[
+            { title: 'รายการ', width: 100, dataIndex: 'withdraw_manual_count', key: 'withdraw_manual_count',  },
+            { title: 'จำนวน', width: 100, dataIndex: 'withdraw_manual', key: 'withdraw_manual',  },
+        ]},
+        { title: 'รวม', children:[
+            { title: 'รายการ', width: 100, dataIndex: 'withdraw_count_total', key: 'withdraw_count_total',  },
+            { title: 'จำนวน', width: 100, dataIndex: 'withdraw_total', key: 'withdraw_total',  },
+        ]},
       ]},
       { title: 'เพิ่มเครดิต', children:[
-        { title: 'ยอด', width: 100, dataIndex: 'add_credit', key: 'add_credit',  },
         { title: 'รายการ', width: 100, dataIndex: 'add_credit_count', key: 'add_credit_count',  },
+        { title: 'ยอด', width: 100, dataIndex: 'add_credit', key: 'add_credit',  },
       ]},
       { title: 'ลดเครดิต', children:[
-        { title: 'ยอด', width: 80, dataIndex: 'remove_credit', key: 'remove_credit',  },
         { title: 'รายการ', width: 80, dataIndex: 'remove_credit_count', key: 'remove_credit_count',  },
+        { title: 'ยอด', width: 80, dataIndex: 'remove_credit', key: 'remove_credit',  },
       ]},
-      { title: 'เเนะนำเพื่อน', width: 80, dataIndex: 'recommend', key: 'recommend',  },
-      { title: 'ยอดเสีย', width: 80, dataIndex: 'lost', key: 'lost',  },
       { title: 'กำไรขาดทุน', width: 80,dataIndex: 'profit_and_loss', key: 'profit_and_loss',  },
     ] },
   ]);

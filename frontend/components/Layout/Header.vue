@@ -2,7 +2,7 @@
     <a-flex class="status-web">
         <!-- Button to close server -->
         <a-flex class="status-web-check" vertical>
-            <a-button type="primary" size="small" class="m-auto danger">ปิดเซิร์ฟ</a-button>
+            <a-button type="primary" size="small" class="m-auto danger" @click="showConfirm">ปิดเซิร์ฟ</a-button>
         </a-flex>
 
         <!-- Language selection component -->
@@ -11,38 +11,35 @@
                 <LanguagesLanguageComponent :language="false" />
             </div>
         </a-flex>
+        
+
 
         <!-- System statuses -->
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
-            <div>ออนไลน์</div>
-            <a-tag color="green" class="m-auto">อัตโนมัติ</a-tag>
+            <div>
+                <div>เซิฟเวอร์</div>
+                <a-tag v-if="store.setting.serverStatus" color="green" class="m-auto">เปิด</a-tag>
+                <a-tag v-else color="red" class="m-auto">เปิด</a-tag>
+            </div>
         </a-flex>
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
             <div>ฝาก</div>
-            <a-tag color="green" class="m-auto">อัตโนมัติ</a-tag>
+            <a-tag v-if="store.setting.depositStatus" color="green" class="m-auto">เปิด</a-tag>
+            <a-tag v-else color="red" class="m-auto">ปิด</a-tag>
         </a-flex>
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
             <div>ถอน</div>
-            <a-tag color="green" class="m-auto">อัตโนมัติ</a-tag>
+            <a-tag v-if="store.setting.depositStatus" color="green" class="m-auto">เปิด</a-tag>
+            <a-tag v-else color="red" class="m-auto">ปิด</a-tag>
         </a-flex>
-        <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
+        <!-- <a-flex class="status-web-check border-right p-rl-2 menu-click mobile-none" vertical @click="depositClick('เว็บ')">
             <div>เว็บ</div>
             <a-tag color="green" class="m-auto">เปิด</a-tag>
-        </a-flex>
-        <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
-            <div>ฝาก</div>
-            <a-tag color="green" class="m-auto">เปิด</a-tag>
-        </a-flex>
+        </a-flex> -->
 
-        <!-- Avatar and dropdown -->
-        <!-- <div class="m-auto p-rl-2 mobile">
-            <a-avatar size="large" @click="showDrawer">
-                <template #icon><UserOutlined /></template>
-            </a-avatar>
-        </div> -->
         <div class="m-auto p-3">
             <a-dropdown v-model:open="visible" :trigger="['click']" class="profile">
-                <a-badge :count="10">
+                <a-badge>
                     <a-avatar style="color: #f56a00; background-color: #fde3cf" >{{ name?.charAt(0).toUpperCase() || 'U' }}</a-avatar>
                 </a-badge>
                 <template #overlay>
@@ -72,7 +69,13 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { createVNode } from 'vue';
 import { getName, getPermission, logout } from '~/auth/authToken';
+import { updateServerStatusServices } from '~/services/settingService';
+import { Alert } from '../Alert/alertComponent';
+import { notifyStore } from '~/store/index';
+const store = notifyStore();
 
 const visible = ref(false);
 const name = getName();
@@ -84,9 +87,40 @@ const handleMenuClick = () => {
       
     };
 
+    const showConfirm = async() => {
+  Modal.confirm({
+    title: 'คุณต้องการจะปิดเซิฟเวอร์ใช่ไหม?',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: createVNode('div', { style: 'color:red;' }, 'หากคุณทำการปิดระบบคุณจะไม่สามารถเปิดระบบเองได้ ต้องติดต่อทีมซัพพอร์ต'),
+    
+    // ห่อ onOk ด้วย async function
+    onOk: async () => {
+      try {
+        const data = await updateServerStatusServices();
+        if(data.status == "success"){
+            Alert('success','แก้ไขการตั้งค่าเรียบร้อย');
+        } else {
+            Alert('error', data.message);
+        }
+      } catch (error) {
+        console.error("Error updating server status:", error);
+        Alert('error', 'เกิดข้อผิดพลาดในการอัปเดตสถานะเซิร์ฟเวอร์');
+      }
+    },
+    
+    onCancel() {
+      console.log('Cancel');
+    },
+    class: 'test',
+  });
+};
+
+
 </script>
 
 <style lang="scss">
+@use "sass:color";
+
 .m-auto {
     margin: auto;
 }
@@ -94,8 +128,9 @@ const handleMenuClick = () => {
     background-color: $danger;
     color: white;
 }
+
 .danger:hover {
-    background-color: darken($danger, 10%) !important;
+    background-color: color.scale($danger, $lightness: -10%) !important;
 }
 
 .profile {
@@ -122,5 +157,38 @@ const handleMenuClick = () => {
     font-size: 12px;
     color: gray;
 }
+.menu-click{
+    cursor: pointer;
+}
 
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 6rem;
+    margin: 0;
+    color: #000000; /* สีส้มแดง */
+  }
+  
+  p {
+    // font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .home-link {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    color: #007bff; /* สีน้ำเงิน */
+    text-decoration: none;
+  }
+  
+  .home-link:hover {
+    text-decoration: underline;
+  }
 </style>

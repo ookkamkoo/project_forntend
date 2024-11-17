@@ -86,7 +86,7 @@
           <div>{{ record.id }}</div>
         </template>
         <template v-if="column.key === 'type'">
-          <div> ยอดเสีย </div>
+          <a-tag color="purple">ยอดเสีย</a-tag>
         </template>
         <template v-if="column.key === 'username'">
           <div>{{ record.username }}</div>

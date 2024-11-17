@@ -89,6 +89,8 @@
         <a-tag color="red" v-else-if="record.action == 5">ถอนเงิน</a-tag>
         <a-tag color="blue" v-else-if="record.action == 6">เกมส์โบนัส</a-tag>
         <a-tag color="purple" v-else-if="record.action == 7">ยอดเสีย</a-tag>
+        <a-tag color="cyan" v-else-if="record.action == 8">คืนเครดิต</a-tag>
+        <a-tag color="red" v-else-if="record.action == 9">ลูกค้าถอนเงิน</a-tag>
       </template>
       <template v-if="column.key === 'created_by_name'">
         <div>{{ record.created_by_name }}</div>

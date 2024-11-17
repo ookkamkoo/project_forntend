@@ -129,6 +129,8 @@
   // login
   const onFinish = async () => {
       const data = await login(formState.username, formState.password, formState.twofactor);
+      console.log(data);
+      
       if(data.token != undefined){
         // connectWebSocket();
         setToken(data.token);

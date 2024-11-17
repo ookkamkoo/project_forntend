@@ -316,13 +316,7 @@
             </a-col>
         </a-row>
         <br>
-        <a-row >
-            <a-col :span="8" :md="6">
-                <div class="mx-1 my-1">
-                    <label class="text-label-turn" for="FOOTBALL">FOOTBALL</label>
-                    <a-input-number id="FOOTBALL" v-model:value="formData.turn.football" :min="0" :max="100" style="width: 100%" />
-                </div>
-            </a-col>
+        <a-row :justify="'center'">
             <a-col :span="8" :md="6">
                 <div class="mx-1 my-1">
                     <label class="text-label-turn" for="CASINO">CASINO</label>
@@ -337,38 +331,32 @@
             </a-col>
             <a-col :span="8" :md="6">
                 <div class="mx-1 my-1">
+                    <label class="text-label-turn" for="FISHING">FISHING</label>
+                    <a-input-number id="FISHING" v-model:value="formData.turn.fishing" :min="0" :max="100" style="width: 100%" />
+                </div>
+            </a-col>
+            <a-col :span="8" :md="6">
+                <div class="mx-1 my-1">
+                    <label class="text-label-turn" for="SPORTSBOOK">SPORTSBOOK</label>
+                    <a-input-number id="SPORTSBOOK" v-model:value="formData.turn.sportsbook" :min="0" :max="100" style="width: 100%" />
+                </div>
+            </a-col>
+            <a-col :span="8" :md="6">
+                <div class="mx-1 my-1">
+                    <label class="text-label-turn" for="TRADING">TRADING</label>
+                    <a-input-number id="TRADING" v-model:value="formData.turn.trading" :min="0" :max="100" style="width: 100%" />
+                </div>
+            </a-col>
+            <a-col :span="8" :md="6">
+                <div class="mx-1 my-1">
+                    <label class="text-label-turn" for="CARD">CARD</label>
+                    <a-input-number id="CARD" v-model:value="formData.turn.card" :min="0" :max="100" style="width: 100%" />
+                </div>
+            </a-col>
+            <a-col :span="8" :md="6">
+                <div class="mx-1 my-1">
                     <label class="text-label-turn" for="LOTTO">LOTTO</label>
                     <a-input-number id="LOTTO" v-model:value="formData.turn.lotto" :min="0" :max="100" style="width: 100%" />
-                </div>
-            </a-col>
-            <a-col :span="8" :md="6">
-                <div class="mx-1 my-1">
-                    <label class="text-label-turn" for="PARLAY">PARLAY</label>
-                    <a-input-number id="PARLAY" v-model:value="formData.turn.parlay" :min="0" :max="100" style="width: 100%" />
-                </div>
-            </a-col>
-            <a-col :span="8" :md="6">
-                <div class="mx-1 my-1">
-                    <label class="text-label-turn" for="M2">M2</label>
-                    <a-input-number id="M2" v-model:value="formData.turn.m2" :min="0" :max="100" style="width: 100%" />
-                </div>
-            </a-col>
-            <a-col :span="8" :md="6">
-                <div class="mx-1 my-1">
-                    <label class="text-label-turn" for="MULTI_PLAYER">MULTI_PLAYER</label>
-                    <a-input-number id="MULTI_PLAYER" v-model:value="formData.turn.multiplePlayer" :min="0" :max="100" style="width: 100%" />
-                </div>
-            </a-col>
-            <a-col :span="8" :md="6">
-                <div class="mx-1 my-1">
-                    <label class="text-label-turn" for="POKER">POKER</label>
-                    <a-input-number id="POKER" v-model:value="formData.turn.poker" :min="0" :max="100" style="width: 100%" />
-                </div>
-            </a-col>
-            <a-col :span="8" :md="6">
-                <div class="mx-1 my-1">
-                    <label class="text-label-turn" for="E_SPORT">E_SPORT</label>
-                    <a-input-number id="E_SPORT" v-model:value="formData.turn.eSport" :min="0" :max="100" style="width: 100%" />
                 </div>
             </a-col>
             <a-col :span="8" :md="6">
@@ -379,14 +367,14 @@
             </a-col>
             <a-col :span="8" :md="6">
                 <div class="mx-1 my-1">
-                    <label class="text-label-turn" for="STEP">STEP</label>
-                    <a-input-number id="STEP" v-model:value="formData.turn.step" :min="0" :max="100" style="width: 100%" />
+                    <label class="text-label-turn" for="ESPORT">ESPORT</label>
+                    <a-input-number id="ESPORT" v-model:value="formData.turn.esport" :min="0" :max="100" style="width: 100%" />
                 </div>
             </a-col>
             <a-col :span="8" :md="6">
                 <div class="mx-1 my-1">
-                    <label class="text-label-turn" for="TRADING">TRADING</label>
-                    <a-input-number id="TRADING" v-model:value="formData.turn.trading" :min="0" :max="100" style="width: 100%" />
+                    <label class="text-label-turn" for="POKER">POKER</label>
+                    <a-input-number id="POKER" v-model:value="formData.turn.poker" :min="0" :max="100" style="width: 100%" />
                 </div>
             </a-col>
         </a-row>
@@ -514,18 +502,16 @@
         additionalColumnsFix:[{ amount: 100, bonus: 0,amountMaxWithDrow:0 },{ amount: 200, bonus: 0,amountMaxWithDrow:0 }] as { amount: number; bonus: number; amountMaxWithDrow:number }[],
         additionalColumnsScale:[{ amount: 0, bonus: 0,amountMaxWithDrow:0 },{ amount: 100, bonus: 0,amountMaxWithDrow:0 },{ amount: 200, bonus: 0 ,amountMaxWithDrow:0}]as { amount: number; bonus: number; amountMaxWithDrow:number}[],
         turn:{
-            football:0,
             casino:0,
-            game:0,
-            lotto:0,
-            parlay:0,
-            m2:0,
-            multiplePlayer:0,
-            poker:0,
-            eSport:0,
-            keno:0,
-            step:0,
-            trading:0,
+                    game:0,
+                    fishing:0,
+                    sportsbook:0,
+                    trading:0,
+                    card:0,
+                    lotto:0,
+                    keno:0,
+                    esport:0,
+                    poker:0,
         },
         image: null as any
     });
@@ -535,7 +521,6 @@
         
         if (newValue) {
             if(newValue.id == undefined){
-                console.log('111111111111111');
                 action.value ="create";
                 formData.id = 0;
                 formData.name = '';
@@ -558,23 +543,19 @@
                 formData.additionalColumnsFix = [{ amount: 100, bonus: 0,amountMaxWithDrow:0 },{ amount: 200, bonus: 0,amountMaxWithDrow:0 }] as { amount: number; bonus: number; amountMaxWithDrow:number }[];
                 formData.additionalColumnsScale = [{ amount: 0, bonus: 0,amountMaxWithDrow:0 },{ amount: 100, bonus: 0,amountMaxWithDrow:0 },{ amount: 200, bonus: 0 ,amountMaxWithDrow:0}]as { amount: number; bonus: number; amountMaxWithDrow:number}[];
                 formData.turn = {
-                                    football:0,
-                                    casino:0,
-                                    game:0,
-                                    lotto:0,
-                                    parlay:0,
-                                    m2:0,
-                                    multiplePlayer:0,
-                                    poker:0,
-                                    eSport:0,
-                                    keno:0,
-                                    step:0,
-                                    trading:0,
+                    casino:0,
+                    game:0,
+                    fishing:0,
+                    sportsbook:0,
+                    trading:0,
+                    card:0,
+                    lotto:0,
+                    keno:0,
+                    esport:0,
+                    poker:0,
                                 };
                 formData.image =  null as any
             }else{
-                console.log('22222222222222');
-                console.log(newValue);
                 action.value ="edit";
 
                 formData.id = newValue.id;
@@ -594,9 +575,15 @@
                 };
                 formData.day = newValue.open_data;
                 formData.week = newValue.open_data;
-                formData.additionalColumns = newValue.condition_data;
-                formData.additionalColumnsFix = newValue.condition_data;
-                formData.additionalColumnsScale = newValue.condition_data;
+                if(formData.typeDeposit == "1"){
+                    formData.additionalColumns = newValue.condition_data;
+                    formData.additionalColumnsFix = [{ amount: 100, bonus: 0,amountMaxWithDrow:0 },{ amount: 200, bonus: 0,amountMaxWithDrow:0 }];
+                    formData.additionalColumnsScale = [{ amount: 100, bonus: 0,amountMaxWithDrow:0 },{ amount: 200, bonus: 0,amountMaxWithDrow:0 }];
+                }else{
+                    formData.additionalColumns = { amount: 0, bonus: 0,amountMaxWithDrow:0 };
+                    formData.additionalColumnsFix = newValue.condition_data;
+                    formData.additionalColumnsScale = newValue.condition_data;
+                }
                 formData.turn = newValue.turn;
                 formData.image = newValue.image
             }

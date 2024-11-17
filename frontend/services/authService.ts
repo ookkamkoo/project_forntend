@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { notifyStore } from '~/store/index';
 
 export interface UserData {
     name: string;
@@ -29,22 +30,31 @@ export async function login(Username: string, Password: string, Twofactor: strin
 }
 
 export async function checkToken(token: string): Promise<boolean> {
-  const config = useRuntimeConfig();
-  const url = config.public.serviceUrls;
-
-  try {
-        await axios.get<{ token: string }>(
-            `${url}/auth/check-token`,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
-        );
-        return true;
-  } catch (error : any) {
-        return false;
-  }
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+    const notify = notifyStore();
+  
+    try {
+      const { data } = await axios.post(
+        `${url}/auth/check-token`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
+      // อัปเดต notify ใน store ด้วยข้อมูลจาก data.notify
+      if (data.status == "success") {
+        notify.setNotify(data.data.notify);
+        notify.setSetting(data.data.setting);
+      }
+  
+      return true;
+    } catch (error: any) {
+      return false;
+    }
 }
 
 export async function setPinUser(keyRef:string,pin:string): Promise<any> {

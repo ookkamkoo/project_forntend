@@ -83,20 +83,32 @@ export async function getRoleUserServices(): Promise<getRoleUserResponse> {
   }
 }
 
-export async function createUser(data: userCreate): Promise<getRoleUserResponse> {
+export async function createUser(data: any): Promise<getRoleUserResponse> {
   const config = useRuntimeConfig()
   const url = config.public.serviceUrls;
 
-  const body: userCreate = {
+  var OpenData = '';
+  if(data.dayOpen == '2'){
+      OpenData = data.week;
+  }else if(data.dayOpen == '3'){
+      OpenData = data.day;
+  }
+
+  const body = {
     "name": data.name,
     "username": data.username,
     "password": data.password,
-    "roleId": data.roleId
+    "roleId": data.roleId,
+    "typeOpen": parseInt(data.dayOpen,10),
+    "openData": OpenData,
+    "timeOpenClose":parseInt(data.timeOpen,10),
+    "time":data.time,
   }
   const headers = {
     Authorization: `Bearer ${getToken()}`
   };
-
+  console.log(body);
+  
   try {
     const response = await axios.post<getRoleUserResponse>(`${url}/user/create`, body, { headers });
     return response.data;
@@ -163,15 +175,26 @@ export async function deleteUser(id: number): Promise<getRoleUserResponse> {
   }
 }
 
-export async function editUser(data: userEdit): Promise<getRoleUserResponse> {
+export async function editUser(data: any): Promise<getRoleUserResponse> {
   const config = useRuntimeConfig()
   const url = config.public.serviceUrls;
 
-  const body: userCreate = {
+  var OpenData = '';
+  if(data.dayOpen == '2'){
+      OpenData = data.week;
+  }else if(data.dayOpen == '3'){
+      OpenData = data.day;
+  }
+
+  const body = {
     "name": data.name,
     "username": data.username,
     "password": data.password,
-    "roleId": data.roleId
+    "roleId": data.roleId,
+    "typeOpen": parseInt(data.dayOpen,10),
+    "openData": OpenData,
+    "timeOpenClose":parseInt(data.timeOpen,10),
+    "time":data.time,
   }
   const headers = {
     Authorization: `Bearer ${getToken()}`

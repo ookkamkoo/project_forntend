@@ -9,5 +9,10 @@ export const Alert = (status: string,text: string) => {
       title: 'เกิดข้อผิดพลาด!',
       content: text,
     });
+  }else if(status == "warning"){
+    return Modal.warning({
+      title: 'เกิดข้อผิดพลาด!',
+      content: text,
+    });
   }
 }

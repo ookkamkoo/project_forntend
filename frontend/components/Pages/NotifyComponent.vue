@@ -1,7 +1,7 @@
 <template>
     <div>
-      <a-modal v-model:open="open" width="900px" :title="active ? 'เพิ่มโปรโมชั่น' : 'แก้ไขโปรโมชั่น'" :closable="true">
-         <FormPromoteForm :closeModal="closeModal" :promotionEdit="promotionEdit" :getPromotions="getPromotions"/>
+      <a-modal v-model:open="open" width="900px" :title="active ? 'เพิ่มประกาศ' : 'แก้ไขประกาศ'" :closable="true">
+         <FormNotifyForm :closeModal="closeModal" :newEdit="newEdit" :getNews="getNews"/>
          <template #footer></template>
       </a-modal>
     </div>
@@ -12,7 +12,7 @@
       </a-col>
     </a-row>
     <a-table 
-        :columns="dynamicColumns"
+      :columns="dynamicColumns"
       :data-source="dataShow"
       bordered
       size="small"
@@ -27,24 +27,14 @@
                 <a-button class="danger" type="primary" @click="onDelete(record)"><DeleteOutlined /></a-button>
             </a-flex>
           </template>
-          <template v-else-if="column.key === 'image'">
-            <a-image
-              width="100%"
-              :src="config.public.serviceUrls +'/'+ record.image"
-            />
-          </template>
           <template v-else-if="column.key === 'name'">
             <div>{{ record.name }}</div>
           </template>
-          <template v-else-if="column.key === 'type'">
-            <div>{{ Constants.optionsType[record.type-1].label }}</div>
-          </template>
-          <template v-else-if="column.key === 'bonus_type'">
-            <div>{{ Constants.optionsTypeBonus[record.type-1].label }}</div>
-          </template>
-          <template v-else-if="column.key === 'type_open'">
-            <div>{{ Constants.optionsDayOpen[record.type-1].label }}</div>
-            <div v-if="Constants.optionsDayOpen[record.type-1].value == '2'">{{ record.open_data }}</div>
+          <template v-else-if="column.key === 'image'">
+            <a-image
+              width="100%"
+              :src="config.public.serviceUrls +'/'+record.image"
+            />
           </template>
           <template v-else-if="column.key === 'date'">
             <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
@@ -53,7 +43,7 @@
             <a-switch v-model:checked="record.is_active" @change="updateStatus(record.name,record.is_active,record.id,index)"/>
           </template>
           <template v-else-if="column.key === 'CreatedBySearch'">
-            <div>{{ record.CreatedBySearch.name }}</div>
+            <div>{{ record.created_by_name }}</div>
           </template>
       </template>
     </a-table>
@@ -63,9 +53,8 @@
   import { ref,createVNode } from 'vue';
   import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   import dayjs, { Dayjs } from 'dayjs';
-  import { deletePromotion, getPromotion,updateStatuPromotion } from '~/services/promotionServices';
+  import { getNotifyServices,updateStatuNotify,deleteNotifyServices } from '~/services/notifyServices';
   import { Alert } from '../Alert/alertComponent';
-  import * as Constants from '../Constants/Constants';
   const config = useRuntimeConfig()
 
   const open = ref<boolean>(false);
@@ -86,9 +75,7 @@ const dynamicColumns = computed(() => {
       children: [
         { title: 'ชื่อ', width: 100, dataIndex: 'name', key: 'name',  },
         { title: 'รูป', width: 70, dataIndex: 'image', key: 'image',  },
-        { title: 'ประเภท', width: 100, dataIndex: 'type', key: 'type',  },
-        { title: 'ประเภทโบนัส', width: 100, dataIndex: 'bonus_type', key: 'bonus_type' },
-        { title: 'วันเปิดรับ', width: 100, dataIndex: 'type_open', key: 'type_open' },
+        { title: 'ลำดับ', width: 100, dataIndex: 'priority', key: 'priority',  },
         { title: 'สถานะ', width: 100, dataIndex: 'is_active', key: 'is_active',  },
         { title: 'วันที่', width: 100, dataIndex: 'date', key: 'date' },
         { title: 'สร้างโดย', width: 100, dataIndex: 'CreatedBySearch', key: 'CreatedBySearch',  },
@@ -106,7 +93,7 @@ const closeModal = () => {
   open.value = false;
 };
 
-const promotionEdit = ref<any>();
+const newEdit = ref<any>();
 
 
 const updateStatus = async(name: string,status: boolean,id: number,index: number) =>{
@@ -123,12 +110,12 @@ const updateStatus = async(name: string,status: boolean,id: number,index: number
         content: createVNode('div', { key: 'content' }, [`เปลี่ยนสถานะของ ${name} เป็น ${is_active}`]),
         async onOk() {
             loading.value = true;
-            const data = await updateStatuPromotion(id, status);
+            const data = await updateStatuNotify(id, status);
             if (data.status == 'success') {
                 Alert("success", "เปลี่ยนสถานะเรียบร้อย.");
-                getPromotions();
+                getNotifyServices();
             } else {
-                getPromotions();
+              getNotifyServices();
                 Alert("error", data.message);
             }
             loading.value = false;
@@ -144,14 +131,13 @@ const updateStatus = async(name: string,status: boolean,id: number,index: number
 
 const onEdit = (data:any) => {
     active.value = false;
-    promotionEdit.value = data
-        
+    newEdit.value = data
     showModal();
 }
 
 const onDelete = (record:any) => {
   Modal.confirm({
-        title: 'คุณต้องการลบโปรโมชั่น ใช่หรือไหม?',
+        title: 'คุณต้องลบโปรโมชั่น ใช่หรือไหม?',
         icon: createVNode(ExclamationCircleOutlined),
         content: `ลบโปรโมชั่น ชื่อ ${record.name}`,
         okText: 'OK',
@@ -159,10 +145,10 @@ const onDelete = (record:any) => {
         cancelText: 'No',
         async onOk() {
             loading.value = true;
-            const data = await deletePromotion(record.id);
+            const data = await deleteNotifyServices(record.id);
             if (data.status == 'success') {
                 Alert("success", `ลบโปรโมชั่น ${record.name} เรียบร้อย.`);
-                getPromotions();
+                getNews();
             } else {
                 Alert("error", data.message);
             }
@@ -174,8 +160,8 @@ const onDelete = (record:any) => {
     });
 }
 
-const getPromotions = async() =>{
-  const data = await getPromotion();
+const getNews = async() =>{
+  const data = await getNotifyServices();
   if (data.status === "success") {
       dataShow.value = data.data.data;
       allRecord.value = data.data.records_total;
@@ -186,7 +172,7 @@ const getPromotions = async() =>{
 }
 
 onMounted(() => {
-  getPromotions();
+  getNews();
 });
 
 </script>

@@ -193,8 +193,8 @@
   import type { Bank,Market } from '~/services/memberServices';
   
   const open = ref<boolean>(false);
-  const memberDetail = ref<boolean>(true);
-  const memberDetailId = ref<number>(1);
+  const memberDetail = ref<boolean>(false);
+  const memberDetailId = ref<number>(0);
   const active = ref<boolean>(true);
   const allRecord = ref<number>(0);
   const loading = ref(true);
@@ -258,7 +258,7 @@ let formData = reactive({
     market_list:ref<Market[]>([]),
     market:ref<number>(0),
     data_search:ref<string>(''),
-    dateSelect:ref<string>('Today'),
+    dateSelect:ref<string>('all'),
     page:ref<number>(1),
     pageSize:ref<number>(10),
     memberEdit:ref<any>(),
@@ -406,6 +406,7 @@ const getConfigServices = async() => {
 }
 
 onMounted(() => {
+    handleDateSelectChange();
     getMember();
     getConfigServices();
 });

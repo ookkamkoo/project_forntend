@@ -26,6 +26,22 @@ export async function getSettingServices(): Promise<getResponse> {
     }
 }
 
+export async function updateServerStatusServices(): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    
+    try {
+        const response = await axios.post<getResponse>(`${url}/setting/updated-server`,{}, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 export async function setSetting(data:any,page:string): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
@@ -39,6 +55,8 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
     let body = {};
     if(page == '1'){
         setting = "website";
+        console.log(data.bgColor);
+        
         body = {
             title: data.titleWebsite ? data.titleWebsite.toString() : "",
             description: data.discriptionsWebsite ? data.discriptionsWebsite.toString() : "",
@@ -47,6 +65,9 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
             websiteLine: data.websiteLine ? data.websiteLine.toString() : "",
             imageWebsite: data.imageWebsite ? data.imageWebsite.toString() : "",
             imageLogoWebsite: data.imageLogoWebsite ? data.imageLogoWebsite.toString() : "",
+            bgImageSw: data.bgImageSw ? data.bgImageSw.toString() : "false",
+            bgColor: data.bgColor ? data.bgColor.toString() : "",
+            bgImage: data.bgImage ? data.bgImage.toString() : "",
             clearWithdrawMin: data.clearWithdrawMin ? data.clearWithdrawMin.toString() : "",
             turnWithdrawNormal: data.turnWithdrawNormal ? data.turnWithdrawNormal.toString() : "",
             passwordCustomer: data.password ? data.password.toString() : "",
@@ -62,44 +83,52 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
 
         let detailDeposit = '';
         if(Constants.optionsFee[data.typeDepositFee-1].label == "ปกติ"){
+            data.depostDetailNormal.fee = data.depostDetailNormal_fee 
+            data.depostDetailNormal.amountMaxFee = data.depostDetailNormal_amountMaxFee 
             detailDeposit = data.depostDetailNormal
         }else if(Constants.optionsFee[data.typeDepositFee-1].label == "กำหนดเอง"){
             detailDeposit = data.depostDetailScal
         }
 
+        if (typeof data.withdrawDetailNormal !== 'object' || data.withdrawDetailNormal === null) {
+            data.withdrawDetailNormal = {};
+        }
+
         let detailWithdraw = '';
-        if(Constants.optionsFee[data.typeDepositFee-1].label == "ปกติ"){
-            detailWithdraw = data.WithdrawDetailNormal
-        }else if(Constants.optionsFee[data.typeDepositFee-1].label == "กำหนดเอง"){
-            detailWithdraw = data.WithdrawDetailScal
+        if(Constants.optionsFee[data.typeWithdrawFee-1].label == "ปกติ"){
+            data.withdrawDetailNormal.fee = data.withdrawDetailNormal_fee 
+            data.withdrawDetailNormal.amountMaxFee = data.withdrawDetailNormal_amountMaxFee
+            detailWithdraw = data.withdrawDetailNormal
+        }else if(Constants.optionsFee[data.typeWithdrawFee-1].label == "กำหนดเอง"){
+            detailWithdraw = data.withdrawDetailScal
         }
 
         body = {
-            depositStatus: data.depositStatus ? data.depositStatus.toString() : "",
-            memberCreateDeposit: data.memberCreateDeposit ? data.memberCreateDeposit.toString() : "",
+            depositStatus: data.depositStatus ? data.depositStatus.toString() : "false",
+            memberCreateDeposit: data.memberCreateDeposit ? data.memberCreateDeposit.toString() : "false",
             depositMin: data.depositMin ? data.depositMin.toString() : "",
             depositMax: data.depositMax ? data.depositMax.toString() : "",
-            depositFee: data.depositFee ? data.depositFee.toString() : "",
+            depositFee: data.depositFee ? data.depositFee.toString() : "false",
             typeDepositFee: data.typeDepositFee ? data.typeDepositFee.toString() : "",
             typeDepositFeeAmountOrPerCent: data.typeDepositFeeAmountOrPerCent ? data.typeDepositFeeAmountOrPerCent.toString() : "",
             depostDetail: JSON.stringify(detailDeposit) ? JSON.stringify(detailDeposit).toString() : "",
-            withdrawStatus: data.statusWithdraw ? data.statusWithdraw.toString() : "",
-            withdrawAll: data.withdrawAll ? data.withdrawAll.toString() : "",
+            withdrawStatus: data.statusWithdraw ? data.statusWithdraw.toString() : "false",
+            withdrawAll: data.withdrawAll ? data.withdrawAll.toString() : "false",
             withdrawMin: data.withdrawMin ? data.withdrawMin.toString() : "",
             withdrawMax: data.withdrawMax ? data.withdrawMax.toString() : "",
             withdrawMaxDay: data.withdrawMaxDay ? data.withdrawMaxDay.toString() : "",
             withdrawAround: data.withdrawAround ? data.withdrawAround.toString() : "",
-            withdrawFee: data.withdrawFee ? data.withdrawFee.toString() : "",
+            withdrawFee: data.withdrawFee ? data.withdrawFee.toString() : "false",
             typeWithdrawFee: data.typeWithdrawFee ? data.typeWithdrawFee.toString() : "",
             typeWithdrawFeeAmountOrPerCent: data.typeWithdrawFeeAmountOrPerCent ? data.typeWithdrawFeeAmountOrPerCent.toString() : "",
             withdrawDetail:JSON.stringify(detailWithdraw) ? JSON.stringify(detailWithdraw).toString() : "",
-            withdrawAuto: data.withdrawAuto ? data.withdrawAuto.toString() : "",
-            tranferAuto: data.tranferAuto ? data.tranferAuto.toString() : "",
+            withdrawAuto: data.withdrawAuto ? data.withdrawAuto.toString() : "false",
+            tranferAuto: data.tranferAuto ? data.tranferAuto.toString() : "false",
         };
     }else if(page == '3'){
         setting = "automatic";
         body = {
-            refundLost: data.refundLost ? data.refundLost.toString() : "",
+            refundLost: data.refundLost ? data.refundLost.toString() : "false",
             typeRefundLost: data.typeRefundLost ? data.typeRefundLost.toString() : "",
             refundLostPercent: data.refundLostPercent ? data.refundLostPercent.toString() : "",
             typeRefundLostSet: data.typeRefundLostSet ? data.typeRefundLostSet.toString() : "",
@@ -108,7 +137,7 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
             refundLostMax: data.refundLostMax ? data.refundLostMax.toString() : "",
             typeRefundLostdate: data.typeRefundLostdate ? data.typeRefundLostdate.toString() : "",
             refundLostdate: data.optionRefundLostDate ? data.optionRefundLostDate.toString() : "",
-            recommend: data.recommend ? data.recommend.toString() : "",
+            recommend: data.recommend ? data.recommend.toString() : "false",
             typeRecommend: data.typeRecommend ? data.typeRecommend.toString() : "",
             recommendPercent: data.recommendPercent ? data.recommendPercent.toString() : "",
             recommendTurn: data.recommendTurn ? data.recommendTurn.toString() : "",
@@ -120,16 +149,16 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
     }else if(page == '4'){
         setting = "notify";
         body = {
-            notifyLineStatus: data.notifyLineStatus ? data.notifyLineStatus.toString() : "",
+            notifyLineStatus: data.notifyLineStatus ? data.notifyLineStatus.toString() : "false",
             notifyLineSummary: data.notifyLineSummary ? data.notifyLineSummary.toString() : "",
             notifyLineRegismember: data.notifyLineRegismember ? data.notifyLineRegismember.toString() : "",
             notifyLineDeposit: data.notifyLineDeposit ? data.notifyLineDeposit.toString() : "",
             notifyLineDepositList: data.notifyLineDepositList ? data.notifyLineDepositList.toString() : "",
             notifyLineWithdraw: data.notifyLineWithdraw ? data.notifyLineWithdraw.toString() : "",
             notifyLineWithdrawList: data.notifyLineWithdrawList ? data.notifyLineWithdrawList.toString() : "",
-            notifySoundDepositStatus: data.notifySoundDepositStatus ? data.notifySoundDepositStatus.toString() : "",
+            notifySoundDepositStatus: data.notifySoundDepositStatus ? data.notifySoundDepositStatus.toString() : "false",
             notifySoundDeposit: data.notifySoundDeposit ? data.notifySoundDeposit.toString() : "",
-            notifySoundWithdrawStatus: data.notifySoundWithdrawStatus ? data.notifySoundWithdrawStatus.toString() : "",
+            notifySoundWithdrawStatus: data.notifySoundWithdrawStatus ? data.notifySoundWithdrawStatus.toString() : "false",
             notifySoundWithdraw: data.notifySoundWithdraw ? data.notifySoundWithdraw.toString() : "",
         };
     }

@@ -29,7 +29,7 @@
       <template #bodyCell="{ column, record, index }">
           <template v-if="column.key === 'operation'">
             <a-flex gap="small" :justify="'center'" horizontal>
-                <a-button v-if="column.key" class="warning" type="primary" @click="onEdit(record.id,record.name,record.username,record.role.id)"><FormOutlined /></a-button>
+                <a-button v-if="column.key" class="warning" type="primary" @click="onEdit(record)"><FormOutlined /></a-button>
                 <a-button class="danger" type="primary" @click="onDelete(record.id,record.name)"><DeleteOutlined /></a-button>
             </a-flex>
           </template>
@@ -142,14 +142,21 @@ const closeModal = () => {
     open.value = false;
 };
 
-const onEdit = (id: number, name: string, username: string, roleId: string) => {
+const onEdit = (data :any) => {
     active.value = false;
     editData.value = {
-        id: id,
-        name: name,
-        username: username,
-        roleId: roleId
+        id: data.id,
+        name: data.name,
+        username: data.username,
+        roleId: data.role.id,
+        time_open_close: data.time_open_close,
+        time_open: data.time_open,
+        time_close: data.time_close,
+        type_open: data.type_open,
+        open_data: data.open_data,
     };
+    console.log(editData);
+    
     showModal();
 };
 

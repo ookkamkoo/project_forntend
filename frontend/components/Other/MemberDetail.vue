@@ -59,6 +59,9 @@
 
                 <span v-if="show_data == 5"><a-button type="primary" class="select-member-detail" @click="show_data = 5">รายการเล่นเกมส์</a-button></span>
                 <span v-else><a-button type="primary" class="select-member-detail" @click="show_data = 5" ghost>รายการเล่นเกมส์</a-button></span>
+
+                <span v-if="show_data == 6"><a-button type="primary" class="select-member-detail" @click="show_data = 6">ตั้งค่า Pg100 ต่อยูส</a-button></span>
+                <span v-else><a-button type="primary" class="select-member-detail" @click="show_data = 6" ghost>ตั้งค่า Pg100 ต่อยูส</a-button></span>
             </a-row>
         </a-col>
     </a-row>
@@ -192,6 +195,9 @@
     </a-row>
     <a-row v-if="show_data == 5">
         <TableTablesMemberPlay :id="data.id"/>
+    </a-row>
+    <a-row v-if="show_data == 6">
+        <TableTablesPg100Setting :id="data.id"/>
     </a-row>
 </template>
 <script lang="ts" setup>

@@ -129,6 +129,51 @@
                             </a-upload-dragger>
                     </a-col>
                 </a-row>
+                <a-row>
+                    <a-col :span="24" :md="24" class="p-3">
+                        <b>ใช้งานภาพพื้นหลัง</b> 
+                    </a-col>
+                    <a-col :span="24" :md="24" class="p-3">
+                        <a-switch v-model:checked="formData.bgImageSw" />
+                    </a-col>
+                </a-row>
+                <a-row v-if="formData.bgImageSw">
+                    <a-col :span="24" :md="12" class="p-3 my-2">
+                        <label for="clearWithdrawMin"><b  class="request">ภาพพื้นหลัง ขนาด ( w3 : h1 ) แนวนอนดีที่สุด</b></label>
+                        <div v-if="!ImageTextBgImage" class="close-image" @click="clearPreviewImageBgImage">
+                            <CloseCircleOutlined />
+                        </div>
+                        <a-upload-dragger
+                                v-model:fileList="fileListBgImage"
+                                name="file"
+                                :showUploadList=false
+                                class="image-upload"
+                                @change="handleChangeBgImage"
+                            >
+                                <div class="image-upload-text">
+                                    <div v-if="ImageTextBgImage">
+                                        <p class="ant-upload-drag-icon">
+                                            <inbox-outlined></inbox-outlined>
+                                        </p>
+                                        <p class="ant-upload-text">Click or drag file to this area to upload</p>
+                                        <p class="ant-upload-hint">
+                                            โปรดเช็คขนาดไฟล์ในการอัปโหลด ขนาดเเนะนำ w3:h1 ไฟล์ PNG JPG JPEG
+                                        </p>
+                                    </div>
+                                </div>
+                                <div v-if="previewImageBgImage" class="preview-image-container">
+                                    <img :src="previewImageBgImage" class="preview-image" style="width: 350px;">
+                                </div>
+                            </a-upload-dragger>
+                    </a-col>
+                </a-row>
+                <a-row v-if="!formData.bgImageSw">
+                    <a-col :span="24" :md="12" class="p-3 my-2">
+                        <a-form-item label="เลือกสีพื้นหลัง">
+                            <a-input v-model:value="formData.bgColor" type="color" @input="showColor" />
+                        </a-form-item>
+                    </a-col>
+                </a-row>
                 <h2>ทั่วไป</h2>
                 <a-row>
                     <a-col :span="12" :md="12" class="p-3">
@@ -167,7 +212,7 @@
                     <b>เเสดงเบอร์โทรศัพท์ลูกค้า</b> 
                     </a-col>
                     <a-col :span="24" :md="24" class="p-3">
-                    <a-switch v-model:checked="formData.showUsername" />
+                        <a-switch v-model:checked="formData.showUsername" />
                     </a-col>
                 </a-row>
                 <h2>การยืนยันตัวตนหลังบ้าน</h2>
@@ -188,13 +233,13 @@
                     <b>สถานะการสมัคร</b> 
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
-                    <b>สถานะดึงชื่อลูกค้า</b> 
+                    <!-- <b>สถานะดึงชื่อลูกค้า</b>  -->
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
                     <a-switch v-model:checked="formData.registerStatus" />
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
-                    <a-switch v-model:checked="formData.getNameMember" />
+                    <!-- <a-switch v-model:checked="formData.getNameMember" /> -->
                     </a-col>
                 </a-row>
                 <a-row>
@@ -238,10 +283,10 @@
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
                         <a-col :span="24" :md="24">
-                        <b>ฝากเงินโดยการทำรายการ</b>
+                        <!-- <b>ฝากเงินโดยการทำรายการ</b> -->
                         </a-col>
                         <a-col :span="24" :md="24" >
-                        <a-switch v-model:checked="formData.memberCreateDeposit" />
+                        <!-- <a-switch v-model:checked="formData.memberCreateDeposit" /> -->
                         </a-col>
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
@@ -289,25 +334,23 @@
                         ></a-select>
                     </a-col>
                     <a-col :span="24" :md="24" class="p-3 p-rl-5" v-if="formData.depositFee">
-                        <a-row v-if="formData.typeDepositFee ==  1">
+                        <a-row v-if="formData.typeDepositFee == 1">
                             <a-col :span="12" :md="12" class="p-3">
                                 <label for="ค่าธรรมเนียม"><b class="request">ค่าธรรมเนียม ( {{ Constants.optionsTypeBonus[Number(formData.typeDepositFeeAmountOrPerCent) - 1].label }} )</b></label>
                                 <a-form-item 
-                                    ref="depostDetailNormal.fee" 
-                                    name="depostDetailNormal.fee"
+                                    name="depostDetailNormal_fee"
                                     :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
                                     >
-                                    <a-input-number v-model:value="formData.depostDetailNormal.fee"/>
+                                    <a-input-number v-model:value="formData.depostDetailNormal_fee"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="12" :md="12" class="p-3" v-if="formData.typeDepositFeeAmountOrPerCent == '1'">
-                                <label for="ฝากเงินขั้นต่ำ"><b  class="request">ค่าธรรมเนียมสูงสุด</b></label>
+                                <label for="ฝากเงินขั้นต่ำ"><b  class="request">ค่าธรรมเนียมสูงสุด (จำนวนเงิน)</b></label>
                                 <a-form-item 
-                                    ref="depostDetailNormal.amountMaxFee" 
-                                    name="depostDetailNormal.amountMaxFee"
+                                    name="depostDetailNormal_amountMaxFee"
                                     :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียมสูงสุด!' }]"
                                     >
-                                    <a-input-number v-model:value="formData.depostDetailNormal.amountMaxFee"/>
+                                    <a-input-number v-model:value="formData.depostDetailNormal_amountMaxFee"/>
                                 </a-form-item>
                             </a-col>
                         </a-row>
@@ -324,9 +367,8 @@
                                         <div class="mx-1 my-1">
                                             <label for="ฝากเงิน"><b class="request">ฝากเงิน</b></label>
                                             <a-form-item 
-                                                ref="column.amount" 
                                                 name="column.amount"
-                                                :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
+                                                :rules="[{ required: false, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
                                                 >
                                                 <a-input-number v-model:value="column.amount"/>
                                             </a-form-item>
@@ -336,9 +378,8 @@
                                         <div class="mx-1 my-1">
                                             <label for="ค่าธรรมเนียม"><b class="request">ค่าธรรมเนียม ( {{ Constants.optionsTypeBonus[Number(formData.typeDepositFeeAmountOrPerCent) - 1].label }} )</b></label>
                                             <a-form-item 
-                                                ref="column.fee" 
                                                 name="column.fee"
-                                                :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
+                                                :rules="[{ required: false, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
                                                 >
                                                 <a-input-number v-model:value="column.fee"/>
                                             </a-form-item>
@@ -346,11 +387,11 @@
                                     </a-col>
                                     <a-col :span="24" :md="7" v-if="formData.typeDepositFeeAmountOrPerCent == '1'">
                                         <div class="mx-1 my-1">
-                                            <label for="ค่าธรรมเนียมสูงสุด"><b class="request">ค่าธรรมเนียมสูงสุด</b></label>
+                                            <label for="ค่าธรรมเนียมสูงสุด"><b class="request">ค่าธรรมเนียมสูงสุด (จำนวนเงิน)</b></label>
                                             <a-form-item 
-                                                ref="column.amountMaxFee" 
+                                                :ref="'column.amountMaxFee'" 
                                                 name="column.amountMaxFee"
-                                                :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
+                                                :rules="[{ required: false, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
                                                 >
                                                 <a-input-number v-model:value="column.amountMaxFee"/>
                                             </a-form-item>
@@ -454,28 +495,26 @@
                     <a-col :span="24" :md="24" class="p-3 p-rl-5" v-if="formData.withdrawFee">
                         <a-row v-if="formData.typeWithdrawFee ==  1">
                             <a-col :span="12" :md="12" class="p-3">
-                                <label for="ค่าธรรมเนียม"><b class="request">ค่าธรรมเนียม ( {{ Constants.optionsTypeBonus[Number(formData.typeWithdrawFeeAmountOrPerCent) - 1].label }} )</b></label>
+                                <label for="ค่าธรรมเนียม"><b class="request">ค่าธรรมเนียม ( {{ Constants.optionsTypeBonus[Number(formData.typeWithdrawFee) - 1].label }} )</b></label>
                                 <a-form-item 
-                                    ref="depostDetailNormal.fee" 
-                                    name="depostDetailNormal.fee"
+                                    name="withdrawDetailNormal_fee"
                                     :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
                                     >
-                                    <a-input-number v-model:value="formData.depostDetailNormal.fee"/>
+                                    <a-input-number v-model:value="formData.withdrawDetailNormal_fee"/>
                                 </a-form-item>
                             </a-col>
                             <a-col :span="12" :md="12" class="p-3" v-if="formData.typeWithdrawFeeAmountOrPerCent == '1'">
-                                <label for="ฝากเงินขั้นต่ำ"><b  class="request">ค่าธรรมเนียมสูงสุด</b></label>
+                                <label for="ฝากเงินขั้นต่ำ"><b  class="request">ค่าธรรมเนียมสูงสุด (จำนวนเงิน)</b></label>
                                 <a-form-item 
-                                    ref="depostDetailNormal.amountMaxFee" 
-                                    name="depostDetailNormal.amountMaxFee"
+                                    name="withdrawDetailNormal_amountMaxFee"
                                     :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียมสูงสุด!' }]"
                                     >
-                                    <a-input-number v-model:value="formData.WithdrawDetailNormal.amountMaxFee"/>
+                                    <a-input-number v-model:value="formData.withdrawDetailNormal_amountMaxFee"/>
                                 </a-form-item>
                             </a-col>
                         </a-row>
                         <a-row v-if="formData.typeWithdrawFee ==  2">
-                            <a-col v-for="(column, index) in formData.WithdrawDetailScal" :key="index" :span="24" :md="24">
+                            <a-col v-for="(column, index) in formData.withdrawDetailScal" :key="index" :span="24" :md="24">
                                 <a-row>
                                     <a-col :span="24" :md="3">
                                         <br>
@@ -489,7 +528,7 @@
                                             <a-form-item 
                                                 ref="column.amount" 
                                                 name="column.amount"
-                                                :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
+                                                :rules="[{ required: false, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
                                                 >
                                                 <a-input-number v-model:value="column.amount"/>
                                             </a-form-item>
@@ -501,7 +540,7 @@
                                             <a-form-item 
                                                 ref="column.fee" 
                                                 name="column.fee"
-                                                :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
+                                                :rules="[{ required: false, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
                                                 >
                                                 <a-input-number v-model:value="column.fee"/>
                                             </a-form-item>
@@ -509,11 +548,11 @@
                                     </a-col>
                                     <a-col :span="24" :md="7" v-if="formData.typeWithdrawFeeAmountOrPerCent == '1'">
                                         <div class="mx-1 my-1">
-                                            <label for="ค่าธรรมเนียมสูงสุด"><b class="request">ค่าธรรมเนียมสูงสุด</b></label>
+                                            <label for="ค่าธรรมเนียมสูงสุด"><b class="request">ค่าธรรมเนียมสูงสุด (จำนวนเงิน)</b></label>
                                             <a-form-item 
                                                 ref="column.amountMaxFee" 
                                                 name="column.amountMaxFee"
-                                                :rules="[{ required: true, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
+                                                :rules="[{ required: false, message: 'โปรดกรอกค่าธรรมเนียม!' }]"
                                                 >
                                                 <a-input-number v-model:value="column.amountMaxFee"/>
                                             </a-form-item>
@@ -538,14 +577,14 @@
                         <a-switch v-model:checked="formData.withdrawAuto" />
                         </a-col>
                     </a-col>
-                    <a-col :span="24" :md="24" class="p-3">
+                    <!-- <a-col :span="24" :md="24" class="p-3">
                         <a-col :span="24" :md="24">
                         <b>โยกเงินอัตโนมัติ</b> 
                         </a-col>
                         <a-col :span="24" :md="24" >
                         <a-switch v-model:checked="formData.tranferAuto" />
                         </a-col>
-                    </a-col>
+                    </a-col> -->
                 </a-row>
                 <br>
                 <a-row justify="end">
@@ -918,16 +957,20 @@
   import { setSetting,getSettingServices } from '~/services/settingService';
   import * as Constants from '../Constants/Constants';
   import { Alert } from '../Alert/alertComponent';
+  const config = useRuntimeConfig()
 
   const all = ref(false);
 
-  const activeKey = ref('3');
+  const activeKey = ref('4');
   const fileList = ref([]);
   const fileListLogo = ref([]);
+  const fileListBgImage = ref([]);
   const previewImage = ref('');
   const previewImageLogo = ref('');
+  const previewImageBgImage = ref('');
   const ImageText = ref(true);
   const ImageTextLogo = ref(true);
+  const ImageTextBgImage = ref(true);
 
   let formData = reactive({
       // page1 
@@ -939,6 +982,9 @@
       websiteLine:'',
       imageWebsite: null as any,
       imageLogoWebsite: null as any,
+      bgImageSw:true,
+      bgColor: '#ffffff',
+      bgImage:null as any,
       clearWithdrawMin:5,
       turnWithdrawNormal:0,
       password: 'asdf123456',
@@ -955,10 +1001,12 @@
       depositMin: '1',
       depositMax: '50000',
       depositFee:false,
-      typeDepositFee:1,
+      typeDepositFee: 1,
       typeDepositFeeAmountOrPerCent:'1',
+      depostDetailNormal_fee:'0',
+      depostDetailNormal_amountMaxFee:'0',
       depostDetailNormal:{ fee: 10,amountMaxFee:100 },
-      depostDetailScal:[{ amount: 0,fee:10,amountMaxFee:10 },{ amount: 100,fee:5,amountFee:5 },{ amount: 200,fee:1,amountMaxFee:1 }],
+      depostDetailScal:[{ amount: 0,fee:10,amountMaxFee:10 },{ amount: 100,fee:5,amountMaxFee:5 },{ amount: 200,fee:1,amountMaxFee:1 }],
       
       statusWithdraw: true,
       withdrawAll: true,
@@ -967,10 +1015,12 @@
       withdrawMaxDay: 100000,
       withdrawAround: 20,
       withdrawFee:false,
-      typeWithdrawFee:1,
+      typeWithdrawFee: 1,
       typeWithdrawFeeAmountOrPerCent:'1',
-      WithdrawDetailNormal:{ fee: 10,amountMaxFee:100 },
-      WithdrawDetailScal:[{ amount: 0,fee:10,amountMaxFee:10 },{ amount: 100,fee:5,amountMaxFee:5 },{ amount: 200,fee:1,amountMaxFee:1 }],
+      withdrawDetailNormal_fee:'0',
+      withdrawDetailNormal_amountMaxFee:'0',
+      withdrawDetailNormal:{ fee: '',amountMaxFee:'' },
+      withdrawDetailScal:[{ amount: 0,fee:10,amountMaxFee:10 },{ amount: 100,fee:5,amountMaxFee:5 },{ amount: 200,fee:1,amountMaxFee:1 }],
       withdrawAuto:false,
       tranferAuto:false,
       
@@ -989,7 +1039,7 @@
       typeRecommend:'1',
       recommendPercent:'1',
       recommendTurn:'1',
-      recommendTypeMemberGet:'1',
+      recommendTypeMemberGet:'2',
       recommendMin:0,
       recommendMax:1000,
       typeRecommendDate:'1',
@@ -1038,6 +1088,17 @@
       }
   };
 
+  onMounted(() => {
+    console.log("Initial Background Color:", formData.bgColor);
+});
+
+  const showColor = () => {
+    if (formData.bgColor) {
+        console.log("Selected Background Color:", formData.bgColor);
+    } else {
+        console.log("Background Color not set.");
+    }
+};
   const handleChangeLogo = async (info: UploadChangeParam) => {
       const status = info.file.status;
       const file = info.file.originFileObj; // File object
@@ -1067,6 +1128,35 @@
       }
   };
 
+  const handleChangeBgImage = async (info: UploadChangeParam) => {
+    const status = info.file.status;
+    const file = info.file.originFileObj; // File object
+
+    if (file instanceof File) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const base64String = reader.result as string;
+            if (base64String) {
+                previewImageBgImage.value = base64String; // อัปเดตค่า previewImageBgImage
+                formData.bgImage = base64String;
+            }
+        };
+        ImageTextBgImage.value = false;
+        reader.readAsDataURL(file);
+    }
+
+    if (status !== 'uploading') {
+        console.log(info.file, info.fileList);
+    }
+
+    if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+    } else if (status === 'error') {
+        message.error(`อัพโหลดรูปภาพเรียบร้อย`);
+    }
+};
+
   const clearPreviewImage = () => {
     previewImage.value = '';
     fileList.value = [];
@@ -1077,6 +1167,12 @@
     previewImageLogo.value = '';
     fileListLogo.value = [];
     ImageTextLogo.value = true;
+  };
+
+  const clearPreviewImageBgImage = () => {
+    previewImageBgImage.value = '';
+    fileListBgImage.value = [];
+    ImageTextBgImage.value = true;
   };
 
   const selectAllLost = () =>{
@@ -1121,6 +1217,9 @@
     }
 
     const onFinishFailed = (errorInfo: any) => {
+        
+        console.log(errorInfo);
+        
         Alert("error","กรุณากรอกข้อมูลให้ครบ!!")
     };
 
@@ -1133,11 +1232,11 @@
     };
 
     const addColumnScaleWithdrawFee = () => {
-        formData.WithdrawDetailScal.push({ amount: 0, fee: 0, amountMaxFee: 0 });
+        formData.withdrawDetailScal.push({ amount: 0, fee: 0, amountMaxFee: 0 });
     };
 
     const removeColumnScaleWithdrawFee  = () => {
-        formData.WithdrawDetailScal.pop();
+        formData.withdrawDetailScal.pop();
     };
 
     const getSetting = async() =>{
@@ -1158,14 +1257,21 @@
             formData.getNameMember = data.data.getName=='true'?true:false
             formData.checkName = data.data.checkDuplicateName=='true'?true:false
             formData.regisTrue = data.data.registerTruewallet=='true'?true:false
+
+            formData.bgImageSw = data.data.bgImageSw=='true'?true:false
+            formData.bgColor = data.data.bgColor
             
             if(data.data.imageWebsite != ''){
-                previewImage.value = data.data.imageWebsite;
+                previewImage.value = config.public.serviceUrls + '/'+ data.data.imageWebsite;
                 ImageText.value = false;
             }
             if(data.data.imageLogoWebsite != ''){
-                previewImageLogo.value = data.data.imageLogoWebsite;
+                previewImageLogo.value = config.public.serviceUrls + '/'+ data.data.imageLogoWebsite;
                 ImageTextLogo.value = false;
+            }
+            if(data.data.bgImage != ''){
+                previewImageBgImage.value = config.public.serviceUrls + '/'+ data.data.bgImage;
+                ImageTextBgImage.value = false;
             }
 
             // page 2
@@ -1176,10 +1282,16 @@
             formData.depositFee = data.data.depositFee=='true'?true:false
             formData.typeDepositFee = parseInt(data.data.typeDepositFee)
             formData.typeDepositFeeAmountOrPerCent = data.data.typeDepositFeeAmountOrPerCent
+            let  depostDetail = data.data.depostDetail;
+            if (typeof depostDetail === "string") {
+                depostDetail = JSON.parse(depostDetail);
+            }
+
             if(parseInt(data.data.typeDepositFee) == 1){
-                formData.depostDetailNormal = data.data.depostDetail
+                formData.depostDetailNormal_fee = depostDetail.fee
+                formData.depostDetailNormal_amountMaxFee = depostDetail.amountMaxFee
             }else{
-                formData.depostDetailScal = data.data.depostDetail
+                formData.depostDetailScal = depostDetail
             }
 
             formData.statusWithdraw = data.data.withdrawStatus=='true'?true:false
@@ -1189,14 +1301,20 @@
             formData.withdrawMaxDay = data.data.withdrawMaxDay
             formData.withdrawAround = data.data.withdrawAround
             formData.withdrawFee = data.data.withdrawFee=='true'?true:false
-            formData.typeWithdrawFee = data.data.typeWithdrawFee
+            formData.typeWithdrawFee = parseInt(data.data.typeWithdrawFee)
             formData.typeWithdrawFeeAmountOrPerCent = data.data.typeWithdrawFeeAmountOrPerCent
             formData.withdrawAuto = data.data.tranferAuto=='true'?true:false
 
-            if(parseInt(data.data.typeDepositFee) == 1){
-                formData.WithdrawDetailNormal = data.data.withdrawDetail
+            let  withdrawDetail = data.data.withdrawDetail;
+            if (typeof withdrawDetail === "string") {
+                withdrawDetail = JSON.parse(withdrawDetail);
+            }
+
+            if(parseInt(data.data.typeWithdrawFee) == 1){
+                formData.withdrawDetailNormal_fee = withdrawDetail.fee
+                formData.withdrawDetailNormal_amountMaxFee = withdrawDetail.amountMaxFee
             }else{
-                formData.WithdrawDetailScal = data.data.withdrawAuto
+                formData.withdrawDetailScal = withdrawDetail
             }
 
             // page 3
@@ -1249,8 +1367,8 @@
   }
   .close-image {
     position: absolute;
-    top: 2rem;
-    right: 1rem;
+    top: 2.5rem;
+    right: 1.5rem;
     cursor: pointer;
     font-size: 25px;
     z-index: 999;
