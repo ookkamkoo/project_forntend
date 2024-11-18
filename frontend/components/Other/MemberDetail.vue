@@ -273,6 +273,8 @@
     };
 
     watch(() => props.memberDetailId, (newValue: number) => {
+        console.log("id = "+props.memberDetailId);
+        
         if (newValue) {
             data.id = newValue;
             getMemberDetail(newValue);

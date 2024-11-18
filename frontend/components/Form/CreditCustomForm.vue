@@ -86,12 +86,17 @@
         </a-row>
         <a-row v-if="formData.creditCustomType == 3">
             <a-col :span="8" :md="8" class="p-1 my-1">
-                <label for="วันที่สลิป"><b  class="request">วันที่สลิป</b></label>
-                <a-date-picker v-model:value="formData.date" />
+                <label><b class="request">วันที่สลิป</b></label>
+                <a-date-picker 
+                    v-model:value="date" 
+                />
             </a-col>
             <a-col :span="8" :md="8" class="p-1 my-1">
-                <label for="เวลาสลิป"><b  class="request">เวลาสลิป</b></label>
-                <a-time-picker v-model:value="formData.time" :format="'HH:mm'"/>
+                <label><b class="request">เวลาสลิป</b></label>
+                <a-time-picker 
+                    v-model:value="time" 
+                    format="HH:mm"
+                />
             </a-col>
             <a-col :span="8" :md="8" class="p-1 my-1">
                 <label for="บัญชี"><b  class="request">บัญชีรับเงิน</b></label>
@@ -140,19 +145,28 @@
     import dayjs, { Dayjs } from 'dayjs';
     import { Alert } from '../Alert/alertComponent';
     
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    console.log("day = ");
-    console.log(day);
     
     const dataShow = ref<any[]>([]);
+
+    const currentDate = dayjs();
+
+    // ดึงค่า year, month, และ day
+    const year = currentDate.year(); // ปี (เช่น 2024)
+    const month = currentDate.month() + 1; // เดือน (เริ่มจาก 0, +1 เพื่อให้ตรงกับ 1-12)
+    const day = currentDate.date(); // วัน
+
+    const hour = currentDate.hour(); // ชั่วโมง
+    const minute = currentDate.minute(); // นาที
+    // const second = currentDate.second(); // วินาที
+
+    const date = ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD'));
+    // const date = ref<Dayjs>(dayjs(`2015-06-18`, 'YYYY-MM'));
+    const time = ref<Dayjs>(dayjs(`${hour}:${minute}`, 'HH:mm'));
 
     let formData = reactive({
         id: 0,
         creditCustomType:1,
-        username:'',
+        username:'agent0000001',
         amount:'',
         turn:{
             casino:1,
@@ -167,11 +181,10 @@
             poker:1,
         },
         bank_receives_id:1,
-        date:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
-        time:dayjs('00:00', 'HH:mm'),
-        remark:'',
+        date:dayjs(),
+        time:dayjs(),
+        remark:' ',
     });
-    console.log(formData.date);
     
     const props = defineProps<{
         closeModal:Function,
@@ -183,6 +196,9 @@
     };
 
     const handleSubmit = async() => {
+        console.log(formData);
+        formData.date = date.value
+        formData.time = time.value
         const data = await creditCustom(formData);
         if(data.status == "success"){
             Alert('success','เเก้ไขเครดิตลูกค้าสำเร็จ.')
@@ -214,7 +230,7 @@
         Alert("error","กรุณากรอกข้อมูลให้ครบ!!")
     };
     
-    onMounted(async () => {
+    onMounted(async () => { 
       try {
         const data = await getSystemBankServices();
         if (data.status === "success") {

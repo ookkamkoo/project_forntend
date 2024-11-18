@@ -25,7 +25,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                 
                 if(check){
                     // return navigateTo('/deposit-withdraw/credit-custom');
-                    return navigateTo('/setting/system');
+                    return navigateTo('/member/member');
                 }else{
                     Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
                     // logout();

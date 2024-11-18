@@ -746,6 +746,12 @@ const props = defineProps<{
     id: number,
 }>();
 
+watch(() => props.id, (newValue: number) => {
+        if (newValue) {
+          getGamePGSetting();
+        }
+    }, { immediate: false });
+
 const getGamePGSetting = async () =>{
   if(props.id == 0){
     Alert('error',"ไม่พบข้อมูลลูกค้า กรุณากรอกข้อมูลให้ถูกต้อง");
