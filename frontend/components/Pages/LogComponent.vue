@@ -113,10 +113,9 @@
         title: `ทั้งหมด ${allRecord.value} รายการ`, 
         children: [
           { title: '#', width: 60, dataIndex: 'id', key: 'id' },
-          { title: 'ชื่อพนักงาน', width: 120, dataIndex: 'name', key: 'name' },
-          { title: 'เมนู', dataIndex: 'menu', key: 'menu', width: 80 },
-          { title: 'รายการ', dataIndex: 'list', key: 'list', width: 100 },
-          { title: 'รายละเอียด', dataIndex: 'detail', key: 'detail', width: 100 },
+          { title: 'ชื่อพนักงาน', width: 120, dataIndex: 'username', key: 'username' },
+          { title: 'วิธีการ', dataIndex: 'method', key: 'method', width: 80 },
+          { title: 'เมนู', dataIndex: 'menu', key: 'menu', width: 100 },
           { title: 'ip', dataIndex: 'ip', key: 'ip', width: 80 },
           { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
           { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 150 },
