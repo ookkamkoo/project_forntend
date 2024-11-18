@@ -104,6 +104,7 @@
           <div>{{ record.bonus }}</div>
         </template>
         <template v-if="column.key === 'status'">
+          <a-tag color="red" v-if="record.status == 2">ไม่ถึงยอดขั้นต่ำ</a-tag>
           <a-tag color="green" v-if="record.status == 1">รับเเล้ว</a-tag>
           <a-tag color="red" v-else-if="record.status == 0">ยังไม่ได้รับ</a-tag>
         </template>
