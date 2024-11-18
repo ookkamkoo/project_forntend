@@ -80,6 +80,7 @@
     const previewImage = ref('');
     const ImageText = ref(true);
     const action = ref("create")
+    const config = useRuntimeConfig()
 
     const props = defineProps<{
         closeModal:Function,
@@ -155,7 +156,7 @@
             }
             // iamge
             ImageText.value = false;
-            previewImage.value = newValue.image
+            previewImage.value = config.public.serviceUrls +'/'+ newValue.image
         } 
     }, { immediate: true });
 
