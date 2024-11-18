@@ -166,7 +166,7 @@
     let formData = reactive({
         id: 0,
         creditCustomType:1,
-        username:'agent0000001',
+        username:'',
         amount:'',
         turn:{
             casino:1,
