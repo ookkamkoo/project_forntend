@@ -1,4 +1,30 @@
 <template>
+  <a-row class="p-2">
+    <a-col :span="6" class="p-1">
+      <label>สถานะ</label>
+      <a-select
+        ref="select"
+        v-model:value="formData.sl_type"
+        style="width: 100%"
+        >
+        <a-select-option value="all">ทั้งหมด</a-select-option>
+        <a-select-option value="success">success</a-select-option>
+        <a-select-option value="error">error</a-select-option>
+      </a-select>
+    </a-col>
+    <a-col :span="6" class="p-1">
+      <label>ยูสเซอร์เนม</label>
+      <a-input v-model:value="formData.username" placeholder="username" />
+    </a-col>
+    <a-col :span="6" class="p-1">
+      <label>เมนู</label>
+      <a-input v-model:value="formData.menu" placeholder="menu" />
+    </a-col>
+    <a-col :span="6" class="p-1">
+      <label>ไอพี</label>
+      <a-input v-model:value="formData.ip" placeholder="ip" />
+    </a-col>
+  </a-row>
     <a-row class="p-2">
       <a-col :span="11">
         <a-row >
@@ -31,10 +57,11 @@
     </a-row>
     <a-row class="p-2">
         <div>
-        <a-radio-group v-model:value="formData.dateSelect">
+        <a-radio-group v-model:value="formData.dateSelect" @change="dateChange">
             <a-radio-button value="Today">วันนี้</a-radio-button>
             <a-radio-button value="Yesterday">เมื่อวาน</a-radio-button>
             <a-radio-button value="ThisMonth">เดือนนี้</a-radio-button>
+            <a-radio-button value="All">ทั้งหมด</a-radio-button>
         </a-radio-group>
         </div>
     </a-row>
@@ -80,10 +107,8 @@
         <div>{{ record.remark }}</div>
       </template>
       <template v-if="column.key === 'status'">
-        <a-tag color="orange" v-if="record.status == 1">รอทำรายการ</a-tag>
-        <a-tag color="green" v-else-if="record.status == 2">สำเร็จ</a-tag>
-        <a-tag color="red" v-else-if="record.status == 3">ยกเลิก</a-tag>
-        <a-tag color="red" v-else-if="record.status == 4">หมดเวลา</a-tag>
+        <a-tag color="green" v-if="record.status == 'success'">สำเร็จ</a-tag>
+        <a-tag color="red" v-else-if="record.status == 'error'">ยกเลิก</a-tag>
       </template>
       <template v-if="column.key === 'created_by'">
         <div>{{ record.CreatedBySearch.username }}</div>
@@ -137,8 +162,8 @@
       dateStart:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
       dateEnd:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
       username:ref<string>(''),
-      adminName:ref<string>(''),
-      amount:ref<string>(''),
+      menu:ref<string>(''),
+      ip:ref<string>(''),
       dateSelect:ref<string>('Today'),
       sl_type:"all"
     });
@@ -148,12 +173,29 @@
     loading.value = true;
     if (data.status === "success") {
         dataShow.value = data.data.data;
-        allRecord.value = data.data.recordsTotal;
+        allRecord.value = data.data.records_total;
     } else {
         Alert('error', data.message);
     }
     loading.value = false;
 }
+
+const dateChange = () => {
+    if(formData.dateSelect == "Today"){
+      formData.dateStart = dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD');
+      formData.dateEnd = dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD');
+    }else if(formData.dateSelect == "Yesterday"){
+      formData.dateStart = dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD').subtract(1, 'day');
+      formData.dateEnd = dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD').subtract(1, 'day');
+    }else if(formData.dateSelect == "ThisMonth"){
+      formData.dateStart = dayjs().startOf('month');
+      formData.dateEnd = dayjs().endOf('month');
+    }else if(formData.dateSelect == "All"){
+      formData.dateStart = dayjs(`2020-01-01`, 'YYYY-MM-DD');
+      formData.dateEnd = dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD');
+    }
+    getLog();
+  }
 
 onMounted(() => {
   getLog();

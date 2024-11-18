@@ -79,13 +79,21 @@ export async function getLogServices(data :any): Promise<ResponseUsers> {
   let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
   let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
   let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  let sl_type = data.sl_type;
+  let username = data.username;
+  let menu = data.menu;
+  let ip = data.ip;
   const queryParams = [
       `dateStart=${dateStart}`,
       `timeStart=${timeStart}`,
       `dateEnd=${dateEnd}`,
       `timeEnd=${timeEnd}`,
       `page=${data.page}`,
-      `pageSize=${data.pageSize}`
+      `pageSize=${data.pageSize}`,
+      `sl_type=${sl_type}`,
+      `username=${username}`,
+      `menu=${menu}`,
+      `ip=${ip}`,
   ];
   const search = queryParams.join('&');
 
