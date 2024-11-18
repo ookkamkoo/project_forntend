@@ -52,7 +52,7 @@
       </a-col>
       <a-col class="p-1" :span="2">
         <label><br></label>
-        <a-button class="submit sky" type="primary"><SearchOutlined /> ค้นหา</a-button>
+        <a-button class="submit sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
       </a-col>
     </a-row>
     <a-row class="p-2">
@@ -194,6 +194,10 @@ const dateChange = () => {
       formData.dateStart = dayjs(`2020-01-01`, 'YYYY-MM-DD');
       formData.dateEnd = dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD');
     }
+    getLog();
+  }
+
+  const search = () =>{
     getLog();
   }
 
