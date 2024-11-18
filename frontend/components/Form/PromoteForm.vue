@@ -591,8 +591,6 @@
             // iamge
             ImageText.value = false;
             previewImage.value = config.public.serviceUrls +'/'+ newValue.image
-
-            console.log(config.public.serviceUrls +'/'+ newValue.image);
             
         } 
     }, { immediate: true });

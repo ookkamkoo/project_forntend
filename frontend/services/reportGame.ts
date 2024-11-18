@@ -28,6 +28,7 @@ export async function getReportGameService(data :any): Promise<getResponse> {
         `dateEnd=${dateEnd}`,
         `timeEnd=${timeEnd}`,
         `dateSelect=${data.sl_type}`,
+        `game=${data.game}`,
         `amount=${data.amount}`,
         `username=${data.username}`,
         `page=${data.page}`,

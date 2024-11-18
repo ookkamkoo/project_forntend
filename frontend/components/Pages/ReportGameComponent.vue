@@ -1,6 +1,6 @@
 <template>
     <a-row class="p-2">
-        <a-col class="p-1" :span="8">
+        <a-col class="p-1" :span="6">
           <label>ประเภท</label>
           <a-select
               ref="select"
@@ -13,11 +13,15 @@
               <a-select-option value="EQ">รายการที่เสมอ</a-select-option>
           </a-select>
         </a-col>
-        <a-col class="p-1" :span="8">
+        <a-col class="p-1" :span="6">
+          <label>เกมส์</label>
+          <a-input v-model:value="formData.game" placeholder="game" />
+        </a-col>
+        <a-col class="p-1" :span="6">
           <label>ยูสเซอร์เนม</label>
           <a-input v-model:value="formData.username" placeholder="username" />
         </a-col>
-        <a-col class="p-1" :span="8">
+        <a-col class="p-1" :span="6">
           <label>ยอดเงิน</label>
           <a-input v-model:value="formData.amount" placeholder="amount" />
         </a-col>
@@ -110,6 +114,7 @@
         dateStart:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
         dateEnd:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
         username:ref<string>(''),
+        game:ref<string>(''),
         amount:ref<string>(''),
         dateSelect:ref<string>('Today'),
         sl_type:"all",
