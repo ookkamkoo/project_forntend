@@ -45,6 +45,7 @@
     size="small"
     :scroll="{ x: 1500, y: 700 }"
     :pagination="{ pageSize: 10 }"
+    :loading="loading"
   >
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'id'">
@@ -100,6 +101,8 @@
   import { ref } from 'vue';
   import dayjs, { Dayjs } from 'dayjs';
   import { ScanOutlined } from '@ant-design/icons';
+  import { getLogServices } from '~/services/userServices';
+  import { Alert } from '../Alert/alertComponent';
   
   const dataShow = ref<any[]>([]);
   const allRecord = ref<number>(0);
@@ -127,6 +130,7 @@
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
   const day = String(currentDate.getDate()).padStart(2, '0');
+  const loading = ref(true);
 
   let formData = reactive({
       timeStart:ref(dayjs('00:00', 'HH:mm')),
@@ -140,47 +144,19 @@
       sl_type:"all"
     });
 
-  const getCreditCustom = () => {
-  dataShow.value = [
-    {
-      id: "1",
-      name: "admin",
-      menu: "ฝาก - ถอน",
-      list: "ฝาก",
-      detail: "กดอนุมัติ รายการ 6 ",
-      ip: "127.0.0.1",
-      status: 2,
-      CreatedBySearch: { username: 'Admin' },
-      created_at: dayjs().toISOString(),
-    },
-    {
-      id: "1",
-      name: "admin",
-      menu: "ฝาก - ถอน",
-      list: "ฝาก",
-      detail: "กดอนุมัติ รายการ 7 ",
-      ip: "127.0.0.1",
-      status: 2,
-      CreatedBySearch: { username: 'Admin' },
-      created_at: dayjs().toISOString(),
-    },
-    {
-      id: "1",
-      name: "admin",
-      menu: "ฝาก - ถอน",
-      list: "ฝาก",
-      detail: "กดอนุมัติ รายการ 8 ",
-      ip: "127.0.0.1",
-      status: 2,
-      CreatedBySearch: { username: 'Admin' },
-      created_at: dayjs().toISOString(),
-    },
-  ];
-
-  allRecord.value = dataShow.value.length;
+  const getLog = async () => {
+    const data = await getLogServices(formData);
+    loading.value = true;
+    if (data.status === "success") {
+        dataShow.value = data.data.data;
+        allRecord.value = data.data.recordsTotal;
+    } else {
+        Alert('error', data.message);
+    }
+    loading.value = false;
 }
 
 onMounted(() => {
-  getCreditCustom();
+  getLog();
 });
   </script>

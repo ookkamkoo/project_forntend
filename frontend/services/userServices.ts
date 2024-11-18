@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getToken } from '~/auth/authToken'
+import dayjs from 'dayjs';
 
 export interface UserData {
   name: string;
@@ -60,6 +61,37 @@ export async function getUser(): Promise<ResponseUsers> {
 
   try {
     const response = await axios.get<ResponseUsers>(`${url}/user/`, { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+export async function getLogServices(data :any): Promise<ResponseUsers> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+
+  let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+  let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+  let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  const queryParams = [
+      `dateStart=${dateStart}`,
+      `timeStart=${timeStart}`,
+      `dateEnd=${dateEnd}`,
+      `timeEnd=${timeEnd}`,
+      `page=${data.page}`,
+      `pageSize=${data.pageSize}`
+  ];
+  const search = queryParams.join('&');
+
+
+  try {
+    const response = await axios.get<ResponseUsers>(`${url}/log?`+search, { headers });
     return response.data;
   } catch (error: any) {
     return error.response.data;
