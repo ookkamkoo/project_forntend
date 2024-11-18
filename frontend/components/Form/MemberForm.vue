@@ -283,10 +283,10 @@ import { Alert } from '../Alert/alertComponent';
         if (newValue) {
             if(newValue.id == undefined){
                 action.value ="create";
-                formData.username = '0623373061';
+                formData.username = '';
                 formData.password = '';
-                formData.firstName = 'นิตยา';
-                formData.lastName = 'ชูศรีทอง';
+                formData.firstName = '';
+                formData.lastName = '';
                 formData.nameCheck = '';
                 formData.usernameAgent = '';
                 formData.marketingId = 1;
@@ -296,9 +296,9 @@ import { Alert } from '../Alert/alertComponent';
                 formData.agentId = 0;
                 formData.lineId = '';
                 formData.bankId = 1;
-                formData.bankNo = '0270057609';
+                formData.bankNo = '';
                 formData.bankTrueId = 16;
-                formData.bankTrueNo = '0811111111';
+                formData.bankTrueNo = '';
                 formData.refKey = '';
                 formData.agentName = '';
                 formData.IsAgent = false;
