@@ -56,6 +56,7 @@
                 </a-select>
             </a-col>
         </a-row>
+        <h3>เวลาเข้างาน</h3>
         <a-row>
             <a-col :span="24" :md="12">
                 <div class="mx-1 my-1">
@@ -185,9 +186,9 @@
             if(newValue.id == undefined){
                 role_req.value = true
                 action.value = "create";
-                formData.name = 'admin2';
-                formData.username = 'admin2';
-                formData.password = 'aa123456789.';
+                formData.name = '';
+                formData.username = '';
+                formData.password = '';
                 formData.roleId = '3';
                 formData.dayOpen = '1';
                 formData.timeOpen = '1';
