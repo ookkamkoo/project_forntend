@@ -117,7 +117,8 @@ const sidebarData = [
       { path: '/report/summary', name: '10.1. สรุปยอด', icon: FileOutlined, notify: 0 },
       { path: '/report/promotion-summary', name: '10.2. สรุปโปรโมชั่น', icon: FileOutlined, notify: 0 },
       { path: '/report/game', name: '10.3. สรุปการเล่นเกมส์', icon: FileOutlined, notify: 0 },
-      { path: '/report/past-dashboard', name: '10.4. สรุปภาพรวม', icon: FileOutlined, notify: 0 },
+      { path: '/report/bonus', name: '10.4. สรุปโบนัส', icon: FileOutlined, notify: 0 },
+      { path: '/report/past-dashboard', name: '10.5. สรุปภาพรวม', icon: FileOutlined, notify: 0 },
     ]
   },
   { path: '/admin', name: '11. พนักงาน', icon: AndroidOutlined, notify: 0 },

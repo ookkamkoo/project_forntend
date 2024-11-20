@@ -249,7 +249,7 @@
         Username:'sdDDD',
         Password:'asdf123456',
         is_api: true,
-        is_qrcode: true,
+        is_qrcode: false,
         is_active: true,
         is_sms: false,
         Image: null as any

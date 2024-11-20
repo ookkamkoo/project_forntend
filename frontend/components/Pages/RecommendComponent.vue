@@ -1,18 +1,6 @@
 <template>
   <a-row class="p-2">
-    <a-col :span="16">
-      <a-row >
-        <a-col class="p-1" :span="24" :md="12">
-          <label>ยูสเซอร์เนม</label>
-          <a-input v-model:value="formData.username" placeholder="ยูสเซอร์เนม" />
-        </a-col>
-        <a-col class="p-1" :span="24" :md="12">
-          <label>ลูกค้าถูกเเนะนำ</label>
-          <a-input v-model:value="formData.usernameRecommend" placeholder="ลูกค้าถูกเเนะนำ" />
-        </a-col>
-      </a-row>
-    </a-col>
-    <a-col :span="8">
+    <a-col :span="24" :md="8">
       <a-row >
         <a-col class="p-1" :span="24" :md="24">
           <label>สถานะ</label>
@@ -25,6 +13,18 @@
             <a-select-option value="0">ยังไม่ได้รับ</a-select-option>
             <a-select-option value="1">รับเเล้ว</a-select-option>
           </a-select>
+        </a-col>
+      </a-row>
+    </a-col>
+    <a-col :span="24" :md="16">
+      <a-row >
+        <a-col class="p-1" :span="24" :md="12">
+          <label>ยูสเซอร์เนม</label>
+          <a-input v-model:value="formData.username" placeholder="ยูสเซอร์เนม" />
+        </a-col>
+        <a-col class="p-1" :span="24" :md="12">
+          <label>ลูกค้าถูกเเนะนำ</label>
+          <a-input v-model:value="formData.usernameRecommend" placeholder="ลูกค้าถูกเเนะนำ" />
         </a-col>
       </a-row>
     </a-col>
@@ -100,28 +100,16 @@
     </template>
     <template #summary>
         <tr class="center">
-            <td ><strong>รับเเล้ว</strong></td>
+            <td ><strong>รวม</strong></td>
             <td colspan="2"></td>
-            <td><strong>{{sumAmountStatus1.sumAmount}}</strong></td>
-            <td><strong>{{sumAmountStatus1.sumBonus}}</strong></td>
-            <td><strong>{{sumAmountStatus1.sumAmountTotal}}</strong></td>
+            <td><strong>{{sumAmountStatus.sumAmount}}</strong></td>
+            <td><strong>{{sumAmountStatus.sumBonus}}</strong></td>
+            <td><strong>{{sumAmountStatus.sumAmountTotal}}</strong></td>
             <td colspan="1"></td>
-            <td><strong>{{sumAmountStatus1.sumRefundAmount}}</strong></td>
+            <td><strong>{{sumAmountStatus.sumRefundAmount}}</strong></td>
             <td colspan="1"></td>
-            <td><strong>จำนวนรายการ</strong></td>
-            <td><strong>{{countStatus1}}</strong></td>
-        </tr>
-        <tr class="center">
-            <td ><strong>ยังไม่ได้รับ</strong></td>
-            <td colspan="2"></td>
-            <td><strong>{{sumAmountStatus0.sumAmount}}</strong></td>
-            <td><strong>{{sumAmountStatus0.sumBonus}}</strong></td>
-            <td><strong>{{sumAmountStatus0.sumAmountTotal}}</strong></td>
-            <td colspan="1"></td>
-            <td><strong>{{sumAmountStatus0.sumRefundAmount}}</strong></td>
-            <td colspan="1"></td>
-            <td><strong>จำนวนรายการ</strong></td>
-            <td><strong>{{countStatus0}}</strong></td>
+            <td><strong>รายการทั้งหมด</strong></td>
+            <td><strong>{{allRecord}}</strong></td>
         </tr>
     </template>
     
@@ -135,16 +123,7 @@ import { getRecommendServices } from '~/services/recommendServices';
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
 const loading = ref(true);
-const countStatus0 = ref<number>(0);
-const countStatus1 = ref<number>(0);
-  const sumAmountStatus0 = ref({
-  sumAmount: 0,
-  sumBonus: 0,
-  sumAmountTotal: 0,
-  sumRefundAmount: 0
-});
-
-const sumAmountStatus1 = ref({
+  const sumAmountStatus = ref({
   sumAmount: 0,
   sumBonus: 0,
   sumAmountTotal: 0,
@@ -230,10 +209,7 @@ const getRecommend = async() => {
     if (data.status === "success") {
         dataShow.value = data.data.data;
         allRecord.value = data.data.recordsTotal;
-        sumAmountStatus0.value = data.data.sumAmountStatus0;
-        sumAmountStatus1.value = data.data.sumAmountStatus1;
-        countStatus0.value = data.data.countStatus0;
-        countStatus1.value = data.data.countStatus1;
+        sumAmountStatus.value = data.data.sumAmountStatus;
         paginationConfig.value.total = data.data.recordsTotal;
     } else {
         console.log("error : "+ data.message);

@@ -22,8 +22,8 @@
             style="width: 100%"
             >
             <a-select-option value="all">ทั้งหมด</a-select-option>
-            <a-select-option value="1">ฝากเเรก</a-select-option>
-            <a-select-option value="2">ฝากปกติ</a-select-option>
+            <a-select-option value="1">ถอนออโต้</a-select-option>
+            <a-select-option value="2">ถอนมือ</a-select-option>
         </a-select>
       </a-col>
       <a-col class="p-1" :span="5">

@@ -8,7 +8,9 @@
                 style="width: 100%"
                 >
                 <a-select-option value="all">ทั้งหมด</a-select-option>
-                <a-select-option value="1">เเพ้ชนะ</a-select-option>
+                <a-select-option value="0">ยังไม่ได้รับ</a-select-option>
+                <a-select-option value="1">รับเเล้ว</a-select-option>
+                <a-select-option value="2">ไม่ถึงยอดขั้นต่ำ</a-select-option>
                 <!-- <a-select-option value="2">turnOver</a-select-option> -->
             </a-select>
         </a-col>
