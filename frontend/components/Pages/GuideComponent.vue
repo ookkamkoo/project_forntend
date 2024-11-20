@@ -1,5 +1,5 @@
 <template>
-    <h1>Guide</h1>
+    <h2>Guide</h2>
   </template>
   <script lang="ts" setup>
   import { ref } from 'vue';
