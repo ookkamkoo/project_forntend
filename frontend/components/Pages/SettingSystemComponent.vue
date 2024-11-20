@@ -961,7 +961,7 @@
 
   const all = ref(false);
 
-  const activeKey = ref('4');
+  const activeKey = ref('1');
   const fileList = ref([]);
   const fileListLogo = ref([]);
   const fileListBgImage = ref([]);
