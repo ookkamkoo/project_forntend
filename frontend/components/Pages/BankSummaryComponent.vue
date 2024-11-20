@@ -102,18 +102,22 @@ const dynamicColumns = computed(() => [
     { title: 'ธนาคาร', width:80, dataIndex: 'bank_image', key: 'bank_image' },
     { title: 'ชื่อ - นามสกุล', width:80, dataIndex: 'bank_system_name', key: 'bank_system_name' },
     { title: 'เลขบัญชี', width:80, dataIndex: 'bank_system_book_number', key: 'bank_system_book_number' },
-    { title: 'จำนวนรายการ', width: 100,children: [
-      { title: 'ฝากปกติ', width:80, dataIndex: 'deposit_count', key: 'deposit_count' },
-      { title: 'ฝากไม่เข้า', width:80, dataIndex: 'deposit_failed_count', key: 'deposit_failed_count' },
-      { title: 'ฝากรวม', width:80, dataIndex: 'deposit_count_all', key: 'deposit_count_all' },
-      { title: 'ถอน', width:80, dataIndex: 'withdraw_count', key: 'withdraw_count' },
-    ]},
-    { title: 'จำนวนเงิน', width: 100,children: [
-      { title: 'ฝากปกติ', width:80, dataIndex: 'deposit_total', key: 'deposit_total' },
-      { title: 'ฝากไม่เข้า', width:80, dataIndex: 'deposit_failed_total', key: 'deposit_failed_total' },
-      { title: 'ฝากรวม', width:80, dataIndex: 'deposit_total_all', key: 'deposit_total_all' },
-      { title: 'ถอน', width:80, dataIndex: 'withdraw_total', key: 'withdraw_total' },
-    ]},
+    { title: 'ฝากปกติ', width:80,children: [
+      { title: 'จำนวนรายการ', width:80, dataIndex: 'deposit_count', key: 'deposit_count' },
+      { title: 'จำนวนเงิน', width:80, dataIndex: 'deposit_total', key: 'deposit_total' },
+    ]  },
+    { title: 'ฝากไม่เข้า', width:80,children: [
+      { title: 'จำนวนรายการ', width:80, dataIndex: 'deposit_failed_count', key: 'deposit_failed_count' },
+      { title: 'จำนวนเงิน', width:80, dataIndex: 'deposit_failed_total', key: 'deposit_failed_total' },
+    ]  },
+    { title: 'ฝากรวม', width:80,children: [
+      { title: 'จำนวนรายการ', width:80, dataIndex: 'deposit_count_all', key: 'deposit_count_all' },
+      { title: 'จำนวนเงิน', width:80, dataIndex: 'deposit_total_all', key: 'deposit_total_all' },
+    ]  },
+    { title: 'ถอน', width:80,children: [
+      { title: 'จำนวนรายการ', width:80, dataIndex: 'withdraw_count', key: 'withdraw_count' },
+      { title: 'จำนวนเงิน', width:80, dataIndex: 'withdraw_total', key: 'withdraw_total' },
+    ]  },
   ] },
 ]);
 
