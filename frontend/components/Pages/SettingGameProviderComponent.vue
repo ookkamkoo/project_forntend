@@ -95,6 +95,14 @@
                     <template v-if="column.key === 'game_code'">
                       <div>{{ record.game_code }}</div>
                     </template>
+                    <template v-if="column.key === 'pg_real'">
+                      <a-tag color="success" v-if="record.status == 1 || record.status == 3">มี</a-tag>
+                      <a-tag color="error" v-else>ไม่มี</a-tag>
+                    </template>
+                    <template v-if="column.key === 'pg100'">
+                      <a-tag color="success" v-if="record.status == 2 || record.status == 3">มี</a-tag>
+                      <a-tag color="error" v-else>ไม่มี</a-tag>
+                    </template>
                     <template v-if="column.key === 'product_code'">
                       <div>{{ record.product_code }}</div>
                     </template>
@@ -108,7 +116,8 @@
                       <a-switch v-model:checked="record.maintain" @change="editPGGame(record)"/>
                     </template>
                     <template v-if="column.key === 'pg_status'">
-                      <a-switch v-model:checked="record.pg_status" @change="editPGGame(record)"/>
+                      {{record.status}}
+                      <a-switch v-model:checked="record.pg_status" @change="editPGGame(record)" :disabled="record.status == 1 || record.status == 2"/>
                     </template>
                   </template>
                 </a-table>
@@ -948,6 +957,8 @@ return [
       { title: 'รูป', width: 50, dataIndex: 'image', key: 'image'},
       { title: 'ชื่อเกมส์', width: 50, dataIndex: 'game_code', key: 'game_code'},
       { title: 'ค่ายเกมส์', width: 50, dataIndex: 'product_code', key: 'product_code'},
+      { title: 'pg soft', width: 50, dataIndex: 'pg_real', key: 'pg_real'},
+      { title: 'pg100', width: 50, dataIndex: 'pg100', key: 'pg100'},
       { title: 'เกมส์นิยมเล่น', width: 50, dataIndex: 'hot', key: 'hot'},
       { title: 'เเสดงหน้าเว็บ', width: 50, dataIndex: 'status', key: 'status'},
       { title: 'ปิดปรับปรุง', width: 50, dataIndex: 'maintain', key: 'maintain'},
