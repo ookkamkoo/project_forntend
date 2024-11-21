@@ -116,7 +116,6 @@
                       <a-switch v-model:checked="record.maintain" @change="editPGGame(record)"/>
                     </template>
                     <template v-if="column.key === 'pg_status'">
-                      {{record.status}}
                       <a-switch v-model:checked="record.pg_status" @change="editPGGame(record)" :disabled="record.status == 1 || record.status == 2"/>
                     </template>
                   </template>
