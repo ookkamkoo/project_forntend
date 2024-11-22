@@ -83,7 +83,6 @@ import { getDepositServices } from '~/services/memberServices';
 import { Alert } from '../Alert/alertComponent';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { cancelPostServices } from '~/services/postCreditService';
-import { ScanOutlined } from '@ant-design/icons';
 
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
