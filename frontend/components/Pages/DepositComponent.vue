@@ -83,6 +83,8 @@ import { getDepositServices } from '~/services/memberServices';
 import { Alert } from '../Alert/alertComponent';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { cancelPostServices } from '~/services/postCreditService';
+import { notifyStore } from '~/store/index';
+const store = notifyStore();  
 
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
@@ -163,6 +165,10 @@ const cancel = (record:any) => {
             if (data.status == 'success') {
                 Alert("success", `ยกเลิกรายการฝากเรียบร้อย ${record.id} เรียบร้อย.`);
                 getList();
+                store.setNotify({
+                    deposit:  (Number(store.notify.deposit) - 1).toString(), // ค่าปัจจุบันของ deposit
+                    withdraw: store.notify.withdraw, // แปลงเป็น number, คำนวณ, และแปลงกลับเป็น string
+                });
             } else {
                 Alert("error", data.message);
             }

@@ -34,6 +34,8 @@
     import { getMemberSearchServices } from '~/services/memberServices';
     import { addMemberToList } from '~/services/postCreditService';
     import { Alert } from '../Alert/alertComponent';
+    import { notifyStore } from '~/store/index';
+    const store = notifyStore();    
     const data = ref<any[]>([{}]);
 
     const props = defineProps<{
@@ -99,6 +101,10 @@
                 Alert('success','เพิ่มพนักงาน หรือ ผู้ดูเเลระบบเรียบร้อย.')
                 props.closeModal()
                 props.getList();
+                store.setNotify({
+                    deposit:  (Number(store.notify.deposit) - 1).toString(), // ค่าปัจจุบันของ deposit
+                    withdraw: store.notify.withdraw, // แปลงเป็น number, คำนวณ, และแปลงกลับเป็น string
+                });
             }else{
                 Alert('error',data.message);
             }

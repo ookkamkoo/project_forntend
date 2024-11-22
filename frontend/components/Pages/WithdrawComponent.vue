@@ -135,6 +135,10 @@ const cancel = (record:any) => {
             if (data.status == 'success') {
                 Alert("success", `ยกเลิกรายการถอน ${record.id} เรียบร้อย.`);
                 getList();
+                store.setNotify({
+                    deposit: store.notify.deposit, // ค่าปัจจุบันของ deposit
+                    withdraw: (Number(store.notify.withdraw) - 1).toString(), // แปลงเป็น number, คำนวณ, และแปลงกลับเป็น string
+                });
             } else {
                 Alert("error", data.message);
             }
