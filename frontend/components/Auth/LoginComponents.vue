@@ -92,7 +92,7 @@
         <a-qrcode :value="text" :size="256"/>
       </div>
     </a-modal>
-    <a-modal v-model:open="openPin" title="Verify Pin" @ok="handleOkPin">
+    <a-modal v-model:open="openPin" title="กรอกข้อมูลใช้งาน pin ครั้งเเรก" @ok="handleOkPin" width="400px">
       <div class="">
         <a-input v-model:value="valuePin" placeholder="Input Pin" :maxlength="6" @input="validatePin"/>
       </div>

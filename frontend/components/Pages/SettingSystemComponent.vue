@@ -1258,6 +1258,8 @@
             formData.checkName = data.data.checkDuplicateName=='true'?true:false
             formData.regisTrue = data.data.registerTruewallet=='true'?true:false
 
+            formData.type2Factor =  parseInt(data.data.type2factor)
+
             formData.bgImageSw = data.data.bgImageSw=='true'?true:false
             formData.bgColor = data.data.bgColor
             
