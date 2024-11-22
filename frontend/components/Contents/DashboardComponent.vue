@@ -221,8 +221,10 @@
     import { LoadingOutlined } from '@ant-design/icons-vue';
     import { h } from 'vue';
     import { LineChart,BarChart,DoughnutChart  } from 'vue-chart-3';
-    import { Chart, registerables } from 'chart.js';
-    // import type { ChartData } from 'chart.js';
+    import * as ChartJS from 'chart.js';
+    const { Chart, registerables } = ChartJS;
+    Chart.register(...registerables);
+
     import dayjs, { Dayjs } from 'dayjs';
     const report = ref<any>({});
     const members = ref<any>({});
@@ -333,8 +335,6 @@
 
     getReportMain();
   };
-
-    Chart.register(...registerables);
 
 
     const config = {
