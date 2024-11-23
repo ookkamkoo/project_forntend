@@ -1,4 +1,8 @@
 <template>
+    <a-modal v-model:open="open" title="โยกเงินออโต้" :closable="true">
+        <FormTranferForm :closeModal="closeModal" :getTranferMoneyHistory="getTranferMoneyHistory"/>
+            <template #footer></template>
+    </a-modal>
     <a-row class="p-2">
         <a-col :span="11">
         <a-row >
@@ -29,7 +33,7 @@
         <a-button class="submit sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
         </a-col>
     </a-row>
-    <a-row class="p-2">
+    <a-row class="p-2" justify="space-between">
         <div>
         <a-radio-group v-model:value="formData.dateSelect" @change="handleDateSelectChange">
             <a-radio-button value="Today">วันนี้</a-radio-button>
@@ -38,7 +42,10 @@
             <a-radio-button value="all">ทั้งหมด</a-radio-button>
         </a-radio-group>
         </div>
-    </a-row>
+        <div class="action">
+            <a-button class="submit sky" type="primary" @click="showModal()"><PlusOutlined /> เพิ่ม</a-button>
+        </div>
+    </a-row> 
     <a-table 
     :columns="dynamicColumns"
     :data-source="dataShow"
@@ -88,6 +95,10 @@
       <template v-if="column.key === 'created_by'">
         <div>system</div>
       </template>
+      <template v-if="column.key === 'status'">
+        <a-tag color="green" v-if="record.status">สำเร็จ</a-tag>
+        <a-tag color="red" v-else>ไม่สำเร็จ</a-tag>
+      </template>
       <template v-else-if="column.key === 'created_at'">
         <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
       </template>
@@ -103,7 +114,7 @@
 import { ref, computed, onMounted } from 'vue';
 import dayjs, { Dayjs } from 'dayjs';
 import { getBankTranferHistory } from '~/services/bankTranferAuto';
-import { ScanOutlined } from '@ant-design/icons';
+const open = ref<boolean>(false);
 
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
@@ -149,14 +160,15 @@ const day = String(currentDate.getDate()).padStart(2, '0');
               ]  },
           ]  },
           { title: 'ยอดเงิน', width: 100, dataIndex: 'amount', key: 'amount',  },
-          { title: 'เวลา', width: 150, dataIndex: 'created_at', key: 'created_at' },
           { title: 'เพิ่มเติม', dataIndex: 'remark', key: 'remark', width: 150 },
+          { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
           { title: 'โดย', dataIndex: 'created_by', key: 'created_by', width: 150 },
-          {
-              title: 'สลิป',
-              key: 'operation',
-              width: 100,
-          }
+          { title: 'เวลา', width: 150, dataIndex: 'created_at', key: 'created_at' },
+          // {
+          //     title: 'สลิป',
+          //     key: 'operation',
+          //     width: 100,
+          // }
       ] 
       },
   ];
@@ -175,6 +187,14 @@ const day = String(currentDate.getDate()).padStart(2, '0');
     }
     loading.value = false;
   }
+
+  const showModal = () => {
+        open.value = true;
+    };
+
+    const closeModal = () => {
+        open.value = false
+    }
 
   const handleDateSelectChange = () => {
     const currentDate = new Date();
@@ -231,3 +251,8 @@ onMounted(() => {
   getTranferMoneyHistory();
 });
 </script>
+<style scoped>
+.action{
+  float: right;
+}
+</style>

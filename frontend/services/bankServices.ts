@@ -266,6 +266,24 @@ export async function getbankWithdrawServices(id:number): Promise<getResponse> {
     }
   }
 
+  export async function tranferManualServices(data: any): Promise<getResponse> {
+    const config = useRuntimeConfig()
+    const url = config.public.serviceUrls;
+  
+    const headers = {
+      Authorization: `Bearer ${getToken()}`
+    };
+    console.log(data);
+    
+
+    try {
+      const response = await axios.post<getResponse>(`${url}/tranfer-auto/manual`, data, { headers });
+      return response.data;
+    } catch (error: any) {
+      return error.response.data;
+    }
+  }
+
   export async function getBankSummaryServices(data: any): Promise<getResponse> {
     const config = useRuntimeConfig()
     const url = config.public.serviceUrls;

@@ -154,6 +154,22 @@ export async function getMembers(data :any): Promise<getResponse> {
     }
 }
 
+export async function fetchBankServices(): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    try {
+        const response = await axios.get<getResponse>(`${url}/bank/bank-detail`, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 export async function getBackListServices(data: any): Promise<getResponse> {
   const config = useRuntimeConfig()
   const url = config.public.serviceUrls;
