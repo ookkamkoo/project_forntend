@@ -42,9 +42,9 @@
             <a-radio-button value="all">ทั้งหมด</a-radio-button>
         </a-radio-group>
         </div>
-        <div class="action">
+        <!-- <div class="action">
             <a-button class="submit sky" type="primary" @click="showModal()"><PlusOutlined /> เพิ่ม</a-button>
-        </div>
+        </div> -->
     </a-row> 
     <a-table 
     :columns="dynamicColumns"
