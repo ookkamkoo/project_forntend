@@ -191,6 +191,8 @@
   import { Alert } from '../Alert/alertComponent';
   import { getDetailconfigMember } from '~/services/memberServices';
   import type { Bank,Market } from '~/services/memberServices';
+  import { notifyStore } from '~/store/index';
+  const store = notifyStore();
   
   const open = ref<boolean>(false);
   const memberDetail = ref<boolean>(false);
@@ -298,7 +300,7 @@ const resetPassword = (id: number, name: string) => {
     Modal.confirm({
         title: 'คุณต้องรีเซตรหัสผ่านลูกค้า ใช่หรือไหม?',
         icon: createVNode(ExclamationCircleOutlined),
-        content: `รีเซตรหัสผ่านลูกค้า ${name} เป็น asdf123456`,
+        content: `รีเซตรหัสผ่านลูกค้า ${name} เป็น ${store.setting.passwordCustomer}`,
         okText: 'OK',
         okType: 'danger',
         cancelText: 'No',

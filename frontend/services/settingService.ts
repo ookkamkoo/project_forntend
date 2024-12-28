@@ -145,6 +145,8 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
             recommendMax: data.recommendMax ? data.recommendMax.toString() : "",
             typeRecommendDate: data.typeRecommendDate ? data.typeRecommendDate.toString() : "",
             recommendDate: data.recommendDate ? data.recommendDate.toString() : "",
+
+            allianceLogin: data.allianceLogin ? data.allianceLogin.toString() : "false",
         };
     }else if(page == '4'){
         setting = "notify";

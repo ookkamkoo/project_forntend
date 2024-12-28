@@ -1,3 +1,3 @@
 <template>
-    <PagesAdminComponent/>
+    <PagesAllianceComponent/>
 </template>

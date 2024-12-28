@@ -15,10 +15,6 @@ export async function getCreditTransactionHistoryServices(data :any): Promise<an
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
     let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
     const queryParams = [
-        `sl_type=${data.sl_type}`,
-        `username=${data.username}`,
-        `adminName=${data.adminName}`,
-        `amount=${data.amount}`,
         `dateStart=${dateStart}`,
         `timeStart=${timeStart}`,
         `dateEnd=${dateEnd}`,
@@ -44,9 +40,18 @@ export async function getCreditTransactionHistoryByIdServices(data :any,id :numb
         Authorization: `Bearer ${getToken()}`
       };
     
+    let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
     const queryParams = [
-    `page=${data.page}`,
-    `pageSize=${data.pageSize}`
+        `dateStart=${dateStart}`,
+        `timeStart=${timeStart}`,
+        `dateEnd=${dateEnd}`,
+        `timeEnd=${timeEnd}`,
+        `sl_type=${data.sl_type}`,
+        `page=${data.page}`,
+        `pageSize=${data.pageSize}`
     ];
     const search = queryParams.join('&');
 

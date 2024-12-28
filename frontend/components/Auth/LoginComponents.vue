@@ -19,7 +19,12 @@
           <div class="login-set">
             <div class="login-set-detail" >
               <div class="login-set-detail-image" >
-                <img src="https://cdn.zabbet.com/NRM9/lobby_settings/625f5901-0f8d-4f0f-b959-431179967df9.png" alt="login logo" width="80%" height="auto">
+                <a-image
+                  :width="'50%'"
+                  :preview="false"
+                  :src="config.public.serviceUrls +'/'+ store.setting.imageWebsite"
+                />
+                <!-- <img src="https://cdn.zabbet.com/NRM9/lobby_settings/625f5901-0f8d-4f0f-b959-431179967df9.png" alt="login logo" width="80%" height="auto"> -->
               </div>
               <div class="center">
                 <h1 class="white-text"></h1>
@@ -90,6 +95,9 @@
     <a-modal v-model:open="open" title="Verify QR Code" @ok="handleOk">
       <div class="">
         <a-qrcode :value="text" :size="256"/>
+        <p>1.หากเพิ่ม Qrcode เเล้วให้กดยืนยัน</p>
+        <p>2.ให้กด OK เพื่อทำรายการ Login ด้วยรหัสสองชั้น</p>
+        <a-checkbox v-model:checked="checked">ยืนยันการเพิ่ม Qrcode เเล้ว</a-checkbox>
       </div>
     </a-modal>
     <a-modal v-model:open="openPin" title="กรอกข้อมูลใช้งาน pin ครั้งเเรก" @ok="handleOkPin" width="400px">
@@ -105,11 +113,16 @@
   import { login,setPinUser } from '~/services/authService';
   import { setToken,setName,setUsername,setPermission } from '~/auth/authToken';
   import { Alert } from '../Alert/alertComponent';
+  import { notifyStore } from '~/store/index';
+  
+  const config = useRuntimeConfig()
+  const store = notifyStore();
   const open = ref<boolean>(false);
   const openPin = ref<boolean>(false);
   const text = ref('');
   const valuePin = ref('');
   const refKey = ref<string>('');
+  const checked = ref(false);
 
   interface FormState {
     username: string;
@@ -141,7 +154,10 @@
         router.push('/dashboard');
       }else{
         if(data.message == "authen"){
-          text.value = `otpauth://totp/${data.data.name}:${data.data.name}?secret=${data.data.refkey}&issuer=${data.data.name}`
+          refKey.value = data.data.refkey
+          // text.value = `otpauth://totp/${data.data.name}:${data.data.name}?secret=${data.data.refkey}&issuer=${data.data.name}`
+          text.value = `otpauth://totp/Programer_Name:Programer_Name?secret=OSCHPWSIHZTMFFYFYO7BXI43UA======&issuer=Programer_Name`
+          console.log(text.value);
           showModal();
         }else if(data.message == "authen_pin"){
           refKey.value = data.data.refkey
@@ -169,8 +185,21 @@
     openPin.value = !openPin.value;
   };
 
-  const handleOk = (e: MouseEvent) => {
-    open.value = false;
+  const handleOk = async(e: MouseEvent) => {
+    console.log("2222222222222");
+    console.log(checked.value);
+    
+    if(checked.value){
+      const data = await setPinUser(refKey.value,"");
+      if(data.status == "success"){
+          Alert('success','เพิ่ม google authenticator เรียบร้อยเเล้ว.')
+      }else{
+          Alert('error',data.message);
+      }
+      open.value = false;
+    }else{
+      Alert('error',"กรุณากดยืนยัน Qrcode");
+    }
   };
 
   const handleOkPin = async() => {

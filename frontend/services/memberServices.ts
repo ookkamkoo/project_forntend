@@ -154,6 +154,67 @@ export async function getMembers(data :any): Promise<getResponse> {
     }
 }
 
+export async function getMemberOnlineServices(data :any): Promise<getResponse> {
+  const config = useRuntimeConfig();
+  const url = config.public.serviceUrls;
+
+  const headers = {
+      Authorization: `Bearer ${getToken()}`
+  };
+
+  let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+  let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+  let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  const queryParams = [
+      `dateStart=${dateStart}`,
+      `timeStart=${timeStart}`,
+      `dateEnd=${dateEnd}`,
+      `timeEnd=${timeEnd}`,
+      `page=${data.page}`,
+      `pageSize=${data.pageSize}`
+    ];
+    const search = queryParams.join('&');
+
+  try {
+      const response = await axios.get<getResponse>(`${url}/member/member-online-detail?`+search, { headers });
+      return response.data;
+  } catch (error: any) {
+      return error.response.data;
+  }
+}
+
+export async function getMemberOnlineDetailServices(data :any): Promise<getResponse> {
+  const config = useRuntimeConfig();
+  const url = config.public.serviceUrls;
+
+  const headers = {
+      Authorization: `Bearer ${getToken()}`
+  };
+
+  let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+  let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+  let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  const queryParams = [
+      `dateStart=${dateStart}`,
+      `timeStart=${timeStart}`,
+      `dateEnd=${dateEnd}`,
+      `timeEnd=${timeEnd}`,
+      `page=${data.page}`,
+      `pageSize=${data.pageSize}`
+    ];
+    const search = queryParams.join('&');
+
+  try {
+      const response = await axios.get<getResponse>(`${url}/member/member-online?`+search, { headers });
+      return response.data;
+  } catch (error: any) {
+      return error.response.data;
+  }
+}
+
+
 export async function fetchBankServices(): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
@@ -182,6 +243,24 @@ export async function getBackListServices(data: any): Promise<getResponse> {
   let typeSearch = Constants.optionsBlacklist[data.typeSearch-1].name
   try {
     const response = await axios.get<getResponse>(`${url}/member/getBlacklist?date_start="${dateStart}&&date_end=${dateEnd}&&typeSearch=${typeSearch}&&search=${data.search}`, { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
+export async function getAllianceServices(data: any): Promise<getResponse> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+  let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD')+' '+'00:00:00';
+  let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD')+' '+'23:59:59';
+  let typeSearch = Constants.optionsBlacklist[data.typeSearch-1].name
+  try {
+    const response = await axios.get<getResponse>(`${url}/member/getAlliance?date_start="${dateStart}&&date_end=${dateEnd}&&typeSearch=${typeSearch}&&search=${data.search}`, { headers });
     return response.data;
   } catch (error: any) {
     return error.response.data;

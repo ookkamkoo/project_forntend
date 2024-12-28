@@ -81,14 +81,14 @@
             </template>
         </template>
         <template #summary>
-        <tr class="center">
-            <td colspan=4><strong>รวม</strong></td>
-            <td><strong>{{sumBetAmount}}</strong></td>
-            <td><strong>{{sumBetResult}}</strong></td>
-            <td><strong>{{sumBetWinloss}}</strong></td>
-            <td colspan=4></td>
-        </tr>
-    </template>
+          <tr class="center">
+              <td colspan=4><strong>รวม</strong></td>
+              <td><strong>{{sumBetAmount}}</strong></td>
+              <td><strong>{{sumBetResult}}</strong></td>
+              <td><strong>{{sumBetWinloss}}</strong></td>
+              <td colspan=4></td>
+          </tr>
+        </template>
     </a-table>
     </template>
 <script lang="ts" setup>

@@ -49,6 +49,7 @@ export async function checkToken(token: string): Promise<boolean> {
       if (data.status == "success") {
         notify.setNotify(data.data.notify);
         notify.setSetting(data.data.setting);
+        notify.setMemberOnline(data.data.memberOnline);
       }
   
       return true;

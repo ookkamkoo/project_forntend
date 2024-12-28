@@ -70,7 +70,8 @@ const sidebarData = [
     notify: 0,
     children: [
       { path: '/member/member', name: '7.1. สมาชิก', icon: TeamOutlined, notify: 0 },
-      { path: '/member/member-detail', name: '7.2. เช็คข้อมูลสมาชิก', icon: TeamOutlined, notify: 0 },
+      { path: '/member/member-online', name: '7.2. สมาชิกออนไลน์', icon: TeamOutlined, notify: 0 },
+      { path: '/member/member-detail', name: '7.3. เช็คข้อมูลสมาชิก', icon: TeamOutlined, notify: 0 },
       // { path: '/cashback', name: 'คืนยอดเสีย', icon: TeamOutlined, notify: 0 },
       // { path: '/member/cashback-list', name: '7.3. รายการคืนยอดเสีย', icon: TeamOutlined, notify: 0 },
     ]
@@ -129,11 +130,11 @@ const sidebarData = [
       { path: '/notify/notify', name: '12.1. ประกาศ', icon: CreditCardOutlined, notify: 0 },
     ]
   },
-  // { path: '/alliance', name: '13. จัดการพันธมิตร', icon: UsergroupAddOutlined, notify: 0 },
+  { path: '/alliance', name: '13. จัดการพันธมิตร', icon: UsergroupAddOutlined, notify: 0 },
   // { path: '/dashboard', name: 'บัญชี', icon: CreditCardOutlined, notify: 0 },
   {
     path: '#',
-    name: '13. ตั้งค่า',
+    name: '14. ตั้งค่า',
     icon: SettingOutlined,
     notify: 0,
     children: [
@@ -151,9 +152,9 @@ const sidebarData = [
   //       { path: '/deposit', name: 'ตั้งค่ากงล้อ' , icon:MenuUnfoldOutlined},
   //     ]
   // },
-  { path: '/profile', name: '14. ข้อมูลส่วนตัว', icon: UserOutlined,notify: 0 },
-  { path: '/log', name: '15. Log', icon: MenuUnfoldOutlined,notify: 0 },
-  { path: '/blacklist', name: '16. บัญชีดำ', icon: LockOutlined,notify: 0 },
+  { path: '/profile', name: '15. ข้อมูลส่วนตัว', icon: UserOutlined,notify: 0 },
+  { path: '/log', name: '16. Log', icon: MenuUnfoldOutlined,notify: 0 },
+  { path: '/blacklist', name: '17. บัญชีดำ', icon: LockOutlined,notify: 0 },
 ];
 
 export default sidebarData;

@@ -16,11 +16,13 @@
 
         <!-- System statuses -->
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
-            <div>
-                <div>เซิฟเวอร์</div>
-                <a-tag v-if="store.setting.serverStatus" color="green" class="m-auto">เปิด</a-tag>
-                <a-tag v-else color="red" class="m-auto">เปิด</a-tag>
-            </div>
+            <div>ออนไลน์</div>
+            <a-tag color="green" class="m-auto">{{store.memberOnline}} คน</a-tag>
+        </a-flex>
+        <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
+            <div>เซิฟเวอร์</div>
+            <a-tag v-if="store.setting.serverStatus" color="green" class="m-auto">เปิด</a-tag>
+            <a-tag v-else color="red" class="m-auto">ปิด</a-tag>
         </a-flex>
         <a-flex class="status-web-check border-right p-rl-2 mobile-none" vertical>
             <div>ฝาก</div>

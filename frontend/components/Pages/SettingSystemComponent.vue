@@ -782,6 +782,17 @@
                     ></a-select>
                 </a-col>
                 </a-row>
+                <h2>ระบบพันธมิตร</h2>
+                <a-row>
+                <a-col :span="24" :md="24" class="p-3">
+                    <a-col :span="24" :md="24">
+                        <b>พันธมิตร login ก่อนใช้งาน</b> 
+                    </a-col>
+                    <a-col :span="24" :md="24" >
+                        <a-switch v-model:checked="formData.allianceLogin" />
+                    </a-col>
+                </a-col>
+                </a-row>
                 <a-row v-if="formData.typeRecommendDate == '2'">
                     <a-col :span="24" :md="12">
                         <div class="select-day">
@@ -1044,6 +1055,8 @@
       recommendMax:1000,
       typeRecommendDate:'1',
       recommendDate: [] as string[],
+
+      allianceLogin:true,
       
       // page 4 
       notifyLineStatus:true,
@@ -1339,6 +1352,8 @@
             formData.recommendMax = data.data.recommendMax
             formData.typeRecommendDate = data.data.typeRecommendDate
             formData.recommendDate = data.data.recommendDate
+
+            formData.allianceLogin = data.data.allianceLogin
 
             // page 4
             formData.notifyLineStatus = data.data.notifyLineStatus=='true'?true:false

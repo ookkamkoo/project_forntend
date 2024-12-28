@@ -77,7 +77,8 @@ export const notifyStore = defineStore('setting', {
             withdrawMaxDay: "",
             withdrawMin: "",
             withdrawStatus: "",
-        } as Setting
+        } as Setting,
+        memberOnline: 0,
     }),
     actions: {
         setNotify(data: Notify) {
@@ -87,6 +88,10 @@ export const notifyStore = defineStore('setting', {
         setSetting(data: Setting) {
             this.setting = data;
             console.log("Setting details updated:", data);
+        },
+        setMemberOnline(data: number) {
+            this.memberOnline = data;
+            console.log("MemberOnline details updated:", data);
         },
     },
 });
