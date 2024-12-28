@@ -150,6 +150,7 @@ const getAlliance = async() =>{
 const openAlliance = (key_ref :string) =>{
   const config = useRuntimeConfig();
   const url = config.public.webUrl;
+  console.log(config.public.webName);
   console.log(url);
   
   window.open(url+`alliance/dashboard?ref=${key_ref}&token=${getToken()}&status=subport`, "_blank");
