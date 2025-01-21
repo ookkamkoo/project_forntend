@@ -18,37 +18,37 @@
                 <label>ยอดเงิน</label>
                 <a-input v-model:value="formData.amount" placeholder="amount" />
             </a-col>
-      </a-row>
-      <a-row class="p-2" :span="24">
-        <a-col :span="11">
-          <a-row >
-            <a-col class="p-1" :span="15">
-              <label>เริ่มต้นวันที่</label>
-              <a-date-picker v-model:value="formData.dateStart" />
-            </a-col>
-            <a-col class="p-1" :span="8">
-              <label><br></label>
-              <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
-            </a-col>
-          </a-row>
-        </a-col>
-        <a-col :span="11">
-          <a-row>
-            <a-col class="p-1" :span="15">
-              <label>ถึงวันที่</label>
-              <a-date-picker v-model:value="formData.dateEnd" />
-            </a-col>
-            <a-col class="p-1" :span="8">
-              <label><br></label>
-              <a-time-picker v-model:value="formData.timeEnd" format="HH:mm" />
-            </a-col>
-          </a-row>
-        </a-col>
-        <a-col class="p-1" :span="2">
-          <label><br></label>
-          <a-button class="sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
-        </a-col>
-      </a-row>
+    </a-row>
+    <a-row class="p-2">
+      <a-col :span="24" :md="10">
+        <a-row >
+          <a-col class="p-1" :span="12" :md="12">
+            <label>เริ่มต้นวันที่</label>
+            <a-date-picker v-model:value="formData.dateStart" />
+          </a-col>
+          <a-col class="p-1" :span="12" :md="12">
+            <label><br></label>
+            <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
+          </a-col>
+        </a-row>
+      </a-col>
+      <a-col :span="24" :md="10">
+        <a-row>
+          <a-col class="p-1" :span="12" :md="12">
+            <label>ถึงวันที่</label>
+            <a-date-picker v-model:value="formData.dateEnd" />
+          </a-col>
+          <a-col class="p-1" :span="12" :md="12">
+            <label><br></label>
+            <a-time-picker v-model:value="formData.timeEnd" format="HH:mm" />
+          </a-col>
+        </a-row>
+      </a-col>
+      <a-col class="p-1" :span="24" :md="4">
+        <label><br></label>
+        <a-button class="submit sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
+      </a-col>
+    </a-row>
     </a-row>
         <a-row class="p-2 memberplay-100">
             <a-radio-group v-model:value="formData.dateSelect" @change="handleDateSelectChange">

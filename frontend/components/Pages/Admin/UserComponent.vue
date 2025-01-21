@@ -87,7 +87,7 @@ import { ref,createVNode  } from 'vue';
 import dayjs from 'dayjs';
 import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 import { getUser,updateStatus,deleteUser,reset2PassUser } from '~/services/userServices';
-import { Alert } from '../Alert/alertComponent';
+import { Alert } from '../../Alert/alertComponent';
 
 const open = ref<boolean>(false);
 const openPermission = ref<boolean>(false);

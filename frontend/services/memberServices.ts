@@ -462,6 +462,22 @@ export async function getTurnMemberServices(id:number): Promise<getResponse> {
   }
 }
 
+export async function clearTurnMemberServices(id:number): Promise<getResponse> {
+  const config = useRuntimeConfig()
+  const url = config.public.serviceUrls;
+
+  const headers = {
+    Authorization: `Bearer ${getToken()}`
+  };
+
+  try {
+    const response = await axios.post<getResponse>(`${url}/member/clearTurnMember/${id}`,{}, { headers });
+    return response.data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+}
+
 export async function getCreditTransactionServices(id:number): Promise<getResponse> {
   const config = useRuntimeConfig()
   const url = config.public.serviceUrls;

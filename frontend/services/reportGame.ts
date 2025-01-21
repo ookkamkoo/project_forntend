@@ -111,3 +111,98 @@ export async function getReportSummaryProductServices(data :any): Promise<getRes
     }
 }
 
+export async function getReportMinigameSummaryServices(data :any): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    
+    const queryParams = [
+        `dateStart=${dateStart}`,
+        `timeStart=${timeStart}`,
+        `dateEnd=${dateEnd}`,
+        `timeEnd=${timeEnd}`,
+        `page=${data.page}`,
+        `pageSize=${data.pageSize}`
+    ];
+    const search = queryParams.join('&');
+
+    try {
+        const response = await axios.get<getResponse>(`${url}/mini-game/getMiniGameReportSummary?`+search, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export async function getMiniGameReport(data :any): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    
+    const queryParams = [
+        `dateStart=${dateStart}`,
+        `timeStart=${timeStart}`,
+        `dateEnd=${dateEnd}`,
+        `timeEnd=${timeEnd}`,
+        `page=${data.page}`,
+        `pageSize=${data.pageSize}`,
+        `sl_type=${data.sl_type}`,
+        `username=${data.username}`
+    ];
+    const search = queryParams.join('&');
+
+    try {
+        const response = await axios.get<getResponse>(`${url}/mini-game/getMiniGameReport?`+search, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+export async function getMiniGameReportByIdServices(data :any,id:number): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
+    let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
+    let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    
+    const queryParams = [
+        `dateStart=${dateStart}`,
+        `timeStart=${timeStart}`,
+        `dateEnd=${dateEnd}`,
+        `timeEnd=${timeEnd}`,
+        `page=${data.page}`,
+        `pageSize=${data.pageSize}`,
+        `sl_type=${data.sl_type}`,
+    ];
+    const search = queryParams.join('&');
+
+    try {
+        const response = await axios.get<getResponse>(`${url}/mini-game/getMiniGameReportById/${id}?`+search, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+

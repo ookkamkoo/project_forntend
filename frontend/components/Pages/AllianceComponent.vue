@@ -59,6 +59,7 @@
       size="small"
       :scroll="{ x: 1500, y: 700 }"
       :pagination="{ pageSize: 10 }"
+      :loading="loading"
   >
     <template #bodyCell="{ column, record, index }">
         <template v-if="column.key === 'username_agent'">
@@ -104,6 +105,7 @@ import { getToken } from '~/auth/authToken'
 
 
 const dataShow = ref<any[]>([]);
+const loading = ref(true);
 
 const columns: TableColumnsType = [
   { title: 'ทั้งหมด 6 รายการ', children: [
@@ -138,12 +140,14 @@ let formData = reactive({
 });
 
 const getAlliance = async() =>{
+  loading.value = true;
   const data = await getAllianceServices(formData);
   if (data.status === "success") {
       dataShow.value = data.data;
   } else {
       Alert('error', data.message);
   }
+  loading.value = false;
 }
 
 

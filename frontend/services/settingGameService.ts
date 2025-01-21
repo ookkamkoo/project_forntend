@@ -110,6 +110,27 @@ export async function setSettingGamePgServices(data:any): Promise<getResponse> {
     }
 }
 
+export async function uploadImageGameServices(game:any,image:any): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    console.log(game);
+    console.log(image);
+    
+    var body = {
+        "image":image
+    }
+
+    try {
+        const response = await axios.post<getResponse>(`${url}/setting-game/updateImageGame/${game.id}`,body, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 export async function editSettingPG100Services(data:any,number:number): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;

@@ -6,7 +6,7 @@
           v-model:value="formData.sl_type"
           style="width: 100%"
           >
-          <a-select-option value="all">ทั้งหมด</a-select-option>
+          <a-select-option value="all" class="m-2">ทั้งหมด</a-select-option>
           <a-select-option value="1">เพิ่มเครดิต</a-select-option>
           <a-select-option value="2">ลบเครดิต</a-select-option>
           <a-select-option value="3">เเก้ไขเครดิต</a-select-option>
@@ -20,46 +20,46 @@
       </a-select>
     </a-col>
   </a-row>
-    <a-row class="p-1" style="width: 100%;">
-      <a-col :span="24" :md="11">
-        <a-row >
-            <a-col class="p-rl-1" :span="15" >
-            <label>เริ่มต้นวันที่</label>
-            <a-date-picker v-model:value="formData.dateStart" />
-            </a-col>
-            <a-col class="p-rl-1" :span="8">
-            <label><br></label>
-            <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
-            </a-col>
-        </a-row>
-      </a-col>
-      <a-col :span="24" :md="11">
-        <a-row>
-            <a-col class="p-rl-1" :span="15">
-            <label>ถึงวันที่</label>
-            <a-date-picker v-model:value="formData.dateEnd" />
-            </a-col>
-            <a-col class="p-rl-1" :span="8">
-            <label><br></label>
-            <a-time-picker v-model:value="formData.timeEnd" format="HH:mm" />
-            </a-col>
-        </a-row>
-      </a-col>
-      <a-col class="p-rl-1" :span="24" :md="2">
+  <a-row class="p-2">
+    <a-col :span="24" :md="10">
+      <a-row >
+        <a-col class="p-1" :span="12" :md="12">
+          <label>เริ่มต้นวันที่</label>
+          <a-date-picker v-model:value="formData.dateStart" />
+        </a-col>
+        <a-col class="p-1" :span="12" :md="12">
           <label><br></label>
-          <a-button class="submit sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
-      </a-col>
-    </a-row>
-    <a-row class="p-2">
-      <div>
-          <a-radio-group v-model:value="formData.dateSelect" @change="handleDateSelectChange">
-              <a-radio-button value="Today">วันนี้</a-radio-button>
-              <a-radio-button value="Yesterday">เมื่อวาน</a-radio-button>
-              <a-radio-button value="ThisMonth">เดือนนี้</a-radio-button>
-              <a-radio-button value="LastMonth">เดือนที่เเล้ว</a-radio-button>
-              <a-radio-button value="all">ทั้งหมด</a-radio-button>
-          </a-radio-group>
-      </div>
+          <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
+        </a-col>
+      </a-row>
+    </a-col>
+    <a-col :span="24" :md="10">
+      <a-row>
+        <a-col class="p-1" :span="12" :md="12">
+          <label>ถึงวันที่</label>
+          <a-date-picker v-model:value="formData.dateEnd" />
+        </a-col>
+        <a-col class="p-1" :span="12" :md="12">
+          <label><br></label>
+          <a-time-picker v-model:value="formData.timeEnd" format="HH:mm" />
+        </a-col>
+      </a-row>
+    </a-col>
+    <a-col class="p-1" :span="24" :md="4">
+      <label><br></label>
+      <a-button class="submit sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
+    </a-col>
+  </a-row>
+  <a-row class="p-2">
+    <div>
+        <a-radio-group v-model:value="formData.dateSelect" @change="handleDateSelectChange">
+            <a-radio-button value="Today">วันนี้</a-radio-button>
+            <a-radio-button value="Yesterday">เมื่อวาน</a-radio-button>
+            <a-radio-button value="ThisMonth">เดือนนี้</a-radio-button>
+            <a-radio-button value="LastMonth">เดือนที่เเล้ว</a-radio-button>
+            <a-radio-button value="all">ทั้งหมด</a-radio-button>
+        </a-radio-group>
+    </div>
   </a-row>
   <a-table 
     :columns="dynamicColumns"

@@ -1,4 +1,10 @@
 <template>
+    <a-flex :justify="'space-between'" style="width: 100%;">
+        <h3>
+            เทิร์นการเล่น
+        </h3>
+        <a-button type="primary" danger ghost @click="clearTurnMember(id)">เคลียร์เทิร์น</a-button>
+    </a-flex>
     <a-table 
         :columns="columns"
         :data-source="dataShow"
@@ -24,7 +30,9 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 import type { TableColumnsType } from 'ant-design-vue';
-import { getTurnMemberServices } from '~/services/memberServices';
+import { getTurnMemberServices,clearTurnMemberServices } from '~/services/memberServices';
+import { createVNode } from 'vue';
+import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 
 interface TurnMember {
     type: string;
@@ -53,6 +61,33 @@ const getTurnMember = async (id: number) => {
         dataShow.value = responseData.data;
         loading.value = false;
     }
+};
+
+const clearTurnMember = (id: number) => {
+  Modal.confirm({
+    title: 'คุณต้องการเคลียร์การเล่นของลูกค้าใช่ไหม?',
+    icon: createVNode(ExclamationCircleOutlined),
+    content: createVNode('div', { style: 'color:red;' }, 'เคลียร์การเล่นของลูกค้า'),
+    class: 'test',
+    async onOk() {
+      try {
+        // เริ่มโหลดงาน
+        loading.value = true;
+
+        const responseData = await clearTurnMemberServices(id);
+
+        if (responseData.status === 'success') {
+            loading.value = false;
+            getTurnMember(id);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } 
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+  });
 };
 
 watch(() => props.id, (newValue: number) => {

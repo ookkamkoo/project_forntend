@@ -1,5 +1,22 @@
 <template>
     <a-row class="p-2">
+      <a-col class="p-1" :span="6">
+        <label>ประเภท</label>
+        <a-select
+            ref="select"
+            v-model:value="formData.sl_type"
+            style="width: 100%"
+            >
+            <a-select-option value="">ทั้งหมด</a-select-option>
+            <a-select-option value="SpinWheel">SpinWheel</a-select-option>
+        </a-select>
+      </a-col>
+      <a-col class="p-1" :span="6">
+        <label>Username</label>
+        <a-input v-model:value="formData.username" placeholder="username" />
+      </a-col>
+    </a-row>
+    <a-row class="p-2">
       <a-col :span="24" :md="10" :lg="11">
         <a-row >
           <a-col class="p-1" :span="15">
@@ -53,25 +70,24 @@
       <template v-if="column.key === 'date'">
         <div >{{ dayjs(record.date).format('YYYY-MM-DD') }}</div>
       </template>
-      <!-- membber -->
-      <template v-if="column.key === 'deposit_bonus'">
-        <div >{{ record.deposit_bonus.toFixed(2)}}</div>
+      <template v-else-if="column.key === 'result_detail'">
+        <div >{{ record.result_detail }}</div>
       </template>
-      <template v-if="column.key === 'deposit_vat'">
-        <div >{{ record.deposit_vat.toFixed(2)}}</div>
+      <template v-else-if="column.key === 'created_at'">
+        <div >{{ dayjs(record.created_at).format('YYYY-MM-DD') }} <br> {{ dayjs(record.created_at).format('HH:mm:ss') }}</div>
       </template>
-      <template v-if="column.key === 'withdraw_bonus'">
-        <div >{{ record.withdraw_bonus.toFixed(2)}}</div>
+      <template v-else-if="column.key === 'status'">
+        <a-tag color="green" >สำเร็จ</a-tag>
       </template>
-      <template v-if="column.key === 'withdraw_vat'">
-        <div >{{ record.withdraw_vat.toFixed(2)}}</div>
-      </template>
-      <template v-if="column.key === 'recommend'">
-        <div >{{ record.recommend.toFixed(2)}}</div>
-      </template>
-      <template v-if="column.key === 'lost'">
-        <div >{{ record.lost.toFixed(2)}}</div>
-      </template>
+    </template>
+    <template #summary>
+      <tr class="center">
+          <td colspan=4><strong>รวม</strong></td>
+          <td><strong>{{total_coin}}</strong></td>
+          <td></td>
+          <td><strong>{{total_coin_result.toFixed(2)}}</strong></td>
+          <td colspan=2></td>
+      </tr>
     </template>
   </a-table>
     
@@ -80,46 +96,34 @@
   <script lang="ts" setup>
   import { ref } from 'vue';
   import dayjs, { Dayjs } from 'dayjs';
-  import { getBonusSummaryServices } from '~/services/reportSevices';
+  import { getMiniGameReport } from '~/services/reportGame';
 
   const loading = ref(true);
   const dataShow = ref<any[]>([]);
-  const sumSummary = ref<any>({});
+  const total_coin_result = ref<number>(0);
+  const total_coin = ref<number>(0);
   const allRecord = ref<number>(0);
 
-  const dynamicColumns = computed(() => [
-    {  title: `ทั้งหมด ${allRecord.value} รายการ`, children: [
-      { title: 'วันที่', width:80, dataIndex: 'date', key: 'date' },
-      { title: 'ฝาก', children:[
-        { title: 'โบนัส', width: 100, children:[
-          { title: 'จำนวนรายการ', width: 100, dataIndex: 'deposit_bonus_count', key: 'deposit_bonus_count',  },
-          { title: 'โบนัส', width: 100, dataIndex: 'deposit_bonus', key: 'deposit_bonus',  },
-        ]  },
-        { title: 'vat', width: 100, children:[
-          { title: 'จำนวนรายการ', width: 100, dataIndex: 'deposit_vat_count', key: 'deposit_vat_count',  },
-          { title: 'โบนัส', width: 100, dataIndex: 'deposit_vat', key: 'deposit_vat',  },
-        ]   },
-      ]},
-      { title: 'ถอน', children:[
-        { title: 'โบนัส', width: 100, children:[
-          { title: 'จำนวนรายการ', width: 100, dataIndex: 'withdraw_bonus_count', key: 'withdraw_bonus_count',  },
-          { title: 'โบนัส', width: 100, dataIndex: 'withdraw_bonus', key: 'withdraw_bonus',  },
-        ]  },
-        { title: 'vat', width: 100, children:[
-          { title: 'จำนวนรายการ', width: 100, dataIndex: 'withdraw_vat_count', key: 'withdraw_vat_count',  },
-          { title: 'โบนัส', width: 100, dataIndex: 'withdraw_vat', key: 'withdraw_vat',  },
-        ]   },
-      ]},
-      { title: 'ยอดเสีย', children:[
-        { title: 'รายการ', width: 100, dataIndex: 'recommend_count', key: 'recommend_count',  },
-        { title: 'โบนัส', width: 100, dataIndex: 'recommend', key: 'recommend',  },
-      ]},
-      { title: 'เเนะนำเพื่อน', children:[
-        { title: 'รายการ', width: 80, dataIndex: 'lost_count', key: 'lost_count',  },
-        { title: 'จำนวน', width: 80, dataIndex: 'lost', key: 'lost',  },
-      ]},
-    ] },
-  ]);
+  const dynamicColumns = computed(() => {
+        return [
+        { 
+            title: `ทั้งหมด ${allRecord.value} รายการ`, 
+            children: [
+            { title: 'รายการที่', dataIndex: 'id', key: 'id', width: 30 },
+            { title: 'ชื่อ', dataIndex: 'username', key: 'username', width: 30 },
+            { title: 'เกมส์', dataIndex: 'game', key: 'game', width: 30 },
+            { title: 'จำนวนเหรียญ', children: [
+            { title: 'ก่อน', dataIndex: 'Coin_before', key: 'Coin_before', width: 30 },
+            { title: 'เหรียญที่ใช้', dataIndex: 'Coin', key: 'Coin', width: 30 },
+            { title: 'หลัง', dataIndex: 'Coin_after', key: 'Coin_after', width: 30 },
+            ]},
+            { title: 'ผลที่ออก', key: 'result_detail', width: 30},
+            { title: 'สถานะ', key: 'status', width: 30 },
+            { title: 'วันที่', key: 'created_at', width: 40 },
+            ] 
+        },
+        ];
+    });
   
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -134,6 +138,8 @@
     dateSelect:ref<string>('Today'),
     page:ref<number>(1),
     pageSize:ref<number>(10),
+    sl_type:"",
+    username:"",
   });
 
   const handleDateSelectChange = () => {
@@ -169,12 +175,13 @@
 
   const getReportSummary = async() => {
     loading.value = true;
-    const data = await getBonusSummaryServices(formData);
+    const data = await getMiniGameReport(formData);
     if (data.status === "success") {
-        dataShow.value = data.data.data;
-        sumSummary.value = data.data.sumReportSummary;
-        allRecord.value = data.data.recordsTotal;
-        paginationConfig.value.total = data.data.recordsTotal;
+        dataShow.value = data.data.transactions;
+        allRecord.value = data.data.total_count;
+        paginationConfig.value.total = data.data.total_count;
+        total_coin_result.value = data.data.total_coin_result
+        total_coin.value = data.data.total_coin
     } else {
         console.log("error : "+ data.message);
     }

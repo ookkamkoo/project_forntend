@@ -148,3 +148,12 @@ onMounted(() => {
     getMemberTransactionHistoryById();
 });
 </script>
+
+<style>
+.memberplay-100{
+  width: 100%;
+}
+.memberplay-50{
+  width: 50%;
+}
+</style>

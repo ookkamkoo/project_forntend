@@ -87,6 +87,7 @@ const sidebarData = [
       { path: '/history/member-credit-history', name: '8.3. ประวิติรายการเครดิตลูกค้า', icon: HistoryOutlined, notify: 0 },
       { path: '/history/member-transaction-history', name: '8.4. ประวัติการทำรายการลูกค้า', icon: HistoryOutlined, notify: 0 },
       { path: '/history/report-game', name: '8.5. ประวัติการเล่นเกมส์', icon: HistoryOutlined, notify: 0 },
+      { path: '/history/report-minigame', name: '8.5. ประวัติการเล่นมินิเกมส์', icon: HistoryOutlined, notify: 0 },
       // { path: '/history/commission1', name: 'ประวัติรายการเครดิตมือ', icon: HistoryOutlined, notify: 0 },
       // { path: '/history/commission2', name: 'ประวัติการใช้เหรียญ', icon: HistoryOutlined, notify: 0 },
     ]
@@ -118,11 +119,18 @@ const sidebarData = [
       { path: '/report/summary', name: '10.1. สรุปยอด', icon: FileOutlined, notify: 0 },
       { path: '/report/promotion-summary', name: '10.2. สรุปโปรโมชั่น', icon: FileOutlined, notify: 0 },
       { path: '/report/game', name: '10.3. สรุปการเล่นเกมส์', icon: FileOutlined, notify: 0 },
-      { path: '/report/bonus', name: '10.4. สรุปโบนัส', icon: FileOutlined, notify: 0 },
-      { path: '/report/past-dashboard', name: '10.5. สรุปภาพรวม', icon: FileOutlined, notify: 0 },
+      { path: '/report/mini-game', name: '10.4. สรุปมินิเกมส์', icon: FileOutlined, notify: 0 },
+      { path: '/report/bonus', name: '10.5. สรุปโบนัส', icon: FileOutlined, notify: 0 },
+      { path: '/report/past-dashboard', name: '10.6. สรุปภาพรวม', icon: FileOutlined, notify: 0 },
     ]
   },
-  { path: '/admin', name: '11. พนักงาน', icon: AndroidOutlined, notify: 0 },
+  { path: '#', name: '11. พนักงาน', icon: AndroidOutlined, notify: 0,
+    children: [
+      { path: '/admin', name: '12.1. พนักงาน', icon: AndroidOutlined, notify: 0 },
+      { path: '/admin/report', name: '12.1. รายงานพนักงาน', icon: AndroidOutlined, notify: 0 },
+    ]
+  },
+  // { path: '/admin', name: '11. พนักงาน', icon: AndroidOutlined, notify: 0 },
   // { path: '/news', name: '12 เเจ้งข่าวสาร', icon: SoundOutlined, notify: 0 },
   { path: '#', name: '12 เเจ้งเตือนข่าวสาร', icon: CreditCardOutlined, notify: 0,
     children: [
@@ -140,6 +148,7 @@ const sidebarData = [
     children: [
       // { path: '/setting/member', name: 'ตั้งค่าลูกค้า', icon: SettingOutlined, notify: 0 },
       { path: '/setting/system', name: '14.1. ตั้งค่าระบบ', icon: SettingOutlined, notify: 0 },
+      { path: '/setting/mini-game', name: '14.1. ตั้งค่ามินิเกมส์', icon: SettingOutlined, notify: 0 },
       { path: '/setting/game-provider', name: '14.2. ตั้งค่ายเกมส์', icon: SettingOutlined, notify: 0 },
     ]
   },

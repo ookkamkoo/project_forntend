@@ -58,7 +58,8 @@
             <a-tab-pane key="3" tab="รายการเครดิต"></a-tab-pane>
             <a-tab-pane key="4" tab="รายการทำรายการลูกค้า"></a-tab-pane>
             <a-tab-pane key="5" tab="รายการเล่นเกมส์"></a-tab-pane>
-            <a-tab-pane key="6" tab="ตั้งค่า Pg100 ต่อยูส"></a-tab-pane>
+            <a-tab-pane key="6" tab="รายการมินิเกมส์"></a-tab-pane>
+            <a-tab-pane key="7" tab="ตั้งค่า Pg100 ต่อยูส"></a-tab-pane>
         </a-tabs>
     </a-row>
     <a-row v-if="show_data == '1' && data.id != 0">
@@ -182,9 +183,6 @@
     </a-row>
     <a-row v-if="show_data == '2'">
         <a-col :span="24">
-            <h3>
-                เทิร์นการเล่น
-            </h3>
             <TableTablesTurnTable :id="data.id"/>
         </a-col>
     </a-row>
@@ -198,6 +196,9 @@
         <TableTablesMemberPlay :id="data.id"/>
     </a-row>
     <a-row v-if="show_data == '6'">
+        <TableTablesMiniGamePlay :id="data.id"/>
+    </a-row>
+    <a-row v-if="show_data == '7'">
         <TableTablesPg100Setting :id="data.id"/>
     </a-row>
 </template>

@@ -1,4 +1,33 @@
 <template>
+    <a-modal v-model:open="open" title="เเก้ไขรูปภาพ" >
+      <p>ขนาดไฟล์ในการอัปโหลด ขนาดเเนะนำ 1:1 ไฟล์ PNG JPG JPEG </p>
+      <a-upload-dragger
+          v-model:fileList="fileList"
+          name="file"
+          :showUploadList=false
+          class="image-upload"
+          @change="handleChange"
+      >
+          <div class="image-upload-text">
+              <div v-if="ImageText">
+                  <p class="ant-upload-drag-icon">
+                      <inbox-outlined></inbox-outlined>
+                  </p>
+                  <p class="ant-upload-text">Click or drag file to this area to upload QR Code</p>
+                  <p class="ant-upload-hint">
+                      โปรดเช็คขนาดไฟล์ในการอัปโหลด ขนาดเเนะนำ 1:1 ไฟล์ PNG JPG JPEG
+                  </p>
+              </div>
+          </div>
+          <div v-if="previewImage" class="preview-image-container">
+              <img :src="previewImage" class="preview-image" style="width: 350px;">
+          </div>
+      </a-upload-dragger>
+      <template #footer>
+          <a-button @click="closeModal()" class="m-1">Cancel</a-button>
+          <a-button @click="uploadImage()" type="primary" class="m-1 sky">อัปโหลด</a-button>
+      </template>
+    </a-modal>
     <a-tabs v-model:activeKey="activeKey" type="card" @change="handdleMenu()">
       <a-tab-pane key="1" tab="ตั้งค่าค่ายเกมส์">
         <a-row>
@@ -43,15 +72,27 @@
             <a-row>
               <a-col :span="8" :md="4" :lg="2" class="p-1" v-for="gameDetail in game.settingGame" >
                 <div class="center">
-                  <a-image
-                    width="100%"
-                    :src="gameDetail.image"
-                    :preview="false"
-                  />
+                  <div class="imageUpload" @click="showModal(game)">
+                    <!-- รูปภาพหลัก -->
+                    <a-image
+                      class="main-image"
+                      width="100%"
+                      :src="gameDetail.image_upload != ''?gameDetail.image_upload:gameDetail.image"
+                      :preview="false"
+                    />
+
+                    <!-- องค์ประกอบที่ต้องการให้แสดงเมื่อ hover -->
+                    <div class="hover-content">
+                      <button class="upload-button"><upload-outlined></upload-outlined></button>
+                    </div>
+                  </div>
                   <p class="long-text">{{gameDetail.name}}</p>
                   <a-switch v-model:checked="gameDetail.is_active"/>
                   <div class="p-2">
                     <a-input-number id="inputNumber" v-model:value="gameDetail.priority" :min="1"/>
+                  </div>
+                  <div class="p-2">
+                    <!-- <a-button type="primary" @click="showModal(game)" ghost>เเก้ไขรูปภาพ</a-button> -->
                   </div>
                 </div>
               </a-col>
@@ -326,14 +367,22 @@
   import { ref,createVNode } from 'vue';
   // import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   // import * as Constants from '../Constants/Constants';
-  import { getSettingGameServices,setSettingGameMenu,setSettingGame,getGamePGListServices,setSettingGamePgServices,getGamePGSettingServices,editSettingPG100Services } from '~/services/settingGameService';
+  import { getSettingGameServices,setSettingGameMenu,setSettingGame,getGamePGListServices,setSettingGamePgServices,getGamePGSettingServices,editSettingPG100Services,uploadImageGameServices } from '~/services/settingGameService';
   import { Alert } from '../Alert/alertComponent';
+  import type { UploadChangeParam } from 'ant-design-vue';
 
   const activeKey = ref('1');
   const dataShow = ref<any[]>([]);
   const allRecord = ref<number>(0);
   const loading = ref(true);
   const show_data = ref(1);
+  const open = ref<boolean>(false);
+  const fileList = ref([]);
+  const ImageText = ref(true);
+  const previewImage = ref('');
+  const Image = ref<any>(null);
+  const dataGame = ref<any>(null);
+
   
   interface SettingPG {
     gameCode: string;
@@ -882,6 +931,35 @@ const settingPG80:SettingPG  = {
     }
   }
 
+  const handleChange = async (info: UploadChangeParam) => {
+      const status = info.file.status;
+      const file = info.file.originFileObj; // File object
+
+      if (file instanceof File) {
+          const reader = new FileReader();
+
+          reader.onload = () => {
+              const base64String = reader.result as string;
+              if (base64String) {
+                  previewImage.value = base64String;
+                  Image.value = base64String;
+              }
+          };
+          ImageText.value = false;
+          reader.readAsDataURL(file);
+      }
+      
+      if (status !== 'uploading') {
+          console.log(info.file, info.fileList);
+      }
+      
+      if (status === 'done') {
+          message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+          message.error(`อัพโหลดรูปภาพเรียบร้อย`);
+      }
+  };
+
   const getGamePGList = async () =>{
     loading.value = true;
     const data = await getGamePGListServices();
@@ -945,6 +1023,18 @@ const settingPG80:SettingPG  = {
             getGamePGList();
         }
   };
+  
+  const uploadImage = async() => {
+    const data = await uploadImageGameServices(dataGame.value,Image.value);
+        if(data.status == "success"){
+            Alert('success','ตั้งค่าเกมส์ PG เรียบร้อย.')
+            // getGamePGList();
+            getSettingGame();
+        }else{
+            Alert('error',data.message);
+            // getGamePGList();
+        }
+  };
 
 
 const dynamicColumns = computed(() => {
@@ -966,6 +1056,7 @@ return [
   },
 ];
 });
+
 const handdleMenu = () =>{
   if(activeKey.value == "1"){
     getSettingGame();
@@ -982,6 +1073,17 @@ const paginationConfig = ref({
   total: 0,
   showTotal: (total: number) => `ทั้งหมด ${total} รายการ`,
 });
+
+const showModal = (data :any) => {
+  console.log(data);
+  dataGame.value = data
+  open.value = true;
+};
+
+const closeModal = () => {
+  // console.log(data);
+  open.value = false;
+};
 
 const handleTableChange = (pagination: any) => {
   formData.page = pagination.current
@@ -1024,6 +1126,43 @@ onMounted(() => {
 });
     
 </script>
+<style scoped>
+.imageUpload {
+  position: relative; /* เตรียมให้สามารถจัดวางองค์ประกอบซ้อนทับกันได้ */
+  display: inline-block; /* หากต้องการขนาดพอดีกับภาพ */
+  cursor: pointer; /* ให้เป็นรูปมือเวลาชี้ */
+  background: radial-gradient(circle at center, #130a34 0%, /* สีม่วงโทนหนึ่ง */ #0f092f 100% /* สีม่วงโทนใกล้เคียง */);
+  border-radius: 15px;
+}
+
+/* ซ่อน hover-content ไว้ก่อน */
+.hover-content {
+  display: none;
+  position: absolute; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  /* ตกแต่งปุ่มเพิ่มได้ เช่น สี, ขนาด, ความโค้ง */
+  /* ตัวอย่าง */
+  z-index: 10;
+}
+
+/* เมื่อเอาเมาส์ชี้ .imageUpload จะแสดง .hover-content */
+.imageUpload:hover .hover-content {
+  display: block;
+}
+
+/* ตกแต่งเพิ่มเติม */
+.upload-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+</style>
 <style>
 .select-member-detail{
     margin: 0.20rem;

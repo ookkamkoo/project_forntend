@@ -1,30 +1,30 @@
 <template>
     <a-row class="p-2">
-      <a-col :span="11">
+      <a-col :span="24" :md="10" :lg="11">
         <a-row >
           <a-col class="p-1" :span="15">
             <label>เริ่มต้นวันที่</label>
             <a-date-picker v-model:value="formData.dateStart" />
           </a-col>
-          <a-col class="p-1" :span="8">
+          <a-col class="p-1" :span="9">
             <label><br></label>
             <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
           </a-col>
         </a-row>
       </a-col>
-      <a-col :span="11">
+      <a-col :span="24" :md="10" :lg="11">
         <a-row>
           <a-col class="p-1" :span="15">
             <label>ถึงวันที่</label>
             <a-date-picker v-model:value="formData.dateEnd" />
           </a-col>
-          <a-col class="p-1" :span="8">
+          <a-col class="p-1" :span="9">
             <label><br></label>
             <a-time-picker v-model:value="formData.timeEnd" format="HH:mm" />
           </a-col>
         </a-row>
       </a-col>
-      <a-col class="p-1" :span="2">
+      <a-col class="p-1" :span="24" :md="4" :lg="2">
         <label><br></label>
         <a-button class="submit sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
       </a-col>

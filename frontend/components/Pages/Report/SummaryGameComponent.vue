@@ -53,24 +53,8 @@
       <template v-if="column.key === 'date'">
         <div >{{ dayjs(record.date).format('YYYY-MM-DD') }}</div>
       </template>
-      <!-- membber -->
-      <template v-if="column.key === 'deposit_bonus'">
-        <div >{{ record.deposit_bonus.toFixed(2)}}</div>
-      </template>
-      <template v-if="column.key === 'deposit_vat'">
-        <div >{{ record.deposit_vat.toFixed(2)}}</div>
-      </template>
-      <template v-if="column.key === 'withdraw_bonus'">
-        <div >{{ record.withdraw_bonus.toFixed(2)}}</div>
-      </template>
-      <template v-if="column.key === 'withdraw_vat'">
-        <div >{{ record.withdraw_vat.toFixed(2)}}</div>
-      </template>
-      <template v-if="column.key === 'recommend'">
-        <div >{{ record.recommend.toFixed(2)}}</div>
-      </template>
-      <template v-if="column.key === 'lost'">
-        <div >{{ record.lost.toFixed(2)}}</div>
+      <template v-if="column.key === 'status'">
+        <a-tag color="green" >สำเร็จ</a-tag>
       </template>
     </template>
   </a-table>
@@ -80,7 +64,7 @@
   <script lang="ts" setup>
   import { ref } from 'vue';
   import dayjs, { Dayjs } from 'dayjs';
-  import { getBonusSummaryServices } from '~/services/reportSevices';
+  import { getReportSummaryProductServices } from '~/services/reportGame';
 
   const loading = ref(true);
   const dataShow = ref<any[]>([]);
@@ -90,34 +74,17 @@
   const dynamicColumns = computed(() => [
     {  title: `ทั้งหมด ${allRecord.value} รายการ`, children: [
       { title: 'วันที่', width:80, dataIndex: 'date', key: 'date' },
-      { title: 'ฝาก', children:[
-        { title: 'โบนัส', width: 100, children:[
-          { title: 'จำนวนรายการ', width: 100, dataIndex: 'deposit_bonus_count', key: 'deposit_bonus_count',  },
-          { title: 'โบนัส', width: 100, dataIndex: 'deposit_bonus', key: 'deposit_bonus',  },
-        ]  },
-        { title: 'vat', width: 100, children:[
-          { title: 'จำนวนรายการ', width: 100, dataIndex: 'deposit_vat_count', key: 'deposit_vat_count',  },
-          { title: 'โบนัส', width: 100, dataIndex: 'deposit_vat', key: 'deposit_vat',  },
-        ]   },
-      ]},
-      { title: 'ถอน', children:[
-        { title: 'โบนัส', width: 100, children:[
-          { title: 'จำนวนรายการ', width: 100, dataIndex: 'withdraw_bonus_count', key: 'withdraw_bonus_count',  },
-          { title: 'โบนัส', width: 100, dataIndex: 'withdraw_bonus', key: 'withdraw_bonus',  },
-        ]  },
-        { title: 'vat', width: 100, children:[
-          { title: 'จำนวนรายการ', width: 100, dataIndex: 'withdraw_vat_count', key: 'withdraw_vat_count',  },
-          { title: 'โบนัส', width: 100, dataIndex: 'withdraw_vat', key: 'withdraw_vat',  },
-        ]   },
-      ]},
-      { title: 'ยอดเสีย', children:[
-        { title: 'รายการ', width: 100, dataIndex: 'recommend_count', key: 'recommend_count',  },
-        { title: 'โบนัส', width: 100, dataIndex: 'recommend', key: 'recommend',  },
-      ]},
-      { title: 'เเนะนำเพื่อน', children:[
-        { title: 'รายการ', width: 80, dataIndex: 'lost_count', key: 'lost_count',  },
-        { title: 'จำนวน', width: 80, dataIndex: 'lost', key: 'lost',  },
-      ]},
+      { title: 'PG100', width: 80, dataIndex: 'pg100', key: 'pg100',  },
+      { title: 'Slot Game', width: 80, dataIndex: 'slot_game', key: 'slot_game',  },
+      { title: 'Sportsbook', width: 80, dataIndex: 'sports_book', key: 'sports_book',  },
+      { title: 'Live Casino', width: 80,dataIndex: 'live_casino', key: 'live_casino',  },
+      { title: 'Fishing Hunter', width: 80,dataIndex: 'fishing_hunter', key: 'fishing_hunter',  },
+      { title: 'Game Card', width: 80,dataIndex: 'game_card', key: 'game_card',  },
+      { title: 'Lotto', width: 80,dataIndex: 'lotto', key: 'lotto',  },
+      { title: 'E-Sport', width: 80,dataIndex: 'e_sport', key: 'e_sport',  },
+      { title: 'Poker Game', width: 80,dataIndex: 'poker_game', key: 'poker_game',  },
+      { title: 'Keno', width: 80,dataIndex: 'keno', key: 'keno',  },
+      { title: 'Crypto Tradding', width: 80,dataIndex: 'crypto_tradding', key: 'crypto_tradding',  },
     ] },
   ]);
   
@@ -169,7 +136,7 @@
 
   const getReportSummary = async() => {
     loading.value = true;
-    const data = await getBonusSummaryServices(formData);
+    const data = await getReportSummaryProductServices(formData);
     if (data.status === "success") {
         dataShow.value = data.data.data;
         sumSummary.value = data.data.sumReportSummary;

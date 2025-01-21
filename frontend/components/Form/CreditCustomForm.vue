@@ -152,14 +152,15 @@
 
     // ดึงค่า year, month, และ day
     const year = currentDate.year(); // ปี (เช่น 2024)
-    const month = currentDate.month() + 1; // เดือน (เริ่มจาก 0, +1 เพื่อให้ตรงกับ 1-12)
-    const day = currentDate.date(); // วัน
+    const month = String(currentDate.month() + 1).padStart(2, '0'); // zero padding
+    const day = String(currentDate.date()).padStart(2, '0');   
 
     const hour = currentDate.hour(); // ชั่วโมง
     const minute = currentDate.minute(); // นาที
     // const second = currentDate.second(); // วินาที
-
+    
     const date = ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD'));
+        console.log(date);
     // const date = ref<Dayjs>(dayjs(`2015-06-18`, 'YYYY-MM'));
     const time = ref<Dayjs>(dayjs(`${hour}:${minute}`, 'HH:mm'));
 

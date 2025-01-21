@@ -1,32 +1,32 @@
 <template>
     <a-row class="p-2">
-      <a-col :span="11">
+      <a-col :span="24" :md="10" :lg="11">
         <a-row >
-            <a-col class="p-1" :span="15">
+          <a-col class="p-1" :span="15">
             <label>เริ่มต้นวันที่</label>
             <a-date-picker v-model:value="formData.dateStart" />
-            </a-col>
-            <a-col class="p-1" :span="8">
-                <label><br></label>
-                <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
-            </a-col>
+          </a-col>
+          <a-col class="p-1" :span="9">
+            <label><br></label>
+            <a-time-picker v-model:value="formData.timeStart" format="HH:mm" />
+          </a-col>
         </a-row>
       </a-col>
-      <a-col :span="11">
+      <a-col :span="24" :md="10" :lg="11">
         <a-row>
-            <a-col class="p-1" :span="15">
+          <a-col class="p-1" :span="15">
             <label>ถึงวันที่</label>
             <a-date-picker v-model:value="formData.dateEnd" />
-            </a-col>
-            <a-col class="p-1" :span="8">
+          </a-col>
+          <a-col class="p-1" :span="9">
             <label><br></label>
-            <a-time-picker v-model:value="formData.timeEnd" format="HH:mm"/>
-            </a-col>
+            <a-time-picker v-model:value="formData.timeEnd" format="HH:mm" />
+          </a-col>
         </a-row>
       </a-col>
-      <a-col class="p-1" :span="2">
+      <a-col class="p-1" :span="24" :md="4" :lg="2">
         <label><br></label>
-        <a-button class="submit sky" type="primary"  @click="search"><SearchOutlined /> ค้นหา</a-button>
+        <a-button class="submit sky" type="primary" @click="search"><SearchOutlined /> ค้นหา</a-button>
       </a-col>
     </a-row>
     <a-row class="p-2">
@@ -53,9 +53,17 @@
       <template v-if="column.key === 'date'">
         <div >{{ dayjs(record.date).format('YYYY-MM-DD') }}</div>
       </template>
-      <template v-if="column.key === 'status'">
-        <a-tag color="green" >สำเร็จ</a-tag>
+      <template v-if="column.key === 'total_coin_result'">
+        {{record.total_coin_result.toFixed(2)}}
       </template>
+    </template>
+    <template #summary>
+      <tr class="center">
+          <td colspan=1><strong>รวม</strong></td>
+          <td><strong>{{SumUseCoin}}</strong></td>
+          <td><strong>{{SumCoin}}</strong></td>
+          <td><strong>{{Sumbonus}}</strong></td>
+      </tr>
     </template>
   </a-table>
     
@@ -64,27 +72,24 @@
   <script lang="ts" setup>
   import { ref } from 'vue';
   import dayjs, { Dayjs } from 'dayjs';
-  import { getReportSummaryProductServices } from '~/services/reportGame';
+  import { getReportMinigameSummaryServices } from '~/services/reportGame';
 
   const loading = ref(true);
   const dataShow = ref<any[]>([]);
   const sumSummary = ref<any>({});
   const allRecord = ref<number>(0);
+  const SumUseCoin = ref<number>(0);
+  const SumCoin = ref<number>(0);
+  const Sumbonus = ref<number>(0);
 
   const dynamicColumns = computed(() => [
     {  title: `ทั้งหมด ${allRecord.value} รายการ`, children: [
-      { title: 'วันที่', width:80, dataIndex: 'date', key: 'date' },
-      { title: 'PG100', width: 80, dataIndex: 'pg100', key: 'pg100',  },
-      { title: 'Slot Game', width: 80, dataIndex: 'slot_game', key: 'slot_game',  },
-      { title: 'Sportsbook', width: 80, dataIndex: 'sports_book', key: 'sports_book',  },
-      { title: 'Live Casino', width: 80,dataIndex: 'live_casino', key: 'live_casino',  },
-      { title: 'Fishing Hunter', width: 80,dataIndex: 'fishing_hunter', key: 'fishing_hunter',  },
-      { title: 'Game Card', width: 80,dataIndex: 'game_card', key: 'game_card',  },
-      { title: 'Lotto', width: 80,dataIndex: 'lotto', key: 'lotto',  },
-      { title: 'E-Sport', width: 80,dataIndex: 'e_sport', key: 'e_sport',  },
-      { title: 'Poker Game', width: 80,dataIndex: 'poker_game', key: 'poker_game',  },
-      { title: 'Keno', width: 80,dataIndex: 'keno', key: 'keno',  },
-      { title: 'Crypto Tradding', width: 80,dataIndex: 'crypto_tradding', key: 'crypto_tradding',  },
+      // { title: 'วันที่', width:80, dataIndex: 'date', key: 'date' },
+      { title: 'เกมส์', width: 80, dataIndex: 'game_name', key: 'game_name',  },
+      { title: 'เหรียญที่ถูกใช้งาน', width: 80, dataIndex: 'total_coin', key: 'total_coin',  },
+      { title: 'ครั้ง', width: 80, dataIndex: 'count', key: 'count',  },
+      { title: 'จำนวนโบนัส', width: 80, dataIndex: 'total_coin_result', key: 'total_coin_result',  },
+      // { title: 'จำนวนครั้ง', width: 80, dataIndex: 'count', key: 'count',  },
     ] },
   ]);
   
@@ -131,17 +136,22 @@
     formData.timeStart = dayjs().startOf('day'); // 00:00
     formData.timeEnd = dayjs().endOf('day');     // 23:59
 
-    getReportSummary();
+    getReportMiniGameSummary();
   };
 
-  const getReportSummary = async() => {
+  const getReportMiniGameSummary = async() => {
     loading.value = true;
-    const data = await getReportSummaryProductServices(formData);
+    const data = await getReportMinigameSummaryServices(formData);
     if (data.status === "success") {
-        dataShow.value = data.data.data;
-        sumSummary.value = data.data.sumReportSummary;
-        allRecord.value = data.data.recordsTotal;
-        paginationConfig.value.total = data.data.recordsTotal;
+        if(data.data.data != null){
+          dataShow.value = data.data.data;
+          sumSummary.value = data.data.sumReportSummary;
+          allRecord.value = data.data.data.length;
+          SumUseCoin.value = data.data.total_coin_sum
+          SumCoin.value = data.data.total_count_sum
+          Sumbonus.value = data.data.total_coin_result_sum.toFixed(2)
+        }
+        // paginationConfig.value.total = data.data.recordsTotal;
     } else {
         console.log("error : "+ data.message);
     }
@@ -149,7 +159,7 @@
   }
 
   const search = () =>{
-    getReportSummary();
+    getReportMiniGameSummary();
   }
   
   const paginationConfig = ref({
@@ -161,13 +171,13 @@
 
   const handleTableChange = (pagination: any) => {
     formData.page = pagination.current
-    getReportSummary();
+    getReportMiniGameSummary();
     console.log(pagination.pageSize);
     paginationConfig.value.current = pagination.current
     paginationConfig.value.pageSize = pagination.pageSize
   };
 
   onMounted(() => {
-    getReportSummary();
+    getReportMiniGameSummary();
   });
   </script>
