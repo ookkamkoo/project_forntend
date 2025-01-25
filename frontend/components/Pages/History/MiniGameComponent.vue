@@ -9,6 +9,7 @@
             >
             <a-select-option value="">ทั้งหมด</a-select-option>
             <a-select-option value="SpinWheel">SpinWheel</a-select-option>
+            <a-select-option value="Card">Card</a-select-option>
         </a-select>
       </a-col>
       <a-col class="p-1" :span="6">
@@ -70,6 +71,10 @@
       <template v-if="column.key === 'date'">
         <div >{{ dayjs(record.date).format('YYYY-MM-DD') }}</div>
       </template>
+      <template v-else-if="column.key === 'action'">
+        <a-tag color="green" v-if="record.action='add'" >เพิ่ม</a-tag>
+        <a-tag color="red" v-else>ลบ</a-tag>
+      </template>
       <template v-else-if="column.key === 'result_detail'">
         <div >{{ record.result_detail }}</div>
       </template>
@@ -112,6 +117,7 @@
             { title: 'รายการที่', dataIndex: 'id', key: 'id', width: 30 },
             { title: 'ชื่อ', dataIndex: 'username', key: 'username', width: 30 },
             { title: 'เกมส์', dataIndex: 'game', key: 'game', width: 30 },
+            { title: 'กระทำ', dataIndex: 'action', key: 'action', width: 30 },
             { title: 'จำนวนเหรียญ', children: [
             { title: 'ก่อน', dataIndex: 'Coin_before', key: 'Coin_before', width: 30 },
             { title: 'เหรียญที่ใช้', dataIndex: 'Coin', key: 'Coin', width: 30 },

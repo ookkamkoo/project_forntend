@@ -62,6 +62,7 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
             description: data.discriptionsWebsite ? data.discriptionsWebsite.toString() : "",
             keyword: data.websiteKeyword ? data.websiteKeyword.toString() : "",
             websiteUrl: data.websiteUrl ? data.websiteUrl.toString() : "",
+            textSlide: data.textSlide ? data.textSlide.toString() : "",
             websiteLine: data.websiteLine ? data.websiteLine.toString() : "",
             imageWebsite: data.imageWebsite ? data.imageWebsite.toString() : "",
             imageLogoWebsite: data.imageLogoWebsite ? data.imageLogoWebsite.toString() : "",

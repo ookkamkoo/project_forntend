@@ -69,6 +69,16 @@
                             <a-input v-model:value="formData.websiteLine"/>
                         </a-form-item>
                     </a-col>
+                    <a-col :span="12" :md="12" class="p-3">
+                        <label for="textSlide"><b  class="request">ข้อความเลื่อน</b></label>
+                        <a-form-item 
+                            ref="textSlide" 
+                            name="textSlide"
+                            :rules="[{ required: true, message: 'โปรดกรอกลิงค์เว็บไซต์!' }]"
+                            >
+                            <a-input v-model:value="formData.textSlide"/>
+                        </a-form-item>
+                    </a-col>
                 </a-row>
                 <a-row>
                     <a-col :span="24" :md="12" class="p-3 my-2">
@@ -985,11 +995,13 @@
 
   let formData = reactive({
       // page1 
+      // เว็บที่ให้บริการคาสิโนออนไลน์เต็มรูปแบบ ทั้งสล็อตออนไลน์ คาสิโนสด บาคาร่าสด เกมแทงปลา เกมกีฬา ฯลฯ 
       product: 1,
       titleWebsite:'demo',
       discriptionsWebsite:'คาสิโนออนไลน์ เว็บตรงอันดับ 1 มาใหม่ ฝากถอนไม่มีขั้นต่ำ ครบในเว็บเดียว',
       websiteKeyword:'คาสิโนออนไลน์ เว็บตรงอันดับ 1 มาใหม่ ฝากถอนไม่มีขั้นต่ำ ครบในเว็บเดียว',
       websiteUrl:'',
+      textSlide:'textSlide',
       websiteLine:'',
       imageWebsite: null as any,
       imageLogoWebsite: null as any,
@@ -1261,6 +1273,7 @@
             formData.discriptionsWebsite = data.data.description
             formData.websiteKeyword = data.data.keyword
             formData.websiteUrl = data.data.websiteUrl
+            formData.textSlide = data.data.textSlide
             formData.websiteLine = data.data.websiteLine
             formData.clearWithdrawMin = parseInt(data.data.clearWithdrawMin)
             formData.turnWithdrawNormal = parseInt(data.data.turnWithdrawNormal)

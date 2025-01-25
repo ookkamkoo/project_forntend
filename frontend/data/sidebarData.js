@@ -16,7 +16,8 @@ import {
   SwapOutlined,
   AndroidOutlined,
   HistoryOutlined,
-  SoundOutlined
+  SoundOutlined,
+  BellOutlined
 
 } from '@ant-design/icons-vue';
 import { notifyStore } from '~/store/index';
@@ -55,11 +56,11 @@ const sidebarData = [
   {
     path: '#',
     name: '5. โบนัส',
-    icon: SwapOutlined,
+    icon: BellOutlined,
     notify: 0,
     children: [
-      { path: '/recommend', name: '5.1. เเนะนำเพื่อน', icon: SwapOutlined, notify: 0 },
-      { path: '/member/cashback-list', name: '5.3. ยอดเสีย', icon: SwapOutlined, notify: 0 },
+      { path: '/recommend', name: '5.1. เเนะนำเพื่อน', icon: BellOutlined, notify: 0 },
+      { path: '/member/cashback-list', name: '5.3. ยอดเสีย', icon: BellOutlined, notify: 0 },
     ]
   },
   { path: '/promote', name: '6. โปรโมชั่น', icon: CrownOutlined, notify: 0 },
