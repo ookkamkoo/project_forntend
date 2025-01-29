@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-logo">
+  <div class="layout-logo m-1">
     <a-image
       width="120px"
       :preview="false"
