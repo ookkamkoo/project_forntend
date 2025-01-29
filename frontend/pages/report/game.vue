@@ -1,3 +1,3 @@
 <template>
-    <PagesSummaryGameComponent/>
+    <PagesReportSummaryGameComponent/>
 </template>
