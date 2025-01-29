@@ -18,7 +18,7 @@
           </div>
           <div class="login-set">
             <div class="login-set-detail" >
-              <div class="login-set-detail-image" >
+              <div class="login-set-detail-image m-2" >
                 <a-image
                   width="120px"
                   :preview="false"
