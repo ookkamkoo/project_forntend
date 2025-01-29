@@ -20,7 +20,7 @@
             <div class="login-set-detail" >
               <div class="login-set-detail-image" >
                 <a-image
-                  :width="'50%'"
+                  width="120px"
                   :preview="false"
                   :src="config.public.serviceUrls +'/'+ store.setting.imageWebsite"
                 />
