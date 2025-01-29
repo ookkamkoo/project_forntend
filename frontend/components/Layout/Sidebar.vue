@@ -1,9 +1,9 @@
 <template>
   <div class="layout-logo">
     <a-image
-      :width="'50%'"
+      width="120px"
       :preview="false"
-      :src="config.public.serviceUrls +'/'+ store.setting.imageWebsite"
+      :src="config.public.serviceUrls +'/'+ store.setting.imageLogoWebsite"
     />
   </div>
   <div class="sidebar-layout">
