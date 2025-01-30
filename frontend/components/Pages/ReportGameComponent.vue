@@ -131,6 +131,7 @@
         children: [
             { title: '#', width: 60, dataIndex: 'id', key: 'id' },
             { title: 'ยูสเซอร์เนม', width: 120, dataIndex: 'username', key: 'username' },
+            { title: 'หมวดหมู่', dataIndex: 'category_name', key: 'category_name', width: 80 },
             { title: 'ค่าย', dataIndex: 'product_name', key: 'product_name', width: 80 },
             { title: 'เกมส์', dataIndex: 'game_name', key: 'game_name', width: 100 },
             { title: 'เครดิต', width: 100, children: [

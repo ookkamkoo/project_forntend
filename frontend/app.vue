@@ -22,7 +22,7 @@ import { notifyStore } from '~/store/index';
 const store = notifyStore();
 
 const loading = ref(true);
-
+{{store.setting.serverStatus}}
 if (store.setting.serverStatus == "false") {
   throw createError({
     statusCode: 404,
