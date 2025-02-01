@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: backoffice.scbbbb.com  # ใช้โดเมนของคุณ
+  - host: backoffice.cooper89.com  # ใช้โดเมนของคุณ
     http:
       paths:
       - path: /

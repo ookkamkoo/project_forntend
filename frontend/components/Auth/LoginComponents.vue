@@ -22,7 +22,7 @@
                 <a-image
                   width="120px"
                   :preview="false"
-                  :src="config.public.serviceUrls +'/'+ store.setting.imageLogoWebsite"
+                  :src="store.setting.imageLogoWebsite"
                 />
                 <!-- <img src="https://cdn.zabbet.com/NRM9/lobby_settings/625f5901-0f8d-4f0f-b959-431179967df9.png" alt="login logo" width="80%" height="auto"> -->
               </div>

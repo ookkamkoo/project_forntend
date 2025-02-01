@@ -586,11 +586,11 @@
                     formData.additionalColumnsScale = newValue.condition_data;
                 }
                 formData.turn = newValue.turn;
-                formData.image = config.public.serviceUrls +'/'+ newValue.image
+                formData.image =  newValue.image
             }
             // iamge
             ImageText.value = false;
-            previewImage.value = config.public.serviceUrls +'/'+ newValue.image
+            previewImage.value = newValue.image
             
         } 
     }, { immediate: true });

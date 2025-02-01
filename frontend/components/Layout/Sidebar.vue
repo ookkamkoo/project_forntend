@@ -3,7 +3,7 @@
     <a-image
       width="120px"
       :preview="false"
-      :src="config.public.serviceUrls +'/'+ store.setting.imageLogoWebsite"
+      :src=" store.setting.imageLogoWebsite"
     />
   </div>
   <div class="sidebar-layout">

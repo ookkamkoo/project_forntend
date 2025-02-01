@@ -347,7 +347,7 @@
             }
             if(newValue.image != ""){
                 ImageText.value = false;
-                previewImage.value = config.public.serviceUrls +'/'+newValue.image
+                previewImage.value = newValue.image
             }
         } 
     }, { immediate: true });

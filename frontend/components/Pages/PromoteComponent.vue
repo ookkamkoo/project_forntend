@@ -30,7 +30,7 @@
           <template v-else-if="column.key === 'image'">
             <a-image
               width="100%"
-              :src="config.public.serviceUrls +'/'+ record.image"
+              :src="record.image"
             />
           </template>
           <template v-else-if="column.key === 'name'">
