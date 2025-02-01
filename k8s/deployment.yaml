@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backoffice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backoffice
+  template:
+    metadata:
+      labels:
+        app: backoffice
+    spec:
+      imagePullSecrets:
+        - name: dockerhub-secret  # ✅ ใช้ Secret สำหรับดึง Image จาก Docker Hub
+      containers:
+        - name: backoffice
+          image: littleweb14766/project_csn:backOfice_1
+          imagePullPolicy: Always  # ✅ บังคับให้ดึง Image ใหม่เสมอ
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: backoffice-config  # ✅ ดึงค่าจาก ConfigMap (เช่น API URL, PORT)
+          resources:
+            limits:
+              cpu: "500m"  # ลด CPU Limit
+              memory: "512Mi"
+            requests:
+              cpu: "250m"  # ลดการขอ CPU
+              memory: "256Mi"

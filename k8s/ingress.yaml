@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backoffice-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: backoffice.scbbbb.com  # ใช้โดเมนของคุณ
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backoffice-service  # เปลี่ยนจาก api-service เป็น backoffice-service
+            port:
+              number: 80

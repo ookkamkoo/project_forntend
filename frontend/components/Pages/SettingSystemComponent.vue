@@ -1290,15 +1290,15 @@
             formData.bgColor = data.data.bgColor
             
             if(data.data.imageWebsite != ''){
-                previewImage.value = config.public.serviceUrls + '/'+ data.data.imageWebsite;
+                previewImage.value = data.data.imageWebsite;
                 ImageText.value = false;
             }
             if(data.data.imageLogoWebsite != ''){
-                previewImageLogo.value = config.public.serviceUrls + '/'+ data.data.imageLogoWebsite;
+                previewImageLogo.value = data.data.imageLogoWebsite;
                 ImageTextLogo.value = false;
             }
             if(data.data.bgImage != ''){
-                previewImageBgImage.value = config.public.serviceUrls + '/'+ data.data.bgImage;
+                previewImageBgImage.value = data.data.bgImage;
                 ImageTextBgImage.value = false;
             }
 
