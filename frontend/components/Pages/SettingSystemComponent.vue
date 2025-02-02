@@ -1006,7 +1006,7 @@
       imageWebsite: null as any,
       imageLogoWebsite: null as any,
       bgImageSw:true,
-      bgColor: '#ffffff',
+      bgColor: '#000000',
       bgImage:null as any,
       clearWithdrawMin:5,
       turnWithdrawNormal:0,

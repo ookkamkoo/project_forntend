@@ -169,6 +169,9 @@ const handleLayoutClick = (event: Event) => {
 .collapsed_togle .ant-layout-sider-trigger{
   width: 0px !important;
 }
+.ant-select-item{
+  margin: 0px !important;
+}
 
 @media screen and (max-width: 750px) {
   .collapsed{
