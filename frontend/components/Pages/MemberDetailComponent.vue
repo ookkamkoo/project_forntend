@@ -208,7 +208,7 @@ import { ref } from 'vue';
 import { getDetailMemberByName } from '~/services/memberServices';
 import dayjs, { Dayjs } from 'dayjs';
 
-const show_data = ref('5');
+const show_data = ref('1');
 
 const data = reactive({
         id: 0,

@@ -375,7 +375,7 @@
   import { Alert } from '../Alert/alertComponent';
   import type { UploadChangeParam } from 'ant-design-vue';
 
-  const activeKey = ref('2');
+  const activeKey = ref('1');
   const dataShow = ref<any[]>([]);
   const allRecord = ref<number>(0);
   const loading = ref(true);
