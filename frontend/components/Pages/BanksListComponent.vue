@@ -128,7 +128,7 @@ const getSystemBank = async() =>{
         dataShow.value = data.data.data;
         allRecord.value = data.data.recordsTotal;
     } else {
-        Alert('error', data.message);
+        // Alert('error', data.message);
     }
     loading.value = false;
 }
@@ -216,7 +216,7 @@ const CheckConnect = async(id: number) =>{
       getSystemBank();
         Alert("success", `บัญชีธนาคารเชื่อมต่อกับทางธนาคาร`);
     } else {
-        Alert('error', data.message);
+        // Alert('error', data.message);
     }
     isLoadingCheckConnect.value[id] = false;
 }
