@@ -13,10 +13,8 @@
         <a-select-option value="3">เเก้ไขเครดิต</a-select-option>
         <a-select-option value="4">ฝากเงิน</a-select-option>
         <a-select-option value="5">ถอนเงิน</a-select-option>
-        <a-select-option value="6">เเนะนำเพื่อน</a-select-option>
+        <a-select-option value="6">เกมส์โบนัส</a-select-option>
         <a-select-option value="7">ยอดเสีย</a-select-option>
-        <a-select-option value="8">มินิเกมส์</a-select-option>
-        <a-select-option value="9">รวมโบนัส</a-select-option>
     </a-select>
     </a-col>
       <a-col class="p-1" :span="6">

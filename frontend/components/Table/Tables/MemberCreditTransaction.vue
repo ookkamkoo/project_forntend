@@ -12,11 +12,13 @@
           <a-select-option value="3">เเก้ไขเครดิต</a-select-option>
           <a-select-option value="4">ฝากเงิน</a-select-option>
           <a-select-option value="5">ถอนเงิน</a-select-option>
-          <a-select-option value="6">เกมส์โบนัส</a-select-option>
+          <a-select-option value="6">เเนะนำเพื่อน</a-select-option>
           <a-select-option value="7">ยอดเสีย</a-select-option>
+          <a-select-option value="8">มินิเกมส์</a-select-option>
           <a-select-option value="9">เเจ้งถอนเงิน</a-select-option>
           <a-select-option value="10">เพิ่มเครดิต + ฝากเงิน</a-select-option>
           <a-select-option value="11">ถอนเงิน + เเจ้งถอนเงิน</a-select-option>
+          <a-select-option value="12">เเนะนำเพื่อน + ยอดเสีย + มินิเกมส์</a-select-option>
       </a-select>
     </a-col>
   </a-row>
