@@ -60,16 +60,16 @@ useHead({
     { property: 'og:description', content: store.setting.description },
     { property: 'og:type', content: 'website' },
     { property: 'og:url', content: store.setting.websiteUrl },
-    { property: 'og:image', content: store.setting.imageLogoWebsite },
+    { property: 'og:image', content: store.setting.imageWebsite },
     
     // Twitter Card tags
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: store.setting.title },
     { name: 'twitter:description', content: store.setting.description },
-    { name: 'twitter:image', content: store.setting.imageLogoWebsite }
+    { name: 'twitter:image', content: store.setting.imageWebsite }
   ],
   link: [
-    { rel: 'icon', type: 'image/png', href: store.setting.imageLogoWebsite }
+    { rel: 'icon', type: 'image/png', href: store.setting.imageWebsite }
   ]
 });
 </script>

@@ -144,6 +144,10 @@
                       <a-tag color="success" v-if="record.status == 2 || record.status == 3">มี</a-tag>
                       <a-tag color="error" v-else>ไม่มี</a-tag>
                     </template>
+                    <template v-if="column.key === 'working'">
+                      <a-tag color="success" v-if="record.pg_status">pg100</a-tag>
+                      <a-tag color="error" v-else>reel</a-tag>
+                    </template>
                     <template v-if="column.key === 'product_code'">
                       <div>{{ record.product_code }}</div>
                     </template>
@@ -371,7 +375,7 @@
   import { Alert } from '../Alert/alertComponent';
   import type { UploadChangeParam } from 'ant-design-vue';
 
-  const activeKey = ref('1');
+  const activeKey = ref('2');
   const dataShow = ref<any[]>([]);
   const allRecord = ref<number>(0);
   const loading = ref(true);
@@ -1048,6 +1052,7 @@ return [
       { title: 'ค่ายเกมส์', width: 50, dataIndex: 'product_code', key: 'product_code'},
       { title: 'pg soft', width: 50, dataIndex: 'pg_real', key: 'pg_real'},
       { title: 'pg100', width: 50, dataIndex: 'pg100', key: 'pg100'},
+      { title: 'ทำงาน', width: 50, dataIndex: 'working', key: 'working'},
       { title: 'เกมส์นิยมเล่น', width: 50, dataIndex: 'hot', key: 'hot'},
       { title: 'เเสดงหน้าเว็บ', width: 50, dataIndex: 'status', key: 'status'},
       { title: 'ปิดปรับปรุง', width: 50, dataIndex: 'maintain', key: 'maintain'},
