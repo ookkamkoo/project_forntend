@@ -131,9 +131,9 @@
     remember: boolean;
   }
   const formState = reactive<FormState>({
-    username: "programer",
-    password: "aa123456789.",
-    twofactor: "123456",
+    username: "",
+    password: "",
+    twofactor: "",
     remember: true,
   });
   
