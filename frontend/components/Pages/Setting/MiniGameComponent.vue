@@ -115,7 +115,7 @@
         <a-switch v-model:checked="formData.dailyLoginStatus" />
         <br>
         <h4>รายละเอียดล็อกอินรายวัน</h4>
-        <a-row>
+        <a-row :justify="'center'">
             <a-col :span="6">
                 <div class="m-1">
                     <label for="ประเภทการล็อกอิน">ประเภทการล็อกอิน</label>
@@ -130,7 +130,7 @@
                 </div>
             </a-col>
         </a-row>
-        <a-row>
+        <a-row :justify="'center'">
             <a-col :span="6">
                 <div class="m-1">
                     <label for="ประเภทการล็อกอิน">วิธีการล็อกอิน</label>
@@ -152,7 +152,7 @@
             </a-col>
         </a-row>
         
-        <a-row>
+        <a-row :justify="'center'">
             <a-col :span="6">
                 <div class="m-1">
                     <label for="จำนวนวันที่ต้องล็อกอิน">จำนวนวันที่ต้องล็อกอิน</label>
@@ -166,7 +166,7 @@
                 </div>
             </a-col>
         </a-row>
-        <a-row>
+        <a-row :justify="'center'">
             <a-col :span="6">
                 <div class="m-1">
                     <label for="เลือกรางวัล">เลือกรางวัล</label>
