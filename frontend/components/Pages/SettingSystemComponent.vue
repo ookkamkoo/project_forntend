@@ -1393,7 +1393,10 @@
   </script>
   <style>
   .preview-image-container{
-      position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .close-image {
     position: absolute;
