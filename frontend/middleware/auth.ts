@@ -22,10 +22,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             if (token) {
                 const check = await checkToken(token);
                 console.log(check);
-                
                 if(check){
                     // return navigateTo('/deposit-withdraw/credit-custom');
-                    // return navigateTo('/');
+                    // console.log(to.path);
+                    
+                    return navigateTo('/setting/play');
                 }else{
                     Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
                     // logout();

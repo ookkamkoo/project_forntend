@@ -162,23 +162,36 @@ const optionsBankType = [
         label: 'ถอนเงิน',
         labelEN: 'withdraw',
         bank:[
+            // {
+            //     value: 1,
+            //     short: 'SCB',
+            //     name: 'ธนาคารไทยพาณิชย์',
+            //     image: 'https://cdn-fastplay.sgp1.cdn.digitaloceanspaces.com/banks/SCB.svg',
+            //     bankConnect:[{
+            //         value: 1,
+            //         label: 'เชื่อมเอง',
+            //     },
+            //     // {
+            //     //     value: 2,
+            //     //     label: 'เชื่อมออโต้',
+            //     // }
+            //     ],
+            //     action:[
+            //         {value:1,name:'api',show:1,bankNo:1,pin:1,deviceId:1,keyID:0,UnP:0,status:1,api:1,sms:0},
+            //         {value:2,name:'line-connect',show:0,bankNo:1,pin:0,deviceId:0,keyID:0,UnP:0,status:1,api:1,sms:0}
+            //     ]
+            // },
             {
                 value: 1,
-                short: 'SCB',
-                name: 'ธนาคารไทยพาณิชย์',
-                image: 'https://cdn-fastplay.sgp1.cdn.digitaloceanspaces.com/banks/SCB.svg',
+                short: 'PAYMENT',
+                name: 'Flash Payment',
+                image: 'https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/banks/FPM.png',
                 bankConnect:[{
                     value: 1,
                     label: 'เชื่อมเอง',
-                },
-                // {
-                //     value: 2,
-                //     label: 'เชื่อมออโต้',
-                // }
-                ],
+                }],
                 action:[
-                    {value:1,name:'api',show:1,bankNo:1,pin:1,deviceId:1,keyID:0,UnP:0,status:1,api:1,sms:0},
-                    {value:2,name:'line-connect',show:0,bankNo:1,pin:0,deviceId:0,keyID:0,UnP:0,status:1,api:1,sms:0}
+                    {value:1,name:'api',show:1,bankNo:1,pin:0,deviceId:0,keyID:0,UnP:0,status:1,api:1,sms:0},
                 ]
             },
             {

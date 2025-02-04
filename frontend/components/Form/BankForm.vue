@@ -78,7 +78,7 @@
                 </a-form-item>
             </a-col>
             <!-- ฟิลด์ Pin -->
-            <a-col :span="24" :md="12" class="p-2">
+            <a-col :span="24" :md="12" class="p-2" v-if="showPinField">
                 <label for="Pin"><b>Pin ตัวเลข 6 ตัว</b></label>
                 <a-form-item
                     ref="bankPin" 
@@ -240,14 +240,14 @@
         bank_list:1,
         bank_list_api:1,
         bank_connect:1,
-        bankName:'กิตติพงษ์ คำก๋อง',
-        bankNo:'8422576122',
-        bankPin:'123456',
-        devicesID:'devicesID-1',
-        keyID:'keyID-1',
-        TureID:'TureID-1',
-        Username:'sdDDD',
-        Password:'asdf123456',
+        bankName:'',
+        bankNo:'',
+        bankPin:'',
+        devicesID:'',
+        keyID:'',
+        TureID:'',
+        Username:'',
+        Password:'',
         is_api: true,
         is_qrcode: false,
         is_active: true,
@@ -370,7 +370,7 @@
             }
         });
         if(check){
-            Alert("warning","ธนาคารมีการเปลี่ยนเเปลงเนื่องจากไม่พบเงื่อนไขที่ท่านเลือก กรุณาตรวจสอบธนาคาร")
+            // Alert("warning","ธนาคารมีการเปลี่ยนเเปลงเนื่องจากไม่พบเงื่อนไขที่ท่านเลือก กรุณาตรวจสอบธนาคาร")
             formData.bank_list = 1;
             formData.bank_list_api = 1;
         }
