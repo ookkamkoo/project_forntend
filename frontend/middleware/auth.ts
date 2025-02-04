@@ -26,7 +26,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
                     // return navigateTo('/deposit-withdraw/credit-custom');
                     // console.log(to.path);
                     
-                    return navigateTo('/setting/play');
+                    // return navigateTo('/setting/play');
+                    return navigateTo('/dashboard');
                 }else{
                     Alert("error","กรุณาเข้าสู่ระบบใหม่อีกครั้ง ใหม่อีกครั้ง.")
                     // logout();
