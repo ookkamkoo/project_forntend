@@ -33,7 +33,32 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_NAME }}/project_csn:backOfice_1
-      
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ✅ ติดตั้ง ArgoCD CLI
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x argocd-linux-amd64
+          sudo mv argocd-linux-amd64 /usr/local/bin/argocd
+          argocd version --client  # ✅ ตรวจสอบว่า ArgoCD ติดตั้งสำเร็จ
+
+      - name: Login to ArgoCD (HTTP)
+        run: |
+          argocd login 139.59.193.21 --username admin --password "@Asdf1@asdf@asdf" --insecure
+
+
+      # ✅ Sync Application หลังจาก Build เสร็จ
+      - name: Sync ArgoCD Application
+        run: |
+          argocd app sync play --prune --force
+          argocd app wait play --health
   # deploy:
   #   runs-on: ubuntu-latest
   #   needs: build
