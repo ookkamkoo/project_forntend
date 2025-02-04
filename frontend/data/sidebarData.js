@@ -151,7 +151,7 @@ const sidebarData = [
       { path: '/setting/system', name: '14.1. ตั้งค่าระบบ', icon: SettingOutlined, notify: 0 },
       { path: '/setting/mini-game', name: '14.2. ตั้งค่ามินิเกมส์', icon: SettingOutlined, notify: 0 },
       { path: '/setting/game-provider', name: '14.3. ตั้งค่ายเกมส์', icon: SettingOutlined, notify: 0 },
-      { path: '/setting/play', name: '14.3. ตั้งหน้าบ้าน', icon: SettingOutlined, notify: 0 },
+      { path: '/setting/play', name: '14.4. ตั้งหน้าบ้าน', icon: SettingOutlined, notify: 0 },
     ]
   },
   // { 
