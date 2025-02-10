@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:open="open" width="750px" ::title="status == 0 ? 'เพิ่มบัญชีธนาคาร' : 'แก้ไขบัญชีธนาคาร'":closable="true">
+  <a-modal v-model:open="open" width="750px" :title="status == 0 ? 'เพิ่มบัญชีธนาคาร' : 'แก้ไขบัญชีธนาคาร'" :closable="true">
     <FormBankForm :closeModal="closeModal" :bankSystemEdit="bankSystemEdit" :getSystemBank="getSystemBank" :status="status"/>
     <template #footer></template>
   </a-modal>
