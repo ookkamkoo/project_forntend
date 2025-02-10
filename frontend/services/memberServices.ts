@@ -543,6 +543,7 @@ export async function getWithdrawServices(data :any): Promise<getResponse> {
   let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
   const queryParams = [
       `sl_type=${data.sl_type}`,
+      `de_type=${data.de_type}`,
       `username=${data.username}`,
       `adminName=${data.adminName}`,
       `amount=${data.amount}`,

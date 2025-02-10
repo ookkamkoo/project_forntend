@@ -24,9 +24,9 @@ spec:
             - configMapRef:
                 name: backoffice-config  # ✅ ดึงค่าจาก ConfigMap (เช่น API URL, PORT)
           resources:
-            limits:
-              cpu: "500m"  # ลด CPU Limit
-              memory: "512Mi"
             requests:
-              cpu: "250m"  # ลดการขอ CPU
-              memory: "256Mi"
+              cpu: "100m"   # ลดจาก "250m" เป็น "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"   # ลดจาก "500m" เป็น "250m"
+              memory: "512Mi"

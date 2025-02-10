@@ -49,12 +49,13 @@ jobs:
           sudo mv argocd-linux-amd64 /usr/local/bin/argocd
           argocd version --client  # ✅ ตรวจสอบว่า ArgoCD ติดตั้งสำเร็จ
 
-      - name: Login to ArgoCD (HTTP)
+      # ✅ Login เข้า ArgoCD ด้วย Username/Password
+      - name: Login to ArgoCD
         run: |
-          argocd login ${ARGOCD_SERVER} \
-            --username ${ARGOCD_USERNAME} \
-            --password "${ARGOCD_PASSWORD}" \
-            --grpc-web --insecure 
+          argocd login ${{ secrets.ARGOCD_SERVER }} \
+            --username ${{ secrets.ARGOCD_USERNAME }} \
+            --password ${{ secrets.ARGOCD_PASSWORD }} \
+            --insecure
 
 
       # ✅ Sync Application หลังจาก Build เสร็จ

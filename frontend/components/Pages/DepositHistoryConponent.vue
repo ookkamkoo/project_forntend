@@ -218,7 +218,7 @@ const dynamicColumns = computed(() => {
         { title: 'รายการ', dataIndex: 'is_first_deposit', key: 'is_first_deposit', width: 100 },
         { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
         { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 150 },
-        // { title: 'จัดการ',key: 'operation',width: 110,},
+        { title: 'เพิ่มเติม',key: 'operation',width: 110,},
       ] 
     },
   ];

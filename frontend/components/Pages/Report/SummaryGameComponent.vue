@@ -73,7 +73,7 @@
 
   const dynamicColumns = computed(() => [
     {  title: `ทั้งหมด ${allRecord.value} รายการ`, children: [
-      { title: 'วันที่', width:80, dataIndex: 'date', key: 'date' },
+      { title: 'วันที่', width:100, dataIndex: 'date', key: 'date' },
       { title: 'PG100', width: 80, dataIndex: 'pg100', key: 'pg100',  },
       { title: 'Slot Game', width: 80, dataIndex: 'slot_game', key: 'slot_game',  },
       { title: 'Sportsbook', width: 80, dataIndex: 'sports_book', key: 'sports_book',  },

@@ -25,7 +25,7 @@ export async function creditCustom(data: any): Promise<any> {
     data.date = dayjs(data.date).tz('Asia/Bangkok').format('YYYY-MM-DD');
     data.time = dayjs(data.time).tz('Asia/Bangkok').format('HH:mm:ss');
     console.log(data);
-    
+    data.bank_receives_id = Number(data.bank_receives_id)
     try {
         const response = await axios.post<any>(`${url}/credit/credit-custom`, data, { headers });
         return response.data;

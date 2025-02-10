@@ -1,4 +1,8 @@
 <template>
+            <a-row>
+            <a-col :span="12">ธนาคาร</a-col>
+            <a-col :span="12">สแกนคิวอาร์โค้ด</a-col>
+        </a-row>
     <a-form
         :model="formData"
         name="basic"
@@ -127,6 +131,35 @@
                 <a-input type="password" v-model:value="formData.Password" />
                 </a-form-item>
             </a-col>
+
+            <!-- ฟิลด์ ApiKey -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showApiKeyField">
+                <label for="Password"><b>ApiKey</b></label>
+                <a-form-item ref="ApiKey" name="ApiKey" >
+                <a-input type="text" v-model:value="formData.ApiKey" />
+                </a-form-item>
+            </a-col>
+            <!-- ฟิลด์ SecretKey -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showSecretKeyField">
+                <label for="SecretKey"><b>SecretKey</b></label>
+                <a-form-item ref="SecretKey" name="SecretKey" >
+                <a-input type="text" v-model:value="formData.SecretKey" />
+                </a-form-item>
+            </a-col>
+            <!-- ฟิลด์ ClientId -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showClientIdField">
+                <label for="ClientId"><b>ClientId</b></label>
+                <a-form-item ref="ClientId" name="ClientId" >
+                <a-input type="text" v-model:value="formData.ClientId" />
+                </a-form-item>
+            </a-col>
+            <!-- ฟิลด์ Merchant -->
+            <a-col :span="24" :md="12" class="p-2" v-if="showMerchantField">
+                <label for="Merchant"><b>Merchant</b></label>
+                <a-form-item ref="Merchant" name="Merchant" >
+                <a-input type="text" v-model:value="formData.Merchant" />
+                </a-form-item>
+            </a-col>
         </a-row>
         <a-row class="my-2">
             <a-col span="6" class="p-2">
@@ -248,6 +281,11 @@
         TureID:'',
         Username:'',
         Password:'',
+        ApiKey:'',
+        SecretKey:'',
+        ClientId:'',
+        Merchant:'',
+
         is_api: true,
         is_qrcode: false,
         is_active: true,
@@ -290,6 +328,10 @@
                 formData.TureID = '';
                 formData.Username = '';
                 formData.Password = '';
+                formData.ApiKey = '';
+                formData.SecretKey = '';
+                formData.ClientId = '';
+                formData.Merchant = '';
                 formData.is_api= true;
                 formData.is_qrcode=true;
                 formData.is_active=true;
@@ -335,6 +377,11 @@
                 formData.TureID = "";
                 formData.Username = "";
                 formData.Password = "";
+                formData.ApiKey = "";
+                formData.SecretKey = "";
+                formData.ClientId = "";
+                formData.Merchant = "";
+
                 formData.is_api= newValue.is_api;
                 formData.is_qrcode=newValue.is_qrcode;
                 formData.is_active=newValue.is_active;
@@ -415,7 +462,7 @@
             Constants.optionsBankType[3].bank = data.data.Bank
             Constants.optionsBankType[3].bank.forEach((element,index) => {
                 element.value = index+1;
-                element.action = [{value:1,name:'api',show:1,bankNo:0,pin:0,deviceId:0,keyID:0,UnP:0,status:1,api:0,sms:0}];
+                element.action = [{value:1,name:'api',show:1,bankNo:0,pin:0,deviceId:0,keyID:0,UnP:0,ApiKey:0,SecretKey:0,ClientId:0,Merchant:0,status:1,api:0,sms:0}];
             });
         }
       } catch (error) {
@@ -462,6 +509,23 @@
     const showPasswordField = computed(() => {
     return formData.bank_type !== 4 &&
         Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.UnP;
+    });
+
+    const showApiKeyField = computed(() => {
+    return formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.ApiKey;
+    });
+    const showSecretKeyField = computed(() => {
+    return formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.SecretKey;
+    });
+    const showClientIdField = computed(() => {
+    return formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.ClientId;
+    });
+    const showMerchantField = computed(() => {
+    return formData.bank_type !== 4 &&
+        Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.Merchant;
     });
 </script>
 <style>

@@ -81,6 +81,7 @@ export async function createBank(data:any): Promise<getResponse> {
     const headers = {
         Authorization: `Bearer ${getToken()}`
     };
+    console.log("data sssssssssssss");
     console.log(data);
     
     const body = {
@@ -100,7 +101,10 @@ export async function createBank(data:any): Promise<getResponse> {
             keyID:data.keyID,
             tureID:data.TureID,
             username:data.Username,
-            password:data.Password,
+            apiKey:data.ApiKey,
+            secretKey:data.SecretKey,
+            clientId:data.ClientId,
+            merchant:data.Merchant,
         },
     };
 
@@ -139,6 +143,10 @@ export async function editSystemBank(data :any): Promise<getResponse> {
             tureID:data.TureID,
             username:data.Username,
             password:data.Password,
+            apiKey:data.ApiKey,
+            secretKey:data.SecretKey,
+            clientId:data.ClientId,
+            merchant:data.Merchant,
         },
     };
 

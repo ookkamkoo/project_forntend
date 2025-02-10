@@ -12,6 +12,8 @@
             <a-select-option value="2">สำเร็จ</a-select-option>
             <a-select-option value="3">ยกเลิก</a-select-option>
             <a-select-option value="4">หมดเวลา</a-select-option>
+            <a-select-option value="7">กำลังประมวลผล</a-select-option>
+            <a-select-option value="8">ถูกยกเลิก</a-select-option>
         </a-select>
       </a-col>
       <a-col class="p-1" :span="4">
@@ -124,7 +126,10 @@
       <template v-if="column.key === 'status'">
         <a-tag color="orange" v-if="record.status == 1">รอทำรายการ</a-tag>
         <a-tag color="green" v-else-if="record.status == 2">สำเร็จ</a-tag>
+        <a-tag color="cyan" v-else-if="record.status == 5">ถอนมือ</a-tag>
         <a-tag color="red" v-else-if="record.status == 3">ยกเลิก</a-tag>
+        <a-tag color="orange" v-else-if="record.status == 7">กำลังประมวลผล</a-tag>
+        <a-tag color="red" v-else-if="record.status == 8">ถูกยกเลิก</a-tag>
       </template>
       <!-- <template v-if="column.key === 'updated_by'">
         <div v-if="record.UpdatedBySearch.id != 0">{{ record.UpdatedBySearch.username }}</div>
@@ -138,7 +143,7 @@
           <!-- <a-button type="primary" class="sky" :disabled="record.status!=1"><CheckOutlined /></a-button>
           <a-button type="primary" class="warning" :disabled="record.status!=1"><LikeOutlined /></a-button>
           <a-button type="primary" class="danger" danger ghost :disabled="record.status!=1"><CloseOutlined /></a-button> -->
-          <a-button type="primary" ghost :disabled="record.status!=1 && record.bank_member_id==16"><QrcodeOutlined /></a-button>
+          <a-button type="primary" ghost :disabled="record.status!=1"><QrcodeOutlined /></a-button>
         </a-flex>
       </template>
     </template>
@@ -208,7 +213,7 @@ const dynamicColumns = computed(() => {
         { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 60 },
         { title: 'โดย', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 60 },
         { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 120 },
-        // { title: 'จัดการ',key: 'operation',width: 140,},
+        // { title: 'เพิ่มเติม',key: 'operation',width: 140,},
       ] 
     },
   ];

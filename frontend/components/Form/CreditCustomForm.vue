@@ -107,7 +107,7 @@
                     <a-select ref="select" v-model:value="formData.bank_receives_id" style="width: 100%" >
                         <a-select-option value="">บัญชีรับเงิน</a-select-option>
                         <template v-for="option in dataShow" :key="option.name">
-                        <a-select-option :value="option.id">
+                        <a-select-option :value="option.id" v-if="option.type=='deposit'">
                             <template #default>
                                 <div class="image-center">
                                     <img :alt="option.bank.name" width="20px" height="20px" class="ant-image-img px-1" :src="option.bank.image" style="height: 20px;">
@@ -181,7 +181,7 @@
             esport:1,
             poker:1,
         },
-        bank_receives_id:1,
+        bank_receives_id:"",
         date:dayjs(),
         time:dayjs(),
         remark:' ',
@@ -236,6 +236,9 @@
         const data = await getSystemBankServices();
         if (data.status === "success") {
             dataShow.value = data.data.data;
+            if (data?.data?.data?.accounts?.some((account: { type: string })  => account.type === "deposit")) {
+                formData.bank_receives_id = "1"; // ✅ ถ้ามีบัญชี deposit ให้เปลี่ยนเป็น "1"
+            }
         } else {
             Alert('error', data.message);
         }

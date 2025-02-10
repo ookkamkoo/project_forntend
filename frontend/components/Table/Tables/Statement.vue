@@ -29,13 +29,13 @@
     >
       <template #bodyCell="{ column, record, index }">
         <template v-if="column.key === 'report_id'">
-          <a-button @click="showReportId(record.report_id,record.origRqUid,)">show</a-button>
+          <a-button @click="showReportId(record.report_id,record.origRqUid,record.referenceId)">show</a-button>
         </template>
         <template v-else-if="column.key === 'title'">
           <div v-if="record.title == 'Receive money from' || record.transNameTh == 'รับโอนเงิน'">
             <a-tag color="green">เงินเข้าบัญชี</a-tag>
           </div>
-          <div v-else-if="record.title == 'Transfer to'">
+          <div v-else-if="record.title == 'Transfer to' || record.message == 'โอนเรียบร้อย'">
             <a-tag color="red">เงินออกบัญชี</a-tag>
           </div>
           <div v-else>
@@ -45,18 +45,22 @@
         <template v-else-if="column.key === 'type'">
           <div v-if="record.type != null">{{ record.type }}</div>
           <div v-else>{{ record.transNameTh }}</div>
+          <div v-if="record.clientId != null">โอนเงิน payment</div>
         </template>
         <template v-else-if="column.key === 'original_action'">
           <div v-if="record.original_action != null">{{ record.original_action }}</div>
-          <div v-else>{{ record.toAccountBank }}</div> <div>{{ record.toAccountNumber }}</div>
+          <div v-else>{{ record.toAccountBank }}</div> <div>{{ record.toAccountNumber }}</div> <div>{{ record.transactionId }}</div>
         </template>
         <template v-else-if="column.key === 'sub_title'">
           <div v-if="record.sub_title != null">{{ record.sub_title }}</div>
-          <div v-else><div>{{ record.fromAccountNameEn }}</div> <div>{{ record.fromAccountNameTh }}</div>  <div>{{ record.benefitAccountNameTh }}</div></div>
+          <div v-else><div>{{ record.fromAccountNameEn }}</div> <div>{{ record.fromAccountNameTh }}</div>  <div>{{ record.benefitAccountNameTh }}</div> <div>{{ record.systemBankAccountName }}</div></div>
         </template>
         <template v-else-if="column.key === 'amount'">
           <div v-if="record.amount != null">{{ record.amount }}</div>
           <div v-else>{{ record.depositAmount }} {{ record.withdrawAmount }}</div>
+        </template>
+        <template v-else-if="column.key === 'status'">
+          <a-tag color="green">สำเร็จ</a-tag>
         </template>
         <template v-else-if="column.key === 'date_time'">
           <div v-if="record.date_time != null">{{ record.date_time }}</div>
@@ -90,15 +94,18 @@
           { title: 'original_action', width: 100, dataIndex: 'original_action', key: 'original_action' },
           { title: 'ชื่อ', dataIndex: 'sub_title', key: 'sub_title', width: 100 },
           { title: 'จำนวนเงิน', dataIndex: 'amount', key: 'amount', width: 100 },
+          { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
           { title: 'วันที่', dataIndex: 'date_time', key: 'date_time', width: 100 },
         ]
       }
     ];
   });
   
-  const showReportId = (report_id:string,origRqUid:string) =>{
+  const showReportId = (report_id:string,origRqUid:string,referenceId:string) =>{
     if(report_id != undefined){
       data.value = report_id
+    }else if(referenceId != undefined){
+      data.value = referenceId
     }else{
       data.value = origRqUid
     }

@@ -34,7 +34,7 @@
             </a-flex>
           </a-col>
         </a-col>
-        <a-col :span="12" :md="7" class="px-1" @click="handleMemberBank(16)">
+        <a-col :span="12" :md="7" class="px-1" @click="handleMemberBank(16)" v-if="member.bank_true_no !=''">
           <a-col :span="24" :sm="24" class="my-1 bank-member">
             <a-flex
               class="info-bank mx-1 p-2"
@@ -157,6 +157,9 @@
     if (data.status === 'success') {
       bankData.value = data.data.data;
       member.value = data.data.member;
+      
+      formData.bankSystemId = data.data.data[0].id
+      formData.bankSystemBankId = data.data.data[0].bank_id
     }
     setTimeout(() => {
       loading.value = false;

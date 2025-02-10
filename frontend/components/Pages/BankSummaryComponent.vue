@@ -52,11 +52,24 @@
   <template #bodyCell="{ column, record }">
     <template v-if="column.key === 'bank_image'">
       <!-- <a-tag color="green" >สำเร็จ</a-tag> -->
-      <a-image
+      <template v-if="record.bank_system_id != 0">
+        <a-image
               width="35px"
               :src="record.bank_image"
               :preview="false"
             />
+      </template>
+      <template v-else>
+          ไม่พบธนาคาร
+      </template>
+    </template>
+    <template v-if="column.key === 'bank_system_name'">
+      <div v-if="record.bank_system_name != ''">{{ record.bank_system_name }}</div>
+      <div v-else> - </div>
+    </template>
+    <template v-if="column.key === 'bank_system_book_number'">
+      <div v-if="record.bank_system_book_number != ''">{{ record.bank_system_book_number }}</div>
+      <div v-else> - </div>
     </template>
     <template v-if="column.key === 'deposit_count'">
       <div>{{ record.deposit_count }}</div>
