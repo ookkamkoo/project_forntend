@@ -1,6 +1,6 @@
 <template>
-  <a-modal v-model:open="open" width="750px" title="เพิ่มบัญชีธนาคาร" :closable="true">
-    <FormBankForm :closeModal="closeModal" :bankSystemEdit="bankSystemEdit" :getSystemBank="getSystemBank"/>
+  <a-modal v-model:open="open" width="750px" ::title="status == 0 ? 'เพิ่มบัญชีธนาคาร' : 'แก้ไขบัญชีธนาคาร'":closable="true">
+    <FormBankForm :closeModal="closeModal" :bankSystemEdit="bankSystemEdit" :getSystemBank="getSystemBank" :status="status"/>
     <template #footer></template>
   </a-modal>
   <a-modal v-model:open="statement" width="1300px" title="รายการจากทางธนาคาร" :closable="true">
@@ -10,7 +10,7 @@
   <a-row class="p-2" justify="end">
     <a-col class="p-1">
       <label><br></label>
-      <a-button class="submit sky" type="primary" @click="showModal"><PlusOutlined /> เพิ่มบัญชี</a-button>
+      <a-button class="submit sky" type="primary" @click="() => { status = 0; showModal(); }"><PlusOutlined /> เพิ่มบัญชี</a-button>
     </a-col>
   </a-row>
   <a-table 
@@ -25,7 +25,7 @@
           <template v-if="column.key === 'operation'">
               <a-flex gap="small" :justify="'center'" horizontal>
                   <!-- <a-button v-if="record.bank.id==10 && record.typ != 'ParkingAccount'"><LinkOutlined /></a-button> -->
-                  <a-button class="warning" type="primary" @click="onEdit(record)"><FormOutlined /></a-button>
+                  <a-button class="warning" type="primary" @click="() => { status = 1; onEdit(record); }"><FormOutlined /></a-button>
                   <a-button class="danger" type="primary" @click="onDelete(record)"><DeleteOutlined /></a-button>
               </a-flex>
           </template>
@@ -84,6 +84,7 @@ const allRecord = ref<number>(0);
 const isLoadingCheckConnect = ref<Record<number, boolean>>({});
 const isLoadingStatement = ref(false);
 const idGetStatement = ref(0);
+const status = ref(0);
 
 const showModal = () => {
     open.value = true;

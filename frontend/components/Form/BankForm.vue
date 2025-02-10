@@ -1,8 +1,4 @@
 <template>
-            <a-row>
-            <a-col :span="12">ธนาคาร</a-col>
-            <a-col :span="12">สแกนคิวอาร์โค้ด</a-col>
-        </a-row>
     <a-form
         :model="formData"
         name="basic"
@@ -219,7 +215,7 @@
         </a-row>
         <a-row justify="center" class="p-2">
             <a-button @click="props.closeModal()" class="m-1">Cancel</a-button>
-            <a-button type="primary" html-type="submit" class="m-1 sky">เพิ่ม</a-button>
+            <a-button type="primary" html-type="submit" class="m-1 sky"><span v-if="status==0">เพิ่ม</span><span v-else>เเก้ไข</span></a-button>
         </a-row>
     </a-form>
 </template>
@@ -294,6 +290,7 @@
     });
 
     const props = defineProps<{
+        status:Number,
         closeModal:Function,
         getSystemBank:Function,
         bankSystemEdit:object,
