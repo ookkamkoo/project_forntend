@@ -106,6 +106,7 @@ export async function setSetting(data:any,page:string): Promise<getResponse> {
 
         body = {
             depositStatus: data.depositStatus ? data.depositStatus.toString() : "false",
+            depositTypeAction: data.depositTypeAction ? data.depositTypeAction.toString() : "3",
             memberCreateDeposit: data.memberCreateDeposit ? data.memberCreateDeposit.toString() : "false",
             depositMin: data.depositMin ? data.depositMin.toString() : "",
             depositMax: data.depositMax ? data.depositMax.toString() : "",

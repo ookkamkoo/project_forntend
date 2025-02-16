@@ -133,9 +133,13 @@
   import { getbankWithdrawServices,confirmWithdrawServices } from '~/services/bankServices';
   import { ref } from 'vue';
   import { Alert } from '../Alert/alertComponent';
+  import { notifyStore } from '~/store/index';
+  
+  const store = notifyStore();
   
   const props = defineProps<{
         closeModal: () => void,
+        getWithdraw: () => void,
         dataMember: any
     }>();
   
@@ -181,6 +185,9 @@
     const data = await confirmWithdrawServices(formData);
     if (data.status === 'success') {
       Alert("success", `ทำรายการถอนเรียบร้อย.`);
+      props.getWithdraw()
+      props.closeModal();
+      store.notify.withdraw = String(Number(store.notify.withdraw) - 1);
     }else{
       Alert("error", data.message);
     }

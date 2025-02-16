@@ -1,6 +1,6 @@
 <template>
   <a-modal v-model:open="open" width="650px" title="เลือกบัญชีถอน" :closable="true">
-    <FormWithdraw :closeModal="closeModal" :dataMember="dataMember" />
+    <FormWithdraw :closeModal="closeModal" :getWithdraw="getList" :dataMember="dataMember" />
     <template #footer></template>
   </a-modal>
   <a-table 
@@ -48,9 +48,9 @@
         <div>{{ record.remark }}</div>
       </template>
       <template v-if="column.key === 'status'">
-        <a-tag color="orange" v-if="record.status == 1">รอทำรายการ</a-tag>
-        <a-tag color="green" v-else-if="record.status == 2">สำเร็จ</a-tag>
-        <a-tag color="red" v-else-if="record.status == 3">ยกเลิก</a-tag>
+        <a-tag color="orange" v-if="record.status == 1" style="margin: 0 auto;">รอทำรายการ</a-tag>
+        <a-tag color="green" v-else-if="record.status == 2" style="margin: 0 auto;">สำเร็จ</a-tag>
+        <a-tag color="red" v-else-if="record.status == 3" >ยกเลิก</a-tag>
       </template>
       <template v-if="column.key === 'updated_by_name'">
         <div v-if="record.updated_by_name != ''">{{ record.updated_by_name }}</div>
@@ -61,7 +61,7 @@
       </template>
       <template v-if="column.key === 'operation'">
         <a-flex gap="small" horizontal :justify="'center'">
-          <a-button type="primary" class="sky" :disabled="record.status!=1 || store.setting.withdrawAuto=='false'" v-if="record.status == 1 || record.status == 3" @click="showModal(record)"><CheckOutlined /></a-button>
+          <a-button type="primary" class="sky" :disabled="record.status != 1 || store.setting.withdrawAuto == 'false'" v-if="record.status == 1 || record.status == 3" @click="showModal(record)"><CheckOutlined /></a-button>
           <a-button type="primary" class="warning" :disabled="record.status!=1" v-if="record.status == 1 || record.status == 3" @click="manualWithdraw(record)"><LikeOutlined /></a-button>
           <a-button type="primary" class="danger" danger ghost :disabled="record.status!=1" v-if="record.status == 1 || record.status == 3" @click="cancel(record)"><CloseOutlined /></a-button>
           <a-button type="primary" ghost v-if="record.status == 2"><QrcodeOutlined /></a-button>
@@ -98,7 +98,8 @@ let formData = reactive({
     adminName:ref<string>(''),
     amount:ref<string>(''),
     dateSelect:ref<string>('Today'),
-    sl_type:"1"
+    sl_type:"1",
+    de_type:""
   });
 
 
@@ -206,7 +207,7 @@ const dynamicColumns = computed(() => {
           { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 60 },
         ] },
         { title: 'เพิ่มเติม', dataIndex: 'remark', key: 'remark', width: 150 },
-        { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 70 },
+        { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 80 },
         { title: 'สร้าง', dataIndex: 'created_by_name', key: 'created_by_name', width: 80 },
         { title: 'เเก้ไข', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 80 },
         { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 120 },

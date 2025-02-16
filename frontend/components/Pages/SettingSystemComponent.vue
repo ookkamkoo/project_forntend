@@ -300,6 +300,37 @@
                         </a-col>
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
+                        <label for="การฝากหน้าระบบ"><b  class="request">การฝากหน้าระบบ</b></label>
+                        <a-select
+                            ref="select"
+                            v-model:value="formData.depositTypeAction"
+                            style="width: 100%"
+                            >
+                            <a-select-option value="1">เปิดใช้งาน บัญชี อย่างเดียว</a-select-option>
+                            <a-select-option value="2">เปิดใช้งาน QR อย่างเดียว</a-select-option>
+                            <a-select-option value="3">เปิดใช้งานทั้งคู่</a-select-option>
+
+                        </a-select>
+                    </a-col>
+                    <a-col :span="12" :md="12" class="p-3">
+                        <a-col :span="24" :md="24">
+                        <!-- <b>ฝากเงินโดยการทำรายการ</b> -->
+                        </a-col>
+                        <a-col :span="24" :md="24" >
+                        <!-- <a-switch v-model:checked="formData.memberCreateDeposit" /> -->
+                        </a-col>
+                    </a-col>
+                    <a-col :span="12" :md="12" class="p-3">
+                        <label for="ฝากเงินขั้นต่ำ"><b  class="request">ฝากเงินขั้นต่ำ</b></label>
+                        <a-form-item 
+                            ref="depositMin" 
+                            name="depositMin"
+                            :rules="[{ required: true, message: 'โปรดกรอกช่อง ฝากเงินขั้นต่ำ!' }]"
+                            >
+                            <a-input v-model:value="formData.depositMin"/>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :md="12" class="p-3">
                         <label for="ฝากเงินขั้นต่ำ"><b  class="request">ฝากเงินขั้นต่ำ</b></label>
                         <a-form-item 
                             ref="depositMin" 
@@ -1020,6 +1051,7 @@
 
       //page 2  
       depositStatus: true,
+      depositTypeAction: "3",
       memberCreateDeposit: true,
       depositMin: '1',
       depositMax: '50000',
@@ -1304,6 +1336,7 @@
 
             // page 2
             formData.depositStatus = data.data.depositStatus=='true'?true:false
+            formData.depositTypeAction = data.data.depositTypeAction
             formData.memberCreateDeposit = data.data.memberCreateDeposit=='true'?true:false
             formData.depositMin = data.data.depositMin
             formData.depositMax = data.data.depositMax
