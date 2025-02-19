@@ -61,6 +61,30 @@ export async function saveSettingThemeServices(data:any,page:number): Promise<ge
         body = {
             informationColor: data.selectedGradientInformation ? data.selectedGradientInformation.toString() : "",
         };
+    }else if(page == 7){
+        body = {
+            sideBarButtomColor: data.selectedGradientSideBarButtom ? data.selectedGradientSideBarButtom.toString() : "",
+        };
+    }else if(page == 8){
+        body = {
+            activityColor: data.selectedGradientActivity ? data.selectedGradientActivity.toString() : "",
+        };
+    }else if(page == 9){
+        body = {
+            navFooter: data.selectedGradientNavFooter ? data.selectedGradientNavFooter.toString() : "",
+        };
+    }else if(page == 10){
+        body = {
+            footer: data.selectedGradientFooter ? data.selectedGradientFooter.toString() : "",
+        };
+    }else if(page == 11){
+        body = {
+            borderColor: data.selectedGradientBorder ? data.selectedGradientBorder.toString() : "",
+        };
+    }else if(page == 12){
+        body = {
+            buttonColor: data.selectedGradientButton ? data.selectedGradientButton.toString() : "",
+        };
     }
 
     try {

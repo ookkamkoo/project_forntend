@@ -6,11 +6,23 @@
         </a-tab-pane>
         <a-tab-pane key="3" tab="Sidebar">
         </a-tab-pane>
+        <a-tab-pane key="7" tab="SidebarB">
+        </a-tab-pane>
         <a-tab-pane key="4" tab="ข่าวสาร">
         </a-tab-pane>
         <a-tab-pane key="5" tab="Popup">
         </a-tab-pane>
-        <a-tab-pane key="6" tab="Information">
+        <a-tab-pane key="6" tab="ข้อมูล">
+        </a-tab-pane>
+        <a-tab-pane key="8" tab="กิจกรรม">
+        </a-tab-pane>
+        <a-tab-pane key="9" tab="เเถบ footter">
+        </a-tab-pane>
+        <a-tab-pane key="10" tab="footter">
+        </a-tab-pane>
+        <a-tab-pane key="11" tab="ขอบ">
+        </a-tab-pane>
+        <a-tab-pane key="12" tab="ปุ่มเข้าใช้งาน">
         </a-tab-pane>
     </a-tabs>
     <div v-if="activeKey=='1'">
@@ -391,6 +403,378 @@
             <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(6)">บันทึก</a-button>
         </a-row>
     </div>
+    <div v-else-if="activeKey=='7'">
+        <a-row>
+            <a-col :span="24" :md="24">
+                <h4>Sidebar Button</h4>
+                <div v-if="formData.selectedGradientSideBarButtom" class="selected-gradient p-2">
+                    <div class="gradient-bar" :style="{ background: formData.selectedGradientSideBarButtom }"></div>
+                    <!-- <p>{{ selectedGradient }}</p> -->
+                </div>
+                <h4>โทนสว่าง</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in lightNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>โทนปกติ</h4>
+                <div class="gradient-buttons  p-2">
+                    <button 
+                        v-for="(gradient, index) in sidebarNeutralGradients" 
+                        :key="index"
+                        :style="{ background: gradient.lg }"
+                        class="gradient-button"
+                        @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+                
+                <h4>โทนมืด</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in darkNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>องศาของสี</h4>
+                <div class="p-2">
+                    <a-slider id="test" v-model:value="degree" :min="0" :max="360" style="max-width: 240px;" @change="angleChange"/>
+                </div>
+                <h4>กำหนดเอง</h4>
+                <div class="p-2">
+                    <p>กำหนดเองได้ที่ลิงค์ : <a href="https://cssgradient.io/" target="_blank" rel="noopener noreferrer">https://cssgradient.io</a></p>
+                    <p>coppy มาเเค่ : linear-gradient(0deg, rgba(34,195,157,1) 0%, rgba(253,187,45,1) 100%)</p>
+                    <a-textarea
+                        v-model:value="formData.selectedGradientSideBarButtom"
+                        placeholder="Autosize height with minimum and maximum number of lines"
+                        :auto-size="{ minRows: 2, maxRows: 5 }"
+                        style="max-width: 500px;"
+                    />
+                </div>
+            </a-col>
+        </a-row>
+        <a-row justify="end">
+            <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(7)">บันทึก</a-button>
+        </a-row>
+    </div>
+    <div v-else-if="activeKey=='8'">
+        <a-row>
+            <a-col :span="24" :md="24">
+                <h4>กิจกรรม</h4>
+                <div v-if="formData.selectedGradientActivity" class="selected-gradient p-2">
+                    <div class="gradient-bar" :style="{ background: formData.selectedGradientActivity }"></div>
+                    <!-- <p>{{ selectedGradient }}</p> -->
+                </div>
+                <h4>โทนสว่าง</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in lightNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>โทนปกติ</h4>
+                <div class="gradient-buttons  p-2">
+                    <button 
+                        v-for="(gradient, index) in sidebarNeutralGradients" 
+                        :key="index"
+                        :style="{ background: gradient.lg }"
+                        class="gradient-button"
+                        @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+                
+                <h4>โทนมืด</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in darkNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>องศาของสี</h4>
+                <div class="p-2">
+                    <a-slider id="test" v-model:value="degree" :min="0" :max="360" style="max-width: 240px;" @change="angleChange"/>
+                </div>
+                <h4>กำหนดเอง</h4>
+                <div class="p-2">
+                    <p>กำหนดเองได้ที่ลิงค์ : <a href="https://cssgradient.io/" target="_blank" rel="noopener noreferrer">https://cssgradient.io</a></p>
+                    <p>coppy มาเเค่ : linear-gradient(0deg, rgba(34,195,157,1) 0%, rgba(253,187,45,1) 100%)</p>
+                    <a-textarea
+                        v-model:value="formData.selectedGradientActivity"
+                        placeholder="Autosize height with minimum and maximum number of lines"
+                        :auto-size="{ minRows: 2, maxRows: 5 }"
+                        style="max-width: 500px;"
+                    />
+                </div>
+            </a-col>
+        </a-row>
+        <a-row justify="end">
+            <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(8)">บันทึก</a-button>
+        </a-row>
+    </div>
+    <div v-else-if="activeKey=='9'">
+        <a-row>
+            <a-col :span="24" :md="24">
+                <h4>กิจกรรม</h4>
+                <div v-if="formData.selectedGradientNavFooter" class="selected-gradient p-2">
+                    <div class="gradient-bar" :style="{ background: formData.selectedGradientNavFooter }"></div>
+                    <!-- <p>{{ selectedGradient }}</p> -->
+                </div>
+                <h4>โทนสว่าง</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in lightNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>โทนปกติ</h4>
+                <div class="gradient-buttons  p-2">
+                    <button 
+                        v-for="(gradient, index) in sidebarNeutralGradients" 
+                        :key="index"
+                        :style="{ background: gradient.lg }"
+                        class="gradient-button"
+                        @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+                
+                <h4>โทนมืด</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in darkNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>องศาของสี</h4>
+                <div class="p-2">
+                    <a-slider id="test" v-model:value="degree" :min="0" :max="360" style="max-width: 240px;" @change="angleChange"/>
+                </div>
+                <h4>กำหนดเอง</h4>
+                <div class="p-2">
+                    <p>กำหนดเองได้ที่ลิงค์ : <a href="https://cssgradient.io/" target="_blank" rel="noopener noreferrer">https://cssgradient.io</a></p>
+                    <p>coppy มาเเค่ : linear-gradient(0deg, rgba(34,195,157,1) 0%, rgba(253,187,45,1) 100%)</p>
+                    <a-textarea
+                        v-model:value="formData.selectedGradientNavFooter"
+                        placeholder="Autosize height with minimum and maximum number of lines"
+                        :auto-size="{ minRows: 2, maxRows: 5 }"
+                        style="max-width: 500px;"
+                    />
+                </div>
+            </a-col>
+        </a-row>
+        <a-row justify="end">
+            <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(9)">บันทึก</a-button>
+        </a-row>
+    </div>
+    <div v-else-if="activeKey=='10'">
+        <a-row>
+            <a-col :span="24" :md="24">
+                <h4>กิจกรรม</h4>
+                <div v-if="formData.selectedGradientFooter" class="selected-gradient p-2">
+                    <div class="gradient-bar" :style="{ background: formData.selectedGradientFooter }"></div>
+                    <!-- <p>{{ selectedGradient }}</p> -->
+                </div>
+                <h4>โทนสว่าง</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in lightNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>โทนปกติ</h4>
+                <div class="gradient-buttons  p-2">
+                    <button 
+                        v-for="(gradient, index) in sidebarNeutralGradients" 
+                        :key="index"
+                        :style="{ background: gradient.lg }"
+                        class="gradient-button"
+                        @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+                
+                <h4>โทนมืด</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in darkNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>องศาของสี</h4>
+                <div class="p-2">
+                    <a-slider id="test" v-model:value="degree" :min="0" :max="360" style="max-width: 240px;" @change="angleChange"/>
+                </div>
+                <h4>กำหนดเอง</h4>
+                <div class="p-2">
+                    <p>กำหนดเองได้ที่ลิงค์ : <a href="https://cssgradient.io/" target="_blank" rel="noopener noreferrer">https://cssgradient.io</a></p>
+                    <p>coppy มาเเค่ : linear-gradient(0deg, rgba(34,195,157,1) 0%, rgba(253,187,45,1) 100%)</p>
+                    <a-textarea
+                        v-model:value="formData.selectedGradientFooter"
+                        placeholder="Autosize height with minimum and maximum number of lines"
+                        :auto-size="{ minRows: 2, maxRows: 5 }"
+                        style="max-width: 500px;"
+                    />
+                </div>
+            </a-col>
+        </a-row>
+        <a-row justify="end">
+            <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(10)">บันทึก</a-button>
+        </a-row>
+    </div>
+    <div v-else-if="activeKey=='11'">
+        <a-row>
+            <a-col :span="24" :md="24">
+                <h4>กิจกรรม</h4>
+                <div v-if="formData.selectedGradientBorder" class="selected-gradient p-2">
+                    <div class="gradient-bar" :style="{ background: formData.selectedGradientBorder }"></div>
+                    <!-- <p>{{ selectedGradient }}</p> -->
+                </div>
+                <h4>โทนสว่าง</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in lightNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>โทนปกติ</h4>
+                <div class="gradient-buttons  p-2">
+                    <button 
+                        v-for="(gradient, index) in sidebarNeutralGradients" 
+                        :key="index"
+                        :style="{ background: gradient.lg }"
+                        class="gradient-button"
+                        @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+                
+                <h4>โทนมืด</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in darkNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>องศาของสี</h4>
+                <div class="p-2">
+                    <a-slider id="test" v-model:value="degree" :min="0" :max="360" style="max-width: 240px;" @change="angleChange"/>
+                </div>
+                <h4>กำหนดเอง</h4>
+                <div class="p-2">
+                    <p>กำหนดเองได้ที่ลิงค์ : <a href="https://cssgradient.io/" target="_blank" rel="noopener noreferrer">https://cssgradient.io</a></p>
+                    <p>coppy มาเเค่ : linear-gradient(0deg, rgba(34,195,157,1) 0%, rgba(253,187,45,1) 100%)</p>
+                    <a-textarea
+                        v-model:value="formData.selectedGradientBorder"
+                        placeholder="Autosize height with minimum and maximum number of lines"
+                        :auto-size="{ minRows: 2, maxRows: 5 }"
+                        style="max-width: 500px;"
+                    />
+                </div>
+            </a-col>
+        </a-row>
+        <a-row justify="end">
+            <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(11)">บันทึก</a-button>
+        </a-row>
+    </div>
+    <div v-else-if="activeKey=='12'">
+        <a-row>
+            <a-col :span="24" :md="24">
+                <h4>กิจกรรม</h4>
+                <div v-if="formData.selectedGradientButton" class="selected-gradient p-2">
+                    <div class="gradient-bar" :style="{ background: formData.selectedGradientButton }"></div>
+                    <!-- <p>{{ selectedGradient }}</p> -->
+                </div>
+                <h4>โทนสว่าง</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in lightNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>โทนปกติ</h4>
+                <div class="gradient-buttons  p-2">
+                    <button 
+                        v-for="(gradient, index) in sidebarNeutralGradients" 
+                        :key="index"
+                        :style="{ background: gradient.lg }"
+                        class="gradient-button"
+                        @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+                
+                <h4>โทนมืด</h4>
+                <div class="gradient-buttons p-2">
+                    <button 
+                    v-for="(gradient, index) in darkNavGradients" 
+                    :key="index"
+                    :style="{ background: gradient.lg }"
+                    class="gradient-button"
+                    @click="selectGradient(gradient)"
+                    ></button>
+                </div>
+
+                <h4>องศาของสี</h4>
+                <div class="p-2">
+                    <a-slider id="test" v-model:value="degree" :min="0" :max="360" style="max-width: 240px;" @change="angleChange"/>
+                </div>
+                <h4>กำหนดเอง</h4>
+                <div class="p-2">
+                    <p>กำหนดเองได้ที่ลิงค์ : <a href="https://cssgradient.io/" target="_blank" rel="noopener noreferrer">https://cssgradient.io</a></p>
+                    <p>coppy มาเเค่ : linear-gradient(0deg, rgba(34,195,157,1) 0%, rgba(253,187,45,1) 100%)</p>
+                    <a-textarea
+                        v-model:value="formData.selectedGradientButton"
+                        placeholder="Autosize height with minimum and maximum number of lines"
+                        :auto-size="{ minRows: 2, maxRows: 5 }"
+                        style="max-width: 500px;"
+                    />
+                </div>
+            </a-col>
+        </a-row>
+        <a-row justify="end">
+            <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(12)">บันทึก</a-button>
+        </a-row>
+    </div>
   </template>
   <script lang="ts" setup>
   import { ref } from 'vue';
@@ -562,9 +946,15 @@
         selectedGradientNavbar:'',
         selectedGradientMenuBar:'',
         selectedGradientSideBar:'',
+        selectedGradientSideBarButtom:'',
         selectedGradientNewIndex:'',
         selectedGradientPopup:'',
         selectedGradientInformation:'',
+        selectedGradientActivity:'',
+        selectedGradientNavFooter:'',
+        selectedGradientFooter:'',
+        selectedGradientBorder:'',
+        selectedGradientButton:'',
     });
 
 
@@ -573,7 +963,6 @@
         if (data.status === "success") {
             Alert('success','อัพเดต Themes เรียบร้อย.')
         }
-       
     }
 
     
@@ -632,6 +1021,60 @@
             }else{
                 formData.selectedGradientInformation = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2})`;
             }
+        }else if(activeKey.value == "7"){
+            if (!gradientValue.value || gradientValue.value.lg !== gradient.lg) {
+                gradientValue.value = { ...gradient }; // ทำสำเนาเพื่อหลีกเลี่ยงการเปลี่ยนค่าต้นฉบับ
+            }
+            if (gradient.color3 != undefined) {
+                formData.selectedGradientSideBarButtom = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2}, ${gradient.color3})`;
+            }else{
+                formData.selectedGradientSideBarButtom = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2})`;
+            }
+        }else if(activeKey.value == "8"){
+            if (!gradientValue.value || gradientValue.value.lg !== gradient.lg) {
+                gradientValue.value = { ...gradient }; // ทำสำเนาเพื่อหลีกเลี่ยงการเปลี่ยนค่าต้นฉบับ
+            }
+            if (gradient.color3 != undefined) {
+                formData.selectedGradientActivity = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2}, ${gradient.color3})`;
+            }else{
+                formData.selectedGradientActivity = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2})`;
+            }
+        }else if(activeKey.value == "9"){
+            if (!gradientValue.value || gradientValue.value.lg !== gradient.lg) {
+                gradientValue.value = { ...gradient }; // ทำสำเนาเพื่อหลีกเลี่ยงการเปลี่ยนค่าต้นฉบับ
+            }
+            if (gradient.color3 != undefined) {
+                formData.selectedGradientNavFooter = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2}, ${gradient.color3})`;
+            }else{
+                formData.selectedGradientNavFooter = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2})`;
+            }
+        }else if(activeKey.value == "10"){
+            if (!gradientValue.value || gradientValue.value.lg !== gradient.lg) {
+                gradientValue.value = { ...gradient }; // ทำสำเนาเพื่อหลีกเลี่ยงการเปลี่ยนค่าต้นฉบับ
+            }
+            if (gradient.color3 != undefined) {
+                formData.selectedGradientFooter = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2}, ${gradient.color3})`;
+            }else{
+                formData.selectedGradientFooter = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2})`;
+            }
+        }else if(activeKey.value == "11"){
+            if (!gradientValue.value || gradientValue.value.lg !== gradient.lg) {
+                gradientValue.value = { ...gradient }; // ทำสำเนาเพื่อหลีกเลี่ยงการเปลี่ยนค่าต้นฉบับ
+            }
+            if (gradient.color3 != undefined) {
+                formData.selectedGradientBorder = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2}, ${gradient.color3})`;
+            }else{
+                formData.selectedGradientBorder = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2})`;
+            }
+        }else if(activeKey.value == "12"){
+            if (!gradientValue.value || gradientValue.value.lg !== gradient.lg) {
+                gradientValue.value = { ...gradient }; // ทำสำเนาเพื่อหลีกเลี่ยงการเปลี่ยนค่าต้นฉบับ
+            }
+            if (gradient.color3 != undefined) {
+                formData.selectedGradientButton = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2}, ${gradient.color3})`;
+            }else{
+                formData.selectedGradientButton = `linear-gradient(${degree.value}deg, ${gradient.color1}, ${gradient.color2})`;
+            }
         }
 
     };
@@ -658,6 +1101,30 @@
             : `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2})`;
         }else if(activeKey.value == "6"){
             formData.selectedGradientInformation = gradientValue.value.color3
+            ? `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2}, ${gradientValue.value.color3})`
+            : `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2})`;
+        }else if(activeKey.value == "7"){
+            formData.selectedGradientSideBarButtom = gradientValue.value.color3
+            ? `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2}, ${gradientValue.value.color3})`
+            : `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2})`;
+        }else if(activeKey.value == "8"){
+            formData.selectedGradientActivity = gradientValue.value.color3
+            ? `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2}, ${gradientValue.value.color3})`
+            : `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2})`;
+        }else if(activeKey.value == "9"){
+            formData.selectedGradientNavFooter = gradientValue.value.color3
+            ? `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2}, ${gradientValue.value.color3})`
+            : `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2})`;
+        }else if(activeKey.value == "10"){
+            formData.selectedGradientFooter = gradientValue.value.color3
+            ? `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2}, ${gradientValue.value.color3})`
+            : `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2})`;
+        }else if(activeKey.value == "11"){
+            formData.selectedGradientBorder = gradientValue.value.color3
+            ? `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2}, ${gradientValue.value.color3})`
+            : `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2})`;
+        }else if(activeKey.value == "12"){
+            formData.selectedGradientButton = gradientValue.value.color3
             ? `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2}, ${gradientValue.value.color3})`
             : `linear-gradient(${degree.value}deg, ${gradientValue.value.color1}, ${gradientValue.value.color2})`;
         }
@@ -687,7 +1154,26 @@
         }else if (activeKey.value == "6") {
             match = formData.selectedGradientInformation.match(/\((.*?)\)/);
             selectedGradientKey = formData.selectedGradientInformation;
+        }else if (activeKey.value == "7") {
+            match = formData.selectedGradientSideBarButtom.match(/\((.*?)\)/);
+            selectedGradientKey = formData.selectedGradientSideBarButtom;
+        }else if (activeKey.value == "8") {
+            match = formData.selectedGradientActivity.match(/\((.*?)\)/);
+            selectedGradientKey = formData.selectedGradientActivity;
+        }else if (activeKey.value == "9") {
+            match = formData.selectedGradientNavFooter.match(/\((.*?)\)/);
+            selectedGradientKey = formData.selectedGradientNavFooter;
+        }else if (activeKey.value == "10") {
+            match = formData.selectedGradientFooter.match(/\((.*?)\)/);
+            selectedGradientKey = formData.selectedGradientFooter;
+        }else if (activeKey.value == "11") {
+            match = formData.selectedGradientBorder.match(/\((.*?)\)/);
+            selectedGradientKey = formData.selectedGradientBorder;
+        }else if (activeKey.value == "12") {
+            match = formData.selectedGradientButton.match(/\((.*?)\)/);
+            selectedGradientKey = formData.selectedGradientButton;
         }
+
         if (match) {
             let data = match[1]?.split(",") ?? []; // ใช้ Nullish Coalescing
             gradientValue.value.lg = selectedGradientKey;
@@ -713,12 +1199,17 @@
             formData.selectedGradientNavbar = data.data.navBarColor
             formData.selectedGradientMenuBar = data.data.menuBarColor
             formData.selectedGradientSideBar = data.data.sideBarColor
+            formData.selectedGradientSideBarButtom = data.data.sideBarButtomColor
             formData.selectedGradientNewIndex = data.data.newIndexColor
             formData.selectedGradientPopup = data.data.popUpColor
             formData.selectedGradientInformation = data.data.informationColor
+            formData.selectedGradientActivity = data.data.activityColor
+            formData.selectedGradientNavFooter = data.data.navFooter
+            formData.selectedGradientFooter = data.data.footer
+            formData.selectedGradientBorder = data.data.borderColor
+            formData.selectedGradientButton = data.data.buttonColor
 
             changeTab()
-
         }
     }
 
