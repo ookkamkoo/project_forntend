@@ -131,6 +131,25 @@ export async function uploadImageGameServices(game:any,image:any): Promise<getRe
     }
 }
 
+export async function changeCreditPg100(credit:number): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    
+    var body = {
+        "credit":credit
+    }
+
+    try {
+        const response = await axios.post<getResponse>(`${url}/setting-game/updateCredit`,body, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 export async function editSettingPG100Services(data:any,number:number): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;

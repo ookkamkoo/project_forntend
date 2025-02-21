@@ -243,13 +243,13 @@
                     <b>สถานะการสมัคร</b> 
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
-                    <!-- <b>สถานะดึงชื่อลูกค้า</b>  -->
+                    <b>สถานะดึงชื่อลูกค้า</b> 
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
                     <a-switch v-model:checked="formData.registerStatus" />
                     </a-col>
                     <a-col :span="12" :md="12" class="p-3">
-                    <!-- <a-switch v-model:checked="formData.getNameMember" /> -->
+                    <a-switch v-model:checked="formData.getNameMember" />
                     </a-col>
                 </a-row>
                 <a-row>

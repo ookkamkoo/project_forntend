@@ -177,6 +177,19 @@
           <h2>ตั้งค่าเกมส์ PG ปรับเเตก</h2>
           <a-col :span="24" :md="24">
             <a-row class="my-0">
+              <a-col :span="24" :md="8">
+                <h3>เครดิตคงเหลือ</h3>
+                <a-form-item ref="option-from" name="option-from" class="update-credit">
+                      <a-input v-model:value="formData.credit" :disabled="getPermission() != 'Programer'"/>
+                </a-form-item>
+              </a-col>
+              <a-col :span="24">
+                <a-row justify="end" v-if="getPermission() == 'Programer'">
+                  <a-button type="primary" class="sky" html-type="submit" @click="changeCredit()">บันทึก</a-button>
+                </a-row>
+              </a-col>
+            </a-row>
+            <a-row class="my-0">
               <a-col :span="24">
                 <h3>ข้อระวัง</h3>
                 <p>
@@ -371,9 +384,10 @@
   import { ref,createVNode } from 'vue';
   // import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
   // import * as Constants from '../Constants/Constants';
-  import { getSettingGameServices,setSettingGameMenu,setSettingGame,getGamePGListServices,setSettingGamePgServices,getGamePGSettingServices,editSettingPG100Services,uploadImageGameServices } from '~/services/settingGameService';
+  import { getSettingGameServices,setSettingGameMenu,setSettingGame,getGamePGListServices,setSettingGamePgServices,getGamePGSettingServices,editSettingPG100Services,uploadImageGameServices,changeCreditPg100 } from '~/services/settingGameService';
   import { Alert } from '../Alert/alertComponent';
   import type { UploadChangeParam } from 'ant-design-vue';
+  import { getPermission } from '~/auth/authToken';
 
   const activeKey = ref('1');
   const dataShow = ref<any[]>([]);
@@ -781,6 +795,7 @@ const settingPG80:SettingPG  = {
   game: [] as any,
   page: ref<number>(1),
   pageSize: ref<number>(10),
+  credit: ref<number>(0),
   settingPGSet: ref<number>(2),
   settingPG: {
     gameCode: "fortune-ox",
@@ -980,6 +995,7 @@ const settingPG80:SettingPG  = {
     if (data.status === "success") {
       formData.settingPG = data.data.detail
       formData.settingPGdefault = data.data.detail
+      formData.credit = data.data.credit
       formData.settingPGSet = data.data.set
       show_data.value = data.data.set
     }
@@ -1019,6 +1035,17 @@ const settingPG80:SettingPG  = {
 
   const editPGGame = async(datas :any) => {
     const data = await setSettingGamePgServices(datas);
+        if(data.status == "success"){
+            Alert('success','ตั้งค่าเกมส์ PG เรียบร้อย.')
+            getGamePGList();
+        }else{
+            Alert('error',data.message);
+            getGamePGList();
+        }
+  };
+
+  const changeCredit = async() => {
+    const data = await changeCreditPg100(formData.credit);
         if(data.status == "success"){
             Alert('success','ตั้งค่าเกมส์ PG เรียบร้อย.')
             getGamePGList();
@@ -1138,6 +1165,9 @@ onMounted(() => {
   cursor: pointer; /* ให้เป็นรูปมือเวลาชี้ */
   background: radial-gradient(circle at center, #130a34 0%, /* สีม่วงโทนหนึ่ง */ #0f092f 100% /* สีม่วงโทนใกล้เคียง */);
   border-radius: 15px;
+}
+.update-credit{
+  margin: 1rem 0;
 }
 
 /* ซ่อน hover-content ไว้ก่อน */

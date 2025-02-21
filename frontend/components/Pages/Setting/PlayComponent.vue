@@ -841,6 +841,8 @@
 
 
     const sidebarNeutralGradients = ref<GradientInterface[]>([
+        { lg: 'linear-gradient(90deg, #FFF700, #FFD700, #FFA500)', angle: '90deg', color1: '#FFF700', color2: '#FFD700', color3: '#FFA500' },
+        { lg: 'linear-gradient(90deg,#ffd70080,#ffbf00,#ffd70080)', angle: '90deg', color1: '#ffd70080', color2: '#ffbf00', color3: '#ffd70080' },
         { lg: 'linear-gradient(120deg, #1a1a1a, #414141)', angle: '120deg', color1: '#1a1a1a', color2: '#414141' },
         { lg: 'linear-gradient(130deg, #ff5733, #c70039)', angle: '130deg', color1: '#ff5733', color2: '#c70039' },
         { lg: 'linear-gradient(140deg, #900c3f, #581845)', angle: '140deg', color1: '#900c3f', color2: '#581845' },
@@ -901,6 +903,7 @@
 
 
     const darkNavGradients = ref<GradientInterface[]>([
+        { lg: 'linear-gradient(90deg, rgba(0,24,70,1) 26%, rgba(91,151,205,1) 65%, rgba(0,24,70,1) 90%)', angle: '90deg', color1: 'rgba(0,24,70,1) 26%', color2: 'rgba(91,151,205,1) 65%', color3: 'rgba(91,151,205,1) 90%' },
         { lg: 'linear-gradient(#2c002c,#100f4e)', angle: '0deg', color1: '#2c002c', color2: '#100f4e' }, // Dark Gray
         { lg: 'linear-gradient(90deg, #232526, #414345)', angle: '90deg', color1: '#232526', color2: '#414345' }, // Dark Gray
         { lg: 'linear-gradient(90deg, #141E30, #243B55)', angle: '90deg', color1: '#141E30', color2: '#243B55' }, // Deep Blue

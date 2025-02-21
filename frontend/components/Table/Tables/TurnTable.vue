@@ -18,7 +18,7 @@
                 <div>{{ record.type }}</div>
             </template>
             <template v-else-if="column.key === 'turn'">
-                <div>{{ record.turn_play }} / {{ record.turn }}</div>
+                <div>{{ record.turn }} / {{ record.turn_play }}</div>
             </template>
             <template v-else-if="column.key === 'trunAfter'">
                 <div>0</div>
