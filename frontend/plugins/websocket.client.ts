@@ -1,5 +1,5 @@
 export default defineNuxtPlugin((nuxtApp) => {
-  const socket = new WebSocket('ws://api.cooper89.com/ws/admin');
+  const socket = new WebSocket('wss://api.cooper89.com/ws/admin');
 
   socket.onopen = () => {
     console.log("Connected to WebSocket server");
