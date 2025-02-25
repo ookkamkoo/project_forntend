@@ -35,9 +35,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // ตรวจสอบสถานะ WebSocket ทุก 10 วินาที แล้วอัปเดต socket.value เมื่อ reconnect
   setInterval(() => {
-    console.log(socket.value);
-    console.log(socket.value?.readyState);
-    console.log(socket.value?.readyState);
     if (
       !socket.value ||
       (socket.value.readyState !== WebSocket.OPEN &&
@@ -46,5 +43,5 @@ export default defineNuxtPlugin((nuxtApp) => {
       console.log("WebSocket not connected, reconnecting...");
       socket.value = createWebSocket();
     }
-  }, 10000);
+  }, 30000);
 });
