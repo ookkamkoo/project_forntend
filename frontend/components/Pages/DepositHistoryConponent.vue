@@ -213,12 +213,12 @@ const dynamicColumns = computed(() => {
           { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 80 },
         ] },
         { title: 'รูปสลิป', dataIndex: 'image', key: 'image', width: 80 },
-        { title: 'โปรโมชั่น', dataIndex: 'remark', key: 'remark', width: 200 },
+        { title: 'โปรโมชั่น', dataIndex: 'promotion', key: 'promotion', width: 200 },
         { title: 'โดย', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 80 },
         { title: 'รายการ', dataIndex: 'is_first_deposit', key: 'is_first_deposit', width: 100 },
         { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
         { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 150 },
-        { title: 'เพิ่มเติม',key: 'operation',width: 110,},
+        // { title: 'เพิ่มเติม',key: 'operation',width: 110,},
       ] 
     },
   ];

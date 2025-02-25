@@ -200,11 +200,20 @@
                 >
                     <template #bodyCell="{ column, record }">
                         <template v-if="column.key == 'bank_image'">
-                            <a-image
+                            <a-image v-if="record.bank_image != ''"
                                 :preview="false"
                                 :width="36"
                                 :src="record.bank_image"
                             />
+                            <LikeOutlined v-else :style="{fontSize: '24px', color: '#08c'}"/>
+                        </template>
+                        <template v-if="column.key == 'bank_system_no'">
+                            <div v-if="record.bank_system_no != ''">
+                                {{record.bank_system_no}}
+                            </div>
+                            <div v-else>
+                                ถอนมือ
+                            </div>
                         </template>
                         <template v-if="column.key == 'amount'">
                             {{record.amount.toFixed(2)}}
