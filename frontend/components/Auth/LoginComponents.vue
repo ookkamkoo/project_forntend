@@ -6,19 +6,19 @@
           <div class="login-set-image">
             <a-carousel autoplay>
               <div>
-                <img src="https://demos.transloadit.com/49/ea88592a2c40d89be6268b2f047b49/desert.jpg" alt="Desert" style="width: 100%">
+                <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/auth/setting1.png" alt="Desert" style="width: 100%">
               </div>
               <div>
-                <img src="https://demos.transloadit.com/49/ea88592a2c40d89be6268b2f047b49/desert.jpg" alt="Desert" style="width: 100%">
+                <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/auth/setting2.png" alt="Desert" style="width: 100%">
               </div>
               <div>
-                <img src="https://demos.transloadit.com/49/ea88592a2c40d89be6268b2f047b49/desert.jpg" alt="Desert" style="width: 100%">
+                <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/auth/setting3.png" alt="Desert" style="width: 100%">
               </div>
             </a-carousel>
           </div>
           <div class="login-set">
             <div class="login-set-detail" >
-              <div class="login-set-detail-image m-2" >
+              <div class="login-set-detail-image py-1" >
                 <a-image
                   width="120px"
                   :preview="false"
@@ -155,9 +155,9 @@
       }else{
         if(data.message == "authen"){
           refKey.value = data.data.refkey
-          // text.value = `otpauth://totp/${data.data.name}:${data.data.name}?secret=${data.data.refkey}&issuer=${data.data.name}`
-          text.value = `otpauth://totp/Programer_Name:Programer_Name?secret=OSCHPWSIHZTMFFYFYO7BXI43UA======&issuer=Programer_Name`
-          console.log(text.value);
+          text.value = `otpauth://totp/${data.data.name}:${data.data.name}?secret=${data.data.refkey}&issuer=${data.data.name}`
+          // text.value = `otpauth://totp/Programer_Name:Programer_Name?secret=OSCHPWSIHZTMFFYFYO7BXI43UA======&issuer=Programer_Name`
+          // console.log(text.value);
           showModal();
         }else if(data.message == "authen_pin"){
           refKey.value = data.data.refkey
@@ -280,6 +280,9 @@
   }
   .center{
     text-align: center;
+  }
+  .py-1{
+    padding: 1rem 0 !important; 
   }
 
   :deep(.slick-slide) {

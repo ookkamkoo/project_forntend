@@ -11,11 +11,20 @@
       </div>
     </a-layout-content>
     <a-layout-footer style="text-align: center">
-      {{ $config.public.webName }} ©2024 Created by fastPlay
+      {{ $config.public.webName }} ©2024 Created by CooPer
     </a-layout-footer>
   </a-layout>
 </template>
-
+<script setup lang="ts">
+  import { getSettingServices } from '~/services/authService';
+  const getSetting = async () => {
+      const data = await getSettingServices();
+      console.log(data);
+  }
+  onMounted(() => {
+      getSetting();
+  });
+</script>
 <style scoped>
 .layout{
   position: fixed;

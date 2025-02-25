@@ -17,6 +17,14 @@ export interface LoginResponse {
     permission: string;
   }
 
+  export interface getResponse {
+    status: string;
+    data: any;
+    message: string;
+    time: string;
+    error: string;
+}
+
 export async function login(Username: string, Password: string, Twofactor: string): Promise<LoginResponse> {
     const config = useRuntimeConfig()
     const url = config.public.serviceUrls;
@@ -56,6 +64,28 @@ export async function checkToken(token: string): Promise<boolean> {
     } catch (error: any) {
       return false;
     }
+}
+
+export async function getSettingServices(): Promise<boolean> {
+  const config = useRuntimeConfig();
+  const url = config.public.serviceUrls;
+  const notify = notifyStore();
+
+  try {
+    const { data } = await axios.get(
+      `${url}/auth/getSetting`,
+      {},
+    );
+    
+    // อัปเดต notify ใน store ด้วยข้อมูลจาก data.notify
+    if (data.status == "success") {
+      notify.setSetting(data.data.setting);
+    }
+
+    return true;
+  } catch (error: any) {
+    return false;
+  }
 }
 
 export async function setPinUser(keyRef:string,pin:string): Promise<any> {
