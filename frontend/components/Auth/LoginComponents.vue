@@ -6,13 +6,13 @@
           <div class="login-set-image">
             <a-carousel autoplay>
               <div>
-                <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/auth/setting1.png" alt="Desert" style="width: 100%">
+                <img src="https://demos.transloadit.com/49/ea88592a2c40d89be6268b2f047b49/desert.jpg" alt="Desert" style="width: 100%">
               </div>
               <div>
-                <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/auth/setting2.png" alt="Desert" style="width: 100%">
+                <img src="https://demos.transloadit.com/49/ea88592a2c40d89be6268b2f047b49/desert.jpg" alt="Desert" style="width: 100%">
               </div>
               <div>
-                <img src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/image/auth/setting3.png" alt="Desert" style="width: 100%">
+                <img src="https://demos.transloadit.com/49/ea88592a2c40d89be6268b2f047b49/desert.jpg" alt="Desert" style="width: 100%">
               </div>
             </a-carousel>
           </div>
@@ -34,6 +34,7 @@
                 name="normal_login"
                 class="login-form"
                 @finish="onFinish"
+                style="margin-bottom: 24px;"
               >
                 <a-form-item
                   name="username"
@@ -282,7 +283,7 @@
     text-align: center;
   }
   .py-1{
-    padding: 1rem 0 !important; 
+    padding: rem 0 !important; 
   }
 
   :deep(.slick-slide) {

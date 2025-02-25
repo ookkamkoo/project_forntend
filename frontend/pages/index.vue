@@ -1,5 +1,5 @@
 <template>
-    <AuthLoginComponents/>
+    <AuthLoginComponents1/>
 </template>
 <script setup>
   definePageMeta({

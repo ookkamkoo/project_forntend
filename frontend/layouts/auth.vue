@@ -20,6 +20,7 @@
   const getSetting = async () => {
       const data = await getSettingServices();
       console.log(data);
+
   }
   onMounted(() => {
       getSetting();
