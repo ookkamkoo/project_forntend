@@ -42,7 +42,8 @@ const selectName = ref({
 });
 
 const { $socket } = useNuxtApp();
-const socket = $socket as WebSocket;
+const socketRef = $socket as Ref<WebSocket | null>;
+  
 const audio = ref(new Audio(notify.setting.notifySoundWithdraw));
 const isSoundEnabled = ref(true);
 
@@ -74,9 +75,9 @@ const messageContent = ref('');
 
 
 onMounted(() => {
-  if ($socket) {
-    socket.onmessage = (event: MessageEvent) => {
-      try {
+  if (socketRef.value) {
+      socketRef.value.onmessage = (event: MessageEvent) => {
+        try {
         // แปลงข้อความ JSON ที่ได้รับเป็น object
         const data = JSON.parse(event.data);
         
