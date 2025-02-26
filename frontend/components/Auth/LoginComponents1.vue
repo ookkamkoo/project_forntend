@@ -4,7 +4,7 @@
       <div class="form-login">
         <div class="login-set">
           <div class="login-set-detail" >
-            <div class="login-set-detail-image py-1" style="margin-bottom: 24px;">
+            <div class="login-set-detail-image py-1" style="margin-bottom: 24px;text-align: center;">
                 <a-image
                   width="140px"
                   :preview="false"
@@ -208,6 +208,12 @@
 </script>
 
 <style scoped>
+  .white-text{
+    color: whitesmoke;
+  }
+  .center{
+    text-align: center;
+  }
   .login-container {
     display: flex;
     justify-content: center;
