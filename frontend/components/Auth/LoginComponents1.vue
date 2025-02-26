@@ -67,7 +67,7 @@
               </a-form-item>
         
               <a-form-item style="margin-bottom: 24px;">
-                <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" size="large" >
+                <a-button :disabled="disabled" :loading="loading" type="primary" html-type="submit" class="login-form-button" size="large" >
                   เข้าสู่ระบบ
                 </a-button>
               </a-form-item>
@@ -86,7 +86,7 @@
       </div>
     </a-modal>
     <a-modal v-model:open="openPin" title="กรอกข้อมูลใช้งาน pin ครั้งเเรก" @ok="handleOkPin" width="400px">
-      <div class="">
+      <div class="center">
         <a-input v-model:value="valuePin" placeholder="Input Pin" :maxlength="6" @input="validatePin"/>
       </div>
     </a-modal>
@@ -108,6 +108,7 @@
   const valuePin = ref('');
   const refKey = ref<string>('');
   const checked = ref(false);
+  const loading = ref<boolean>(false);
 
   interface FormState {
     username: string;
@@ -126,6 +127,7 @@
 
   // login
   const onFinish = async () => {
+      loading.value = true;
       const data = await login(formState.username, formState.password, formState.twofactor);
       console.log(data);
       
@@ -154,6 +156,7 @@
           });
         }
       }
+      loading.value = false;
   }
 
   const validatePin = () => { 
