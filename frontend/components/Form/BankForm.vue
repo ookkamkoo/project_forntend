@@ -90,9 +90,16 @@
 
             <!-- ฟิลด์ DevicesID หรือ Login-Token -->
             <a-col :span="24" :md="12" class="p-2" v-if="showDevicesIdField">
-                <label for="DevicesID"><b>{{ getDevicesIDLabel }}</b></label>
+                <label for="DevicesID"><b>devicesID</b></label>
                 <a-form-item ref="devicesID" name="devicesID" >
                 <a-input v-model:value="formData.devicesID" />
+                </a-form-item>
+            </a-col>
+
+            <a-col :span="24" :md="12" class="p-2" v-if="showLoginTokenField">
+                <label for="LoginToken"><b>LoginToken</b></label>
+                <a-form-item ref="loginToken" name="loginToken" >
+                <a-input v-model:value="formData.loginToken" />
                 </a-form-item>
             </a-col>
 
@@ -273,6 +280,7 @@
         bankNo:'',
         bankPin:'',
         devicesID:'',
+        loginToken:'',
         keyID:'',
         TureID:'',
         Username:'',
@@ -321,6 +329,7 @@
                 formData.bankNo = '';
                 formData.bankPin = '';
                 formData.devicesID = '';
+                formData.loginToken = '';
                 formData.keyID = '';
                 formData.TureID = '';
                 formData.Username = '';
@@ -370,6 +379,7 @@
                 formData.bankNo = newValue.book_number;
                 formData.bankPin = "";
                 formData.devicesID = "";
+                formData.loginToken = "";
                 formData.keyID = "";
                 formData.TureID = "";
                 formData.Username = "";
@@ -484,8 +494,13 @@
     );
     });
 
-    const getDevicesIDLabel = computed(() => {
-    return Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.bankNo ? 'DevicesID' : 'Login-Token';
+    // const getDevicesIDLabel = computed(() => {
+    // return formData.bank_type !== 4 && Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.bankNo;
+    // // return Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.bankNo ? 'DevicesID' : 'Login-Token';
+    // });
+    const showLoginTokenField = computed(() => {
+    return Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.name == 'ทรูมันนี่วอลเล็ท';
+    // return Constants.optionsBankType[formData.bank_type - 1]?.bank[formData.bank_list - 1]?.action[formData.bank_list_api - 1]?.bankNo ? 'DevicesID' : 'Login-Token';
     });
 
     const showKeyIdField = computed(() => {

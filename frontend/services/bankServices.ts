@@ -98,6 +98,7 @@ export async function createBank(data:any): Promise<getResponse> {
         detail:{
             bankPin:data.bankPin,
             devicesID:data.devicesID,
+            loginToken:data.loginToken,
             keyID:data.keyID,
             tureID:data.TureID,
             username:data.Username,
@@ -140,6 +141,7 @@ export async function editSystemBank(data :any): Promise<getResponse> {
         detail:{
             bankPin:data.bankPin,
             devicesID:data.devicesID,
+            loginToken:data.loginToken,
             keyID:data.keyID,
             tureID:data.TureID,
             username:data.Username,
