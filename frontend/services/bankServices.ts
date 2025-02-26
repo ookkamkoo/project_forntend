@@ -101,6 +101,7 @@ export async function createBank(data:any): Promise<getResponse> {
             keyID:data.keyID,
             tureID:data.TureID,
             username:data.Username,
+            password:data.Password,
             apiKey:data.ApiKey,
             secretKey:data.SecretKey,
             clientId:data.ClientId,

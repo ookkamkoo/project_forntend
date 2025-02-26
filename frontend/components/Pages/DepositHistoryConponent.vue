@@ -132,6 +132,8 @@
         <a-tag color="green" v-else-if="record.status == 2">สำเร็จ</a-tag>
         <a-tag color="red" v-else-if="record.status == 3">ยกเลิก</a-tag>
         <a-tag color="red" v-else-if="record.status == 4">หมดเวลา</a-tag>
+        <a-tag color="orange" v-else-if="record.status == 7">กำลังประมวลผล</a-tag>
+        <a-tag color="red" v-else-if="record.status == 8">ถูกยกเลิก</a-tag>
       </template>
       <template v-if="column.key === 'updated_by'">
         <div v-if="record.UpdatedBySearch.id != 0">{{ record.UpdatedBySearch.username }}</div>
