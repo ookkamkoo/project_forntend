@@ -74,39 +74,39 @@ const openNotification = (placement: NotificationPlacement, message: string) => 
 const messageContent = ref('');
 
 
-// onMounted(() => {
-  // if (socketRef.value) {
-  //     socketRef.value.onmessage = (event: MessageEvent) => {
-  //       try {
-  //       // แปลงข้อความ JSON ที่ได้รับเป็น object
-  //       const data = JSON.parse(event.data);
+onMounted(() => {
+  if (socketRef.value) {
+      socketRef.value.onmessage = (event: MessageEvent) => {
+        try {
+        // แปลงข้อความ JSON ที่ได้รับเป็น object
+        const data = JSON.parse(event.data);
         
-  //       // เก็บข้อมูลข้อความใน messageContent
-  //       messageContent.value = data;
+        // เก็บข้อมูลข้อความใน messageContent
+        messageContent.value = data;
         
-  //       console.log("ข้อความจากเซิร์ฟเวอร์:", data);
-  //       console.log(data.status); // เข้าถึง status จาก object ที่แปลงแล้ว
+        console.log("ข้อความจากเซิร์ฟเวอร์:", data);
+        console.log(data.status); // เข้าถึง status จาก object ที่แปลงแล้ว
         
-  //       if (data.status === "success") {
-  //         // เรียก openNotification และแปลง data.data เป็นสตริงหากจำเป็น
-  //         playNotificationSound();
-  //         openNotification('bottomRight', String(data.message));
-  //         notify.notify = data.data
+        if (data.status === "success") {
+          // เรียก openNotification และแปลง data.data เป็นสตริงหากจำเป็น
+          playNotificationSound();
+          openNotification('bottomRight', String(data.message));
+          notify.notify = data.data
           
-  //       }
-  //     } catch (error) {
-  //       console.error("Error parsing WebSocket message:", error);
-  //     }
-  //   };
-  // } else {
-  //   console.warn("WebSocket connection is not available.");
-  // }
+        }
+      } catch (error) {
+        console.error("Error parsing WebSocket message:", error);
+      }
+    };
+  } else {
+    console.warn("WebSocket connection is not available.");
+  }
 
-//   if (window.innerWidth < 750) {
-//     collapsed.value = true;
-//     collapsed_togle.value = null;
-//   }
-// });
+  if (window.innerWidth < 750) {
+    collapsed.value = true;
+    collapsed_togle.value = null;
+  }
+});
 
 const toggleCollapsed = () => {
   collapsed.value = !collapsed.value;
