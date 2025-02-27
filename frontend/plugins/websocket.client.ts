@@ -43,5 +43,11 @@ export default defineNuxtPlugin((nuxtApp) => {
       console.log("WebSocket not connected, reconnecting...");
       socket.value = createWebSocket();
     }
-  }, 30000);
+
+    if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+      socket.value.send(JSON.stringify({ type: "ping" }));
+      console.log("📤 Sent Ping to WebSocket");
+    }
+
+  }, 50000);
 });

@@ -24,6 +24,8 @@
         </a-tab-pane>
         <a-tab-pane key="12" tab="ปุ่มเข้าใช้งาน">
         </a-tab-pane>
+        <a-tab-pane key="13" tab="ตั้งค่าอื่นๆ">
+        </a-tab-pane>
     </a-tabs>
     <div v-if="activeKey=='1'">
         <a-row>
@@ -775,6 +777,22 @@
             <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(12)">บันทึก</a-button>
         </a-row>
     </div>
+    <div v-if="activeKey=='13'">
+        <a-row>
+            <a-col :span="24" :md="12">
+                <h4>สีข้อความ</h4>
+                <a-row>
+                    <div style="width: 100px;">
+                        <a-input v-model:value="formData.text" type="color" class="input-color"/>
+                    </div>
+                </a-row>
+            </a-col>
+        </a-row>
+
+        <a-row justify="end">
+            <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(13)">บันทึก</a-button>
+        </a-row>
+    </div>
   </template>
   <script lang="ts" setup>
   import { ref } from 'vue';
@@ -958,6 +976,8 @@
         selectedGradientFooter:'',
         selectedGradientBorder:'',
         selectedGradientButton:'',
+        // detail
+        text:"#F7F7F7",
     });
 
 
@@ -1211,6 +1231,8 @@
             formData.selectedGradientFooter = data.data.footer
             formData.selectedGradientBorder = data.data.borderColor
             formData.selectedGradientButton = data.data.buttonColor
+
+            formData.text = data.data.text
 
             changeTab()
         }

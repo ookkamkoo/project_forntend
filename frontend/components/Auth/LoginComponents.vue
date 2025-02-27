@@ -34,7 +34,6 @@
                 name="normal_login"
                 class="login-form"
                 @finish="onFinish"
-                style="margin-bottom: 24px;"
               >
                 <a-form-item
                   name="username"

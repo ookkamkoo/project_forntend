@@ -85,6 +85,10 @@ export async function saveSettingThemeServices(data:any,page:number): Promise<ge
         body = {
             buttonColor: data.selectedGradientButton ? data.selectedGradientButton.toString() : "",
         };
+    }else if(page == 13){
+        body = {
+            text: data.text ? data.text.toString() : "",
+        };
     }
 
     try {
