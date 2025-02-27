@@ -1,4 +1,9 @@
 <template>
+  <a-modal v-model:open="open" title="รายละเอียด" width="750px">
+    <pre style="white-space: pre-wrap; word-wrap: break-word;">
+      {{ JSON.stringify(detail, null, 2) }}
+    </pre>
+  </a-modal>
   <a-row class="p-2">
       <a-col class="p-1" :span="4">
         <label>ประเภท</label>
@@ -151,6 +156,9 @@
       <template v-if="column.key === 'created_at'">
         <div >{{ dayjs(record.created_at).format('YYYY-MM-DD') }} <br> {{ dayjs(record.created_at).format('HH:mm:ss') }}</div>
       </template>
+      <template v-else-if="column.key === 'detail'">
+          <a-button type="primary" class="sky" @click="showModal(record)"><FileOutlined /></a-button>
+      </template>
       <template v-if="column.key === 'operation'">
         <a-flex gap="small" horizontal :justify="'center'">
           <!-- <a-button type="primary" class="sky" :disabled="record.status!=1"><CheckOutlined /></a-button>
@@ -169,8 +177,16 @@ import dayjs, { Dayjs } from 'dayjs';
 import { getWithdrawServices } from '~/services/memberServices';
 
 const dataShow = ref<any[]>([]);
+const detail = ref<any>();
 const allRecord = ref<number>(0);
 const loading = ref(true);
+const open = ref<boolean>(false);
+
+const showModal = (data:any) => {
+  console.log("sssssssssss");
+  open.value = true;
+  detail.value = data
+};
 
 
 const currentDate = new Date();
@@ -232,9 +248,10 @@ const dynamicColumns = computed(() => {
           { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 60 },
         ] },
         { title: 'เพิ่มเติม', dataIndex: 'remark', key: 'remark', width: 150 },
-        { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 60 },
+        { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 80 },
         { title: 'โดย', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 60 },
         { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 120 },
+        { title: 'รายละเอียด', dataIndex: 'detail', key: 'detail', width: 80 },
         // { title: 'เพิ่มเติม',key: 'operation',width: 140,},
       ] 
     },

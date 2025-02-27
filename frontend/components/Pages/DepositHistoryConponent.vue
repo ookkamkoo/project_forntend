@@ -1,4 +1,21 @@
 <template>
+  <a-modal v-model:open="open" title="รายละเอียด" width="750px">
+    <pre style="white-space: pre-wrap; word-wrap: break-word;">
+    {{ JSON.stringify(detail, null, 2) }}
+  </pre>
+  </a-modal>
+  <a-modal v-model:open="openPromotion" title="โปรโมชั่น">
+    <a-textarea
+      v-model:value="promotion.promotion"
+      auto-size
+      :readonly="true"
+    />
+    <template #footer>
+      <div class="center">
+        <a-button type="primary" ghost @click="openPromotion = false"> closs </a-button>
+      </div>
+    </template>
+  </a-modal>
   <a-row class="p-2">
       <a-col class="p-1" :span="4">
         <label>ประเภท</label>
@@ -155,6 +172,12 @@
       <template v-else-if="column.key === 'created_at'">
         <div >{{ dayjs(record.created_at).format('YYYY-MM-DD') }} <br> {{ dayjs(record.created_at).format('HH:mm:ss') }}</div>
       </template>
+      <template v-else-if="column.key === 'detail'">
+          <a-button type="primary" class="sky" @click="showModal(record)"><FileOutlined /></a-button>
+      </template>
+      <template v-else-if="column.key === 'promotion'">
+          <a-button type="primary" ghost :disabled="record.promotion=='ไม่รับโปรโมชั่น' || record.promotion==''" @click="promotionShow(record)"><CrownOutlined /></a-button>
+      </template>
       <template v-if="column.key === 'operation'">
         <a-flex gap="small" horizontal :justify="'center'">
           <a-button type="primary" class="sky"><CheckOutlined /></a-button>
@@ -171,8 +194,21 @@ import dayjs, { Dayjs } from 'dayjs';
 import { getDepositServices } from '~/services/memberServices';
 
 const dataShow = ref<any[]>([]);
+const detail = ref<any>();
+const promotion = ref<any>();
 const allRecord = ref<number>(0);
 const loading = ref(true);
+const open = ref<boolean>(false);
+const openPromotion = ref<boolean>(false);
+
+const showModal = (data:any) => {
+  open.value = true;
+  detail.value = data
+};
+const promotionShow = (data:any) => {
+  openPromotion.value = true;
+  promotion.value = data
+};
 
 
 const currentDate = new Date();
@@ -234,12 +270,14 @@ const dynamicColumns = computed(() => {
           { title: 'เครดิตก่อนหน้า', dataIndex: 'amount_before', key: 'amount_before', width: 70 },
           { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 70 },
         ] },
-        { title: 'รูปสลิป', dataIndex: 'image', key: 'image', width: 80 },
+        // { title: 'รูปสลิป', dataIndex: 'image', key: 'image', width: 80 },
         // { title: 'โปรโมชั่น', dataIndex: 'promotion', key: 'promotion', width: 200 },
-        { title: 'โดย', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 80 },
+        // { title: 'โดย', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 80 },
         { title: 'รายการ', dataIndex: 'is_first_deposit', key: 'is_first_deposit', width: 80 },
+        { title: 'โปรโมชั่น', dataIndex: 'promotion', key: 'promotion', width: 80 },
         { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 80 },
         { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 100 },
+        { title: 'รายละเอียด', dataIndex: 'detail', key: 'detail', width: 80 },
         // { title: 'เพิ่มเติม',key: 'operation',width: 110,},
       ] 
     },

@@ -151,7 +151,7 @@
         <div v-else> - </div>
       </template>
       <template v-else-if="column.key === 'created_at'">
-        <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
+        <div >{{ dayjs(record.created_at).format('YYYY-MM-DD') }} <br> {{ dayjs(record.created_at).format('HH:mm:ss') }}</div>
       </template>
       <template v-if="column.key === 'operation'">
         <a-button type="primary" ghost v-if="record.action =='1'" :disabled="record.image == ''"><ScanOutlined /></a-button>
@@ -209,7 +209,7 @@ const dynamicColumns = computed(() => {
           { title: 'เครดิตก่อนหน้า', dataIndex: 'amount_before', key: 'amount_before', width: 80 },
           { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 80 },
         ] },
-        { title: 'รายละเอียด', dataIndex: 'remark', key: 'remark', width: 200 },
+        // { title: 'รายละเอียด', dataIndex: 'remark', key: 'remark', width: 200 },
         { title: 'สร้าง', dataIndex: 'created_by_name', key: 'created_by_name', width: 80 },
         { title: 'เเก้ไข', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 80 },
         { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
