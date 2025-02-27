@@ -74,7 +74,7 @@ const openNotification = (placement: NotificationPlacement, message: string) => 
 const messageContent = ref('');
 
 
-onMounted(() => {
+// onMounted(() => {
   // if (socketRef.value) {
   //     socketRef.value.onmessage = (event: MessageEvent) => {
   //       try {
@@ -102,11 +102,11 @@ onMounted(() => {
   //   console.warn("WebSocket connection is not available.");
   // }
 
-  if (window.innerWidth < 750) {
-    collapsed.value = true;
-    collapsed_togle.value = null;
-  }
-});
+//   if (window.innerWidth < 750) {
+//     collapsed.value = true;
+//     collapsed_togle.value = null;
+//   }
+// });
 
 const toggleCollapsed = () => {
   collapsed.value = !collapsed.value;
