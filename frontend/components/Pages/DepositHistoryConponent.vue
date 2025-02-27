@@ -117,6 +117,19 @@
         <div v-if="record.bank_no != ''">{{ record.bank_no }}</div>
         <div v-else> - </div>
       </template>
+      <template v-if="column.key === 'bankSystem'">
+        <a-image
+          width="35px"
+          :src="record.bank_system.image"
+          :preview="false"
+           v-if="record.bank_system.image != ''"
+        />
+        <div v-else> - </div>
+      </template>
+      <template v-if="column.key === 'bank_noSystem'">
+        <div v-if="record.bank_system_no != ''">{{ record.bank_system_no }}</div>
+        <div v-else> - </div>
+      </template>
       <template v-if="column.key === 'image'">
         <a-button type="primary" ghost :disabled="record.image==''"><ScanOutlined /></a-button>
       </template>
@@ -204,22 +217,29 @@ const dynamicColumns = computed(() => {
 
       children: [
         { title: '#', width: 60, dataIndex: 'id', key: 'id' },
-        { title: 'ยูสเซอร์เนม', width: 120, dataIndex: 'username', key: 'username' },
-        { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 80 },
-        { title: 'เลชบัญชี', dataIndex: 'bank_no', key: 'bank_no', width: 100 },
+        { title: 'ยูสเซอร์เนม', width: 100, dataIndex: 'username', key: 'username' },
+        { title: 'บัญชีลูกค้า', width: 100, children: [
+          { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 60 },
+          { title: 'เลขบัญชี', dataIndex: 'bank_no', key: 'bank_no', width: 80 },
+        ] },
+        { title: 'บัญชีระบบ', width: 100, children: [
+          { title: 'ธนาคาร', dataIndex: 'bankSystem', key: 'bankSystem', width: 60 },
+          { title: 'เลขบัญชี', dataIndex: 'bank_noSystem', key: 'bank_noSystem', width: 80 },
+        ] },
         { title: 'เครดิต', width: 100, children: [
-          { title: 'ยอดเงิน', dataIndex: 'amount', key: 'amount', width: 80 },
-          { title: 'โบนัส', dataIndex: 'amount_before', key: 'amount_before', width: 80 },
-          { title: 'รวม', dataIndex: 'amount_before', key: 'amount_before', width: 80 },
-          { title: 'เครดิตก่อนหน้า', dataIndex: 'amount_before', key: 'amount_before', width: 80 },
-          { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 80 },
+          { title: 'ยอดเงิน', dataIndex: 'amount', key: 'amount', width: 70 },
+          { title: 'โบนัส', dataIndex: 'bonus', key: 'bonus', width: 70 },
+          { title: 'vat', dataIndex: 'vat', key: 'vat', width: 70 },
+          { title: 'รวม', dataIndex: 'amount_total', key: 'amount_total', width: 70 },
+          { title: 'เครดิตก่อนหน้า', dataIndex: 'amount_before', key: 'amount_before', width: 70 },
+          { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 70 },
         ] },
         { title: 'รูปสลิป', dataIndex: 'image', key: 'image', width: 80 },
-        { title: 'โปรโมชั่น', dataIndex: 'promotion', key: 'promotion', width: 200 },
+        // { title: 'โปรโมชั่น', dataIndex: 'promotion', key: 'promotion', width: 200 },
         { title: 'โดย', dataIndex: 'updated_by_name', key: 'updated_by_name', width: 80 },
-        { title: 'รายการ', dataIndex: 'is_first_deposit', key: 'is_first_deposit', width: 100 },
-        { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 100 },
-        { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 150 },
+        { title: 'รายการ', dataIndex: 'is_first_deposit', key: 'is_first_deposit', width: 80 },
+        { title: 'สถานะ', dataIndex: 'status', key: 'status', width: 80 },
+        { title: 'วันที่', dataIndex: 'created_at', key: 'created_at', width: 100 },
         // { title: 'เพิ่มเติม',key: 'operation',width: 110,},
       ] 
     },

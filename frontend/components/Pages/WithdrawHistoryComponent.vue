@@ -120,6 +120,19 @@
         <div v-if="record.bank_no != ''">{{ record.bank_no }}</div>
         <div v-else> - </div>
       </template>
+      <template v-if="column.key === 'bankSystem'">
+        <a-image
+          width="35px"
+          :src="record.bank_system.image"
+          :preview="false"
+           v-if="record.bank_system.image != ''"
+        />
+        <div v-else> - </div>
+      </template>
+      <template v-if="column.key === 'bank_noSystem'">
+        <div v-if="record.bank_system_no != ''">{{ record.bank_system_no }}</div>
+        <div v-else> - </div>
+      </template>
       <template v-if="column.key === 'remark'">
         <div>{{ record.remark }}</div>
       </template>
@@ -202,10 +215,19 @@ const dynamicColumns = computed(() => {
       children: [
         { title: '#', width: 60, dataIndex: 'id', key: 'id' },
         { title: 'ยูสเซอร์เนม', width: 80, dataIndex: 'username', key: 'username' },
-        { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 50 },
-        { title: 'เลขบัญชี', dataIndex: 'bank_no', key: 'bank_no', width: 80 },
+        { title: 'บัญชีลูกค้า', width: 100, children: [
+          { title: 'ธนาคาร', dataIndex: 'bank', key: 'bank', width: 50 },
+          { title: 'เลขบัญชี', dataIndex: 'bank_no', key: 'bank_no', width: 80 },
+        ] },
+        { title: 'บัญชีระบบ', width: 100, children: [
+          { title: 'ธนาคาร', dataIndex: 'bankSystem', key: 'bankSystem', width: 50 },
+          { title: 'เลขบัญชี', dataIndex: 'bank_noSystem', key: 'bank_noSystem', width: 80 },
+        ] },
         { title: 'เครดิต', width: 100, children: [
           { title: 'ยอดเงิน', dataIndex: 'amount ', key: 'amount', width: 60 },
+          { title: 'โบนัส', dataIndex: 'bonus', key: 'bonus', width: 60 },
+          { title: 'vat', dataIndex: 'vat', key: 'vat', width: 60 },
+          { title: 'รวม', dataIndex: 'amount_total', key: 'amount_total', width: 60 },
           { title: 'เครดิตก่อนหน้า', dataIndex: 'amount_before', key: 'amount_before', width: 60 },
           { title: 'เครดิตหลัง', dataIndex: 'amount_after', key: 'amount_after', width: 60 },
         ] },

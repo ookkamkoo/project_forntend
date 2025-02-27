@@ -27,32 +27,32 @@ export default defineNuxtPlugin((nuxtApp) => {
     return ws;
   }
 
-//   // เริ่มต้นการเชื่อมต่อ WebSocket ครั้งแรก
-//   socket.value = createWebSocket();
+  // เริ่มต้นการเชื่อมต่อ WebSocket ครั้งแรก
+  socket.value = createWebSocket();
 
-//   // Provide ค่า socket เป็น reactive reference เพียงครั้งเดียว
-//   nuxtApp.provide('socket', socket);
+  // Provide ค่า socket เป็น reactive reference เพียงครั้งเดียว
+  nuxtApp.provide('socket', socket);
 
-//   // ตรวจสอบสถานะ WebSocket ทุก 10 วินาที แล้วอัปเดต socket.value เมื่อ reconnect
-//   setInterval(() => {
-//     console.log(socket.value);
-//     console.log(socket.value?.readyState);
-//     console.log(socket.value?.readyState);
-//     if (
-//       !socket.value ||
-//       (socket.value.readyState !== WebSocket.OPEN &&
-//         socket.value.readyState !== WebSocket.CONNECTING)
-//     ) {
-//       console.log("WebSocket not connected, reconnecting...");
-//       socket.value = createWebSocket();
-//     }
+  // ตรวจสอบสถานะ WebSocket ทุก 10 วินาที แล้วอัปเดต socket.value เมื่อ reconnect
+  // setInterval(() => {
+  //   console.log(socket.value);
+  //   console.log(socket.value?.readyState);
+  //   console.log(socket.value?.readyState);
+  //   if (
+  //     !socket.value ||
+  //     (socket.value.readyState !== WebSocket.OPEN &&
+  //       socket.value.readyState !== WebSocket.CONNECTING)
+  //   ) {
+  //     console.log("WebSocket not connected, reconnecting...");
+  //     socket.value = createWebSocket();
+  //   }
 
-//     if (socket.value && socket.value.readyState === WebSocket.OPEN) {
-//       socket.value.send(JSON.stringify({ type: "ping" }));
-//       console.log("📤 Sent Ping to WebSocket");
-//     }
+  //   if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+  //     socket.value.send(JSON.stringify({ type: "ping" }));
+  //     console.log("📤 Sent Ping to WebSocket");
+  //   }
 
-//   }, 50000);
+  // }, 5000);
 });
 
 
