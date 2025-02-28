@@ -78,7 +78,7 @@ export async function getUserReportServices(data :any): Promise<ResponseUsers> {
   let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
   let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
   let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
 
   const queryParams = [
     `dateStart=${dateStart}`,
@@ -109,7 +109,7 @@ export async function getLogServices(data :any): Promise<ResponseUsers> {
   let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
   let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
   let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
   let sl_type = data.sl_type;
   let username = data.username;
   let menu = data.menu;

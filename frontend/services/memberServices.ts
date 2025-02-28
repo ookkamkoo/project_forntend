@@ -129,7 +129,7 @@ export async function getMembers(data :any): Promise<getResponse> {
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     const queryParams = [
         `sl_type=${data.sl_type}`,
         `sl_search=${data.sl_search}`,
@@ -165,7 +165,7 @@ export async function getMemberOnlineServices(data :any): Promise<getResponse> {
   let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
   let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
   let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
   const queryParams = [
       `dateStart=${dateStart}`,
       `timeStart=${timeStart}`,
@@ -195,7 +195,7 @@ export async function getMemberOnlineDetailServices(data :any): Promise<getRespo
   let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
   let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
   let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
   const queryParams = [
       `dateStart=${dateStart}`,
       `timeStart=${timeStart}`,
@@ -505,7 +505,7 @@ export async function getDepositServices(data :any): Promise<getResponse> {
   let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
   let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
   let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
   const queryParams = [
       `sl_type=${data.sl_type}`,
       `de_type=${data.de_type}`,
@@ -540,7 +540,7 @@ export async function getWithdrawServices(data :any): Promise<getResponse> {
   let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
   let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
   let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
   const queryParams = [
       `sl_type=${data.sl_type}`,
       `de_type=${data.de_type}`,

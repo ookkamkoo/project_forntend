@@ -38,7 +38,7 @@ export async function getSystemBankByIdServices(data :any,id :string): Promise<g
   let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
   let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
   let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-  let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+  let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
   const queryParams = [
       `dateStart=${dateStart}`,
       `timeStart=${timeStart}`,
@@ -307,7 +307,7 @@ export async function getbankWithdrawServices(id:number): Promise<getResponse> {
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     const queryParams = [
         `dateStart=${dateStart}`,
         `timeStart=${timeStart}`,

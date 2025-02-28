@@ -39,7 +39,7 @@ export async function getRecommendServices(data :any): Promise<any> {
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     const queryParams = [
         `username=${data.username}`,
         `usernameRecommend=${data.usernameRecommend}`,

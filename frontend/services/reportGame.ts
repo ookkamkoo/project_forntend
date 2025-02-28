@@ -20,7 +20,7 @@ export async function getReportGameService(data :any): Promise<getResponse> {
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     
     const queryParams = [
         `dateStart=${dateStart}`,
@@ -56,7 +56,7 @@ export async function getReportGameByIdService(data :any,id:number): Promise<get
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     
     const queryParams = [
         `dateStart=${dateStart}`,
@@ -91,7 +91,7 @@ export async function getReportSummaryProductServices(data :any): Promise<getRes
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     
     const queryParams = [
         `dateStart=${dateStart}`,
@@ -122,7 +122,7 @@ export async function getReportMinigameSummaryServices(data :any): Promise<getRe
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     
     const queryParams = [
         `dateStart=${dateStart}`,
@@ -153,7 +153,7 @@ export async function getMiniGameReport(data :any): Promise<getResponse> {
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     
     const queryParams = [
         `dateStart=${dateStart}`,
@@ -185,7 +185,7 @@ export async function getMiniGameReportByIdServices(data :any,id:number): Promis
     let dateStart = dayjs(data.dateStart).format('YYYY-MM-DD');
     let timeStart = dayjs(data.timeStart).format('HH:mm:ss');
     let dateEnd = dayjs(data.dateEnd).format('YYYY-MM-DD');
-    let timeEnd = dayjs(data.timeEnd).format('HH:mm:ss');
+    let timeEnd = dayjs(data.timeEnd).format('HH:mm:59');
     
     const queryParams = [
         `dateStart=${dateStart}`,
