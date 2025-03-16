@@ -316,6 +316,62 @@
             </a-col>
         </a-row>
         <br>
+        <a-flex :justify="'space-between'" :align="'center'">
+            <a-col :span="12">
+                <h4 class="mx-1">เกมส์ที่สามารถเล่นได้</h4>
+            </a-col>
+            <a-col :span="12">
+                <a-checkbox v-model:checked="formData.all" style="float: right;" @click="checkAll()">ทั้งหมด</a-checkbox>
+            </a-col>
+        </a-flex>
+        <a-row class="mx-1">
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.casino">คาสิโนสด</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.gameSlot">สล็อตเกม</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.fishing">ยิงปลา</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.sportsbook">กีฬา</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.trading">เทรด</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.card">การ์ด</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.lotto">หวย</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.keno">คีโน</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.eSport">อีสปอร์ต</a-checkbox>
+            </a-col>
+            <a-col :span="6" class="my-1">
+                <a-checkbox v-model:checked="formData.limitGame.poker">โป๊กเกอร์</a-checkbox>
+            </a-col>
+        </a-row>
+        <h4 class="mx-1">ตั้งค่า PG100</h4>
+        <a-row :justify="'center'">
+            <a-button type="primary" :ghost="formData.active != '0'" class="mx-1" @click="selectSetting('0')">ตั้งค่าตามระบบหลัก</a-button>
+
+            <a-button type="primary" :ghost="formData.active != '1'" class="mx-1" @click="selectSetting('1')">เเตก 20%</a-button>
+        
+            <a-button type="primary" :ghost="formData.active != '2'" class="mx-1" @click="selectSetting('2')">เเตก 40% (เเนะนำ)</a-button>
+        
+            <a-button type="primary" :ghost="formData.active != '3'" class="mx-1" @click="selectSetting('3')">เเตก 50% (เเนะนำ)</a-button>
+        
+            <a-button type="primary" :ghost="formData.active != '4'" class="mx-1" @click="selectSetting('4')">เเตก 60%</a-button>
+        
+            <a-button type="primary" :ghost="formData.active != '5'" class="mx-1" @click="selectSetting('5')">เเตก 80%</a-button>
+        </a-row>
+        <br>
+        <h4 class="mx-1">เทิร์นการเล่น</h4>
         <a-row :justify="'center'">
             <a-col :span="8" :md="6">
                 <div class="mx-1 my-1">
@@ -380,6 +436,7 @@
         </a-row>
         <br>
         <a-row>
+            <p>โปรดเช็คขนาดไฟล์ในการอัปโหลด ขนาดเเนะนำ 600*380 px ไฟล์ PNG JPG JPEG</p>
             <a-col :span="24">
                 <div v-if="!ImageText" class="close-image" @click="clearPreviewImage">
                     <CloseCircleOutlined />
@@ -399,7 +456,7 @@
                                 </p>
                                 <p class="ant-upload-text">Click or drag file to this area to upload</p>
                                 <p class="ant-upload-hint">
-                                    โปรดเช็คขนาดไฟล์ในการอัปโหลด ขนาดเเนะนำ 1:1 ไฟล์ PNG JPG JPEG
+                                    โปรดเช็คขนาดไฟล์ในการอัปโหลด ขนาดเเนะนำ 600*380 px ไฟล์ PNG JPG JPEG
                                 </p>
                             </div>
                         </div>
@@ -480,7 +537,7 @@
     function handleDrop(e: DragEvent) {
         console.log(e);
     }
-
+    
     let formData = reactive({
         id: 0,
         name:'',
@@ -493,6 +550,21 @@
         bonusWithdraw:'1',
         dayOpen:'1',
         timeOpen:'1',
+        all:true,
+        settingPG: {},
+        limitGame:{
+            casino:true,
+            gameSlot:true,
+            fishing:true,
+            sportsbook:true,
+            trading:true,
+            card:true,
+            lotto:true,
+            keno:true,
+            eSport:true,
+            poker:true,   
+        },
+        active:'0',
         time:{
             timeOpen:dayjs('00:00', 'HH:mm'),
             timeCloss:dayjs('23:59', 'HH:mm'),
@@ -504,16 +576,16 @@
         additionalColumnsScale:[{ amount: 0, bonus: 0,amountMaxWithDrow:0 },{ amount: 100, bonus: 0,amountMaxWithDrow:0 },{ amount: 200, bonus: 0 ,amountMaxWithDrow:0}]as { amount: number; bonus: number; amountMaxWithDrow:number}[],
         turn:{
             casino:0,
-                    game:0,
-                    fishing:0,
-                    sportsbook:0,
-                    trading:0,
-                    card:0,
-                    lotto:0,
-                    keno:0,
-                    esport:0,
-                    poker:0,
-        },
+            game:0,
+            fishing:0,
+            sportsbook:0,
+            trading:0,
+            card:0,
+            lotto:0,
+            keno:0,
+            esport:0,
+            poker:0,
+},
         image: null as any
     });
 
@@ -538,6 +610,20 @@
                     timeOpen:dayjs('00:00', 'HH:mm'),
                     timeCloss:dayjs('23:59', 'HH:mm')
                 };
+                formData.settingPG = {}
+                formData.limitGame = {
+                        casino:true,
+                        gameSlot:true,
+                        fishing:true,
+                        sportsbook:true,
+                        trading:true,
+                        card:true,
+                        lotto:true,
+                        keno:true,
+                        eSport:true,
+                        poker:true,   
+                    };
+                formData.active = "2";
                 formData.day = [] as string[];
                 formData.week = [] as string[];
                 formData.additionalColumns = { amount: 0, bonus: 0,amountMaxWithDrow:0 } as { amount: number; bonus: number; amountMaxWithDrow:number };
@@ -587,6 +673,12 @@
                 }
                 formData.turn = newValue.turn;
                 formData.image =  newValue.image
+
+                console.log(newValue);
+                
+                formData.limitGame = newValue.limit_game
+                formData.settingPG = newValue.settingPG
+                formData.active = newValue.active
             }
             // iamge
             ImageText.value = false;
@@ -595,6 +687,18 @@
         } 
     }, { immediate: true });
 
+    const checkAll = () => {
+        formData.limitGame.casino = !formData.all
+        formData.limitGame.gameSlot = !formData.all
+        formData.limitGame.fishing = !formData.all
+        formData.limitGame.sportsbook = !formData.all
+        formData.limitGame.trading = !formData.all
+        formData.limitGame.card = !formData.all
+        formData.limitGame.lotto = !formData.all
+        formData.limitGame.keno = !formData.all
+        formData.limitGame.eSport = !formData.all
+        formData.limitGame.poker = !formData.all
+    };
 
     const addColumn = () => {
         formData.additionalColumnsFix.push({ amount: 0, bonus: 0, amountMaxWithDrow: 0 });
@@ -602,6 +706,27 @@
 
     const removeColumn = () => {
         formData.additionalColumnsFix.pop();
+    };
+
+    const selectSetting = (id:string) => {
+        formData.active = id
+        switch (id) {
+            case '1':
+            formData.settingPG = Constants.settingPG20;
+            break;
+            case '2':
+            formData.settingPG = Constants.settingPG40;
+            break;
+            case '3':
+            formData.settingPG = Constants.settingPG50;
+            break;
+            case '4':
+            formData.settingPG = Constants.settingPG60;
+            break;
+            case '5':
+            formData.settingPG = Constants.settingPG80;
+            break;
+        };
     };
 
     const addColumnScale = () => {
@@ -664,6 +789,10 @@
             }
         }
     }
+
+    onMounted(() => {
+        formData.settingPG = Constants.settingPG40;
+    });
 
 </script>
 

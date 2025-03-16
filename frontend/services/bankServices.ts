@@ -27,6 +27,30 @@ export async function getSystemBankServices(): Promise<getResponse> {
     }
 }
 
+export async function CreateQrCodeFmp(id:number,data:any): Promise<getResponse> {
+  const config = useRuntimeConfig();
+  const url = config.public.serviceUrls;
+
+  const headers = {
+      Authorization: `Bearer ${getToken()}`
+  };
+
+  const body = {
+    "id":id,
+    "bankId":data.bankId,
+    "bankNo":data.bankNo,
+    "name":data.name,
+    "amount":data.amount
+  }
+  
+  try {
+      const response = await axios.post<getResponse>(`${url}/bank/createQrFmp`,body, { headers });
+      return response.data;
+  } catch (error: any) {
+      return error.response.data;
+  }
+}
+
 export async function getSystemBankByIdServices(data :any,id :string): Promise<getResponse> {
   const config = useRuntimeConfig();
   const url = config.public.serviceUrls;
@@ -193,16 +217,37 @@ export async function CheckConnectBankSystemServices(id: number): Promise<getRes
     }
   }
 
-export async function getStatementServices(id: number): Promise<getResponse> {
+export async function getStatementServices(id: number,type: string): Promise<getResponse> {
     const config = useRuntimeConfig()
     const url = config.public.serviceUrls;
   
     const headers = {
       Authorization: `Bearer ${getToken()}`
     };
+    
+    const body = {
+      "type":type
+    }
   
     try {
-      const response = await axios.post<getResponse>(`${url}/bank/statement/${id}`, {}, { headers });
+      const response = await axios.post<getResponse>(`${url}/bank/statement/${id}`,body, { headers });
+      return response.data;
+    } catch (error: any) {
+      return error.response.data;
+    }
+  }
+
+  export async function getCreditFmpServices(id: number): Promise<getResponse> {
+    const config = useRuntimeConfig()
+    const url = config.public.serviceUrls;
+  
+    const headers = {
+      Authorization: `Bearer ${getToken()}`
+    };
+    
+  
+    try {
+      const response = await axios.get<getResponse>(`${url}/bank/creditFmp/${id}`, { headers });
       return response.data;
     } catch (error: any) {
       return error.response.data;

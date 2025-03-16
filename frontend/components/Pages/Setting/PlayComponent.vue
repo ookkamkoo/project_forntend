@@ -1,5 +1,7 @@
 <template>
     <a-tabs v-model:activeKey="activeKey" type="card" @change="changeTab">
+        <a-tab-pane key="0" tab="Theam">
+        </a-tab-pane>
         <a-tab-pane key="1" tab="Navbar">
         </a-tab-pane>
         <a-tab-pane key="2" tab="Menubar">
@@ -27,7 +29,15 @@
         <a-tab-pane key="13" tab="ตั้งค่าอื่นๆ">
         </a-tab-pane>
     </a-tabs>
-    <div v-if="activeKey=='1'">
+    <div v-if="activeKey=='0'">
+        <a-row>
+        </a-row>
+
+        <a-row justify="end">
+            <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(1)">บันทึก</a-button>
+        </a-row>
+    </div>
+    <div v-else-if="activeKey=='1'">
         <a-row>
             <a-col :span="24" :md="24">
                 <h4>Navbar</h4>
@@ -860,7 +870,7 @@
 
     const sidebarNeutralGradients = ref<GradientInterface[]>([
         { lg: 'linear-gradient(90deg, #FFF700, #FFD700, #FFA500)', angle: '90deg', color1: '#FFF700', color2: '#FFD700', color3: '#FFA500' },
-        { lg: 'linear-gradient(90deg,#ffd70080,#ffbf00,#ffd70080)', angle: '90deg', color1: '#ffd70080', color2: '#ffbf00', color3: '#ffd70080' },
+        { lg: 'linear-gradient(90deg,#ffd700,#ffbf00,#ffd700)', angle: '90deg', color1: '#ffd700', color2: '#ffbf00', color3: '#ffd700' },
         { lg: 'linear-gradient(120deg, #1a1a1a, #414141)', angle: '120deg', color1: '#1a1a1a', color2: '#414141' },
         { lg: 'linear-gradient(130deg, #ff5733, #c70039)', angle: '130deg', color1: '#ff5733', color2: '#c70039' },
         { lg: 'linear-gradient(140deg, #900c3f, #581845)', angle: '140deg', color1: '#900c3f', color2: '#581845' },
@@ -921,7 +931,7 @@
 
 
     const darkNavGradients = ref<GradientInterface[]>([
-        { lg: 'linear-gradient(90deg, rgba(0,24,70,1) 26%, rgba(91,151,205,1) 65%, rgba(0,24,70,1) 90%)', angle: '90deg', color1: 'rgba(0,24,70,1) 26%', color2: 'rgba(91,151,205,1) 65%', color3: 'rgba(91,151,205,1) 90%' },
+        { lg: 'linear-gradient(90deg, rgba(0,24,70,1) 26%, rgba(91,151,205,1) 65%, rgba(0,24,70,1) 90%)', angle: '90deg', color1: 'rgba(0,24,70,1) 26%', color2: 'rgba(91,151,205,1) 65%', color3: 'rgba(0,24,70,1) 90%' },
         { lg: 'linear-gradient(#2c002c,#100f4e)', angle: '0deg', color1: '#2c002c', color2: '#100f4e' }, // Dark Gray
         { lg: 'linear-gradient(90deg, #232526, #414345)', angle: '90deg', color1: '#232526', color2: '#414345' }, // Dark Gray
         { lg: 'linear-gradient(90deg, #141E30, #243B55)', angle: '90deg', color1: '#141E30', color2: '#243B55' }, // Deep Blue

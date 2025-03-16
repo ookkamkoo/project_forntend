@@ -88,6 +88,9 @@ export async function createPromotion(data :any): Promise<getResponse> {
         typeDeposit:parseInt(data.typeDeposit,10),
         typeMaxWithDrow:parseInt(data.typeMaxWithDrow,10),
         ConditionData:ConditionData,
+        limitGame:data.limitGame,
+        settingPG:data.settingPG,
+        active:data.active,
         turn:data.turn,
         image:data.image
     };
@@ -138,6 +141,9 @@ export async function editPromotion(data :any): Promise<getResponse> {
         typeDeposit:parseInt(data.typeDeposit,10),
         typeMaxWithDrow:parseInt(data.typeMaxWithDrow,10),
         ConditionData:ConditionData,
+        limitGame:data.limitGame,
+        settingPG:data.settingPG,
+        active:data.active,
         turn:data.turn,
         image:data.image
     };

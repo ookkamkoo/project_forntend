@@ -29,7 +29,7 @@
       </template>
     </a-modal>
     <a-tabs v-model:activeKey="activeKey" type="card" @change="handdleMenu()">
-      <a-tab-pane key="1" tab="ตั้งค่าค่ายเกมส์">
+      <a-tab-pane :key="'1'" tab="ตั้งค่าค่ายเกมส์">
         <a-row>
           <h2>ตั้งค่าเมนู</h2>
           <a-col :span="24" :md="24">
@@ -88,11 +88,12 @@
                   </div>
                   <p class="long-text">{{gameDetail.name}}</p>
                   <a-switch v-model:checked="gameDetail.is_active"/>
-                  <div class="p-2">
+                  <div class="p-1">
                     <a-input-number id="inputNumber" v-model:value="gameDetail.priority" :min="1"/>
                   </div>
-                  <div class="p-2">
+                  <div class="p-1">
                     <!-- <a-button type="primary" @click="showModal(game)" ghost>เเก้ไขรูปภาพ</a-button> -->
+                    <NuxtLink to="/setting/list-provider"><a-button type="primary" ghost>ตั้งค่าลิสเกมส์</a-button></NuxtLink>
                   </div>
                 </div>
               </a-col>
@@ -106,7 +107,7 @@
           </a-col>
         </a-row>
       </a-tab-pane>
-      <a-tab-pane key="2" tab="ตั้งค่าเกมส์ PG">
+      <a-tab-pane :key="'2'" tab="ตั้งค่าเกมส์ PG">
         <a-row>
           <h2>ตั้งค่าเกมส์ PG</h2>
           <a-col :span="24" :md="24">
@@ -172,7 +173,7 @@
           </a-col>
         </a-row>
       </a-tab-pane>
-      <a-tab-pane key="3" tab="ตั้งค่าเกมส์ PG ปรับเเตก">
+      <a-tab-pane :key="'3'" tab="ตั้งค่าเกมส์ PG ปรับเเตก">
         <a-row>
           <h2>ตั้งค่าเกมส์ PG ปรับเเตก</h2>
           <a-col :span="24" :md="24">
@@ -388,414 +389,30 @@
   import { Alert } from '../Alert/alertComponent';
   import type { UploadChangeParam } from 'ant-design-vue';
   import { getPermission } from '~/auth/authToken';
+  import type { UploadFile } from 'ant-design-vue';
+  import * as Constants from '../Constants/Constants';
 
-  const activeKey = ref('1');
+  const activeKey = ref<string | number>('1'); // ✅ รองรับทั้ง string และ number
   const dataShow = ref<any[]>([]);
   const allRecord = ref<number>(0);
   const loading = ref(true);
   const show_data = ref(1);
   const open = ref<boolean>(false);
-  const fileList = ref([]);
+  const fileList = ref<UploadFile<any>[]>([]);
   const ImageText = ref(true);
   const previewImage = ref('');
   const Image = ref<any>(null);
   const dataGame = ref<any>(null);
 
   
-  interface SettingPG {
-    gameCode: string;
-    username: string;
-    isPlayerSetting: boolean;
-    setting: {
-      name: string;
-      output: string;
-      percent: number;
-      option: {
-        from: number;
-        to: number;
-      };
-    }[];
-    buyFeatureSetting: {
-      name: string;
-      output: string;
-      percent: number;
-      option: {
-        from: number;
-        to: number;
-      };
-    }[];
-  }
 
-const settingPG20:SettingPG  = {
-  gameCode: "fortune-ox",
-  username: "testuser",
-  isPlayerSetting: true,
-  setting: [
-    {
-      name: "normal-spin",
-      output: "normal-spin",
-      percent: 80,
-      option: {
-        from: 0,
-        to: 0,
-      },
-    },
-    {
-      name: "less-bet",
-      output: "less-bet",
-      percent: 15.14,
-      option: {
-        from: 0,
-        to: 1,
-      },
-    },
-    {
-      name: "more-bet",
-      output: "more-bet",
-      percent: 4.61,
-      option: {
-        from: 0,
-        to: 20,
-      },
-    },
-    {
-      name: "freespin-less-bet",
-      output: "freespin-less-bet",
-      percent: 0.21,
-      option: {
-        from: 0,
-        to: 0.5,
-      },
-    },
-    {
-      name: "freespin-more-bet",
-      output: "freespin-more-bet",
-      percent: 0.04,
-      option: {
-        from: 0,
-        to: 100,
-      },
-    },
-  ],
-  buyFeatureSetting: [
-    {
-      name: "buy-feature-less-bet",
-      output: "freespin-less-bet",
-      percent: 90,
-      option: {
-        from: 0,
-        to: 0.8,
-      },
-    },
-    {
-      name: "buy-feature-more-bet",
-      output: "freespin-more-bet",
-      percent: 10,
-      option: {
-        from: 0,
-        to: 100,
-      },
-    },
-  ],
-};
-const settingPG40:SettingPG  = {
-  gameCode: "fortune-ox",
-  username: "testuser",
-  isPlayerSetting: true,
-  setting: [
-    {
-      name: "normal-spin",
-      output: "normal-spin",
-      percent: 60,
-      option: {
-        from: 0,
-        to: 0,
-      },
-    },
-    {
-      name: "less-bet",
-      output: "less-bet",
-      percent: 30,
-      option: {
-        from: 0,
-        to: 1,
-      },
-    },
-    {
-      name: "more-bet",
-      output: "more-bet",
-      percent: 9.5,
-      option: {
-        from: 0,
-        to: 20,
-      },
-    },
-    {
-      name: "freespin-less-bet",
-      output: "freespin-less-bet",
-      percent: 0.4,
-      option: {
-        from: 0,
-        to: 0.5,
-      },
-    },
-    {
-      name: "freespin-more-bet",
-      output: "freespin-more-bet",
-      percent: 0.1,
-      option: {
-        from: 0,
-        to: 100,
-      },
-    },
-  ],
-  buyFeatureSetting: [
-    {
-      name: "buy-feature-less-bet",
-      output: "freespin-less-bet",
-      percent: 80,
-      option: {
-        from: 0,
-        to: 0.8,
-      },
-    },
-    {
-      name: "buy-feature-more-bet",
-      output: "freespin-more-bet",
-      percent: 20,
-      option: {
-        from: 0,
-        to: 100,
-      },
-    },
-  ],
-};
-
-  const settingPG50:SettingPG  = {
-    gameCode: "fortune-ox",
-    username: "testuser",
-    isPlayerSetting: true,
-    setting: [
-      {
-        name: "normal-spin",
-        output: "normal-spin",
-        percent: 50,
-        option: {
-          from: 0,
-          to: 0,
-        },
-      },
-      {
-        name: "less-bet",
-        output: "less-bet",
-        percent: 37.15,
-        option: {
-          from: 0,
-          to: 1,
-        },
-      },
-      {
-        name: "more-bet",
-        output: "more-bet",
-        percent: 12.19,
-        option: {
-          from: 0,
-          to: 20,
-        },
-      },
-      {
-        name: "freespin-less-bet",
-        output: "freespin-less-bet",
-        percent: 0.53,
-        option: {
-          from: 0,
-          to: 0.5,
-        },
-      },
-      {
-        name: "freespin-more-bet",
-        output: "freespin-more-bet",
-        percent: 0.13,
-        option: {
-          from: 0,
-          to: 100,
-        },
-      },
-    ],
-    buyFeatureSetting: [
-      {
-        name: "buy-feature-less-bet",
-        output: "freespin-less-bet",
-        percent: 75,
-        option: {
-          from: 0,
-          to: 0.8,
-        },
-      },
-      {
-        name: "buy-feature-more-bet",
-        output: "freespin-more-bet",
-        percent: 25,
-        option: {
-          from: 0,
-          to: 100,
-        },
-      },
-    ],
-};
-
-const settingPG60:SettingPG  = {
-    gameCode: "fortune-ox",
-    username: "testuser",
-    isPlayerSetting: true,
-    setting: [
-      {
-        name: "normal-spin",
-        output: "normal-spin",
-        percent: 40,
-        option: {
-          from: 0,
-          to: 0,
-        },
-      },
-      {
-        name: "less-bet",
-        output: "less-bet",
-        percent: 45.17,
-        option: {
-          from: 0,
-          to: 1,
-        },
-      },
-      {
-        name: "more-bet",
-        output: "more-bet",
-        percent: 14.08,
-        option: {
-          from: 0,
-          to: 20,
-        },
-      },
-      {
-        name: "freespin-less-bet",
-        output: "freespin-less-bet",
-        percent: 0.60,
-        option: {
-          from: 0,
-          to: 0.5,
-        },
-      },
-      {
-        name: "freespin-more-bet",
-        output: "freespin-more-bet",
-        percent: 0.15,
-        option: {
-          from: 0,
-          to: 80,
-        },
-      },
-    ],
-    buyFeatureSetting: [
-      {
-        name: "buy-feature-less-bet",
-        output: "freespin-less-bet",
-        percent: 70,
-        option: {
-          from: 0,
-          to: 0.8,
-        },
-      },
-      {
-        name: "buy-feature-more-bet",
-        output: "freespin-more-bet",
-        percent: 30,
-        option: {
-          from: 0,
-          to: 100,
-        },
-      },
-    ],
-};
-
-const settingPG80:SettingPG  = {
-    gameCode: "fortune-ox",
-    username: "testuser",
-    isPlayerSetting: true,
-    setting: [
-      {
-        name: "normal-spin",
-        output: "normal-spin",
-        percent: 20,
-        option: {
-          from: 0,
-          to: 0,
-        },
-      },
-      {
-        name: "less-bet",
-        output: "less-bet",
-        percent: 60,
-        option: {
-          from: 0,
-          to: 1,
-        },
-      },
-      {
-        name: "more-bet",
-        output: "more-bet",
-        percent: 19.00,
-        option: {
-          from: 0,
-          to: 20,
-        },
-      },
-      {
-        name: "freespin-less-bet",
-        output: "freespin-less-bet",
-        percent: 0.78,
-        option: {
-          from: 0,
-          to: 0.5,
-        },
-      },
-      {
-        name: "freespin-more-bet",
-        output: "freespin-more-bet",
-        percent: 0.22,
-        option: {
-          from: 0,
-          to: 50,
-        },
-      },
-    ],
-    buyFeatureSetting: [
-      {
-        name: "buy-feature-less-bet",
-        output: "freespin-less-bet",
-        percent: 60,
-        option: {
-          from: 0,
-          to: 0.8,
-        },
-      },
-      {
-        name: "buy-feature-more-bet",
-        output: "freespin-more-bet",
-        percent: 40,
-        option: {
-          from: 0,
-          to: 100,
-        },
-      },
-    ],
-};
 
   let formData = reactive({
   casinoStatus: true,
   game: [] as any,
   page: ref<number>(1),
   pageSize: ref<number>(10),
-  credit: ref<number>(0),
+  credit: ref<string>("0"),
   settingPGSet: ref<number>(2),
   settingPG: {
     gameCode: "fortune-ox",
@@ -805,46 +422,46 @@ const settingPG80:SettingPG  = {
       {
         name: "normal-spin",
         output: "normal-spin",
-        percent: 60,
+        percent: "60",
         option: {
-          from: 0,
-          to: 0,
+          from: "0",
+          to: "0",
         },
       },
       {
         name: "less-bet",
         output: "less-bet",
-        percent: 30,
+        percent: "30",
         option: {
-          from: 0,
-          to: 1,
+          from: "0",
+          to: "1",
         },
       },
       {
         name: "more-bet",
         output: "more-bet",
-        percent: 9.5,
+        percent: "9.5",
         option: {
-          from: 0,
-          to: 20,
+          from: "0",
+          to: "20",
         },
       },
       {
         name: "freespin-less-bet",
         output: "freespin-less-bet",
-        percent: 0.4,
+        percent: "0.4",
         option: {
-          from: 0,
-          to: 0.5,
+          from: "0",
+          to: "0.5",
         },
       },
       {
         name: "freespin-more-bet",
         output: "freespin-more-bet",
-        percent: 0.1,
+        percent: "0.1",
         option: {
-          from: 0,
-          to: 100,
+          from: "0",
+          to: "100",
         },
       },
     ],
@@ -852,19 +469,19 @@ const settingPG80:SettingPG  = {
       {
         name: "buy-feature-less-bet",
         output: "freespin-less-bet",
-        percent: 80,
+        percent: "80",
         option: {
-          from: 0,
-          to: 0.8,
+          from: "0",
+          to: "0.8",
         },
       },
       {
         name: "buy-feature-more-bet",
         output: "freespin-more-bet",
-        percent: 20,
+        percent: "20",
         option: {
-          from: 0,
-          to: 100,
+          from: "0",
+          to: "100",
         },
       },
     ],
@@ -877,46 +494,46 @@ const settingPG80:SettingPG  = {
       {
         name: "normal-spin",
         output: "normal-spin",
-        percent: 60,
+        percent: "60",
         option: {
-          from: 0,
-          to: 0,
+          from: "0",
+          to: "0",
         },
       },
       {
         name: "less-bet",
         output: "less-bet",
-        percent: 30,
+        percent: "30",
         option: {
-          from: 0,
-          to: 1,
+          from: "0",
+          to: "1",
         },
       },
       {
         name: "more-bet",
         output: "more-bet",
-        percent: 9.5,
+        percent: "9.5",
         option: {
-          from: 0,
-          to: 20,
+          from: "0",
+          to: "20",
         },
       },
       {
         name: "freespin-less-bet",
         output: "freespin-less-bet",
-        percent: 0.4,
+        percent: "0.4",
         option: {
-          from: 0,
-          to: 0.5,
+          from: "0",
+          to: "0.5",
         },
       },
       {
         name: "freespin-more-bet",
         output: "freespin-more-bet",
-        percent: 0.1,
+        percent: "0.1",
         option: {
-          from: 0,
-          to: 100,
+          from: "0",
+          to: "100",
         },
       },
     ],
@@ -924,19 +541,19 @@ const settingPG80:SettingPG  = {
       {
         name: "buy-feature-less-bet",
         output: "freespin-less-bet",
-        percent: 80,
+        percent: "80",
         option: {
-          from: 0,
-          to: 0.8,
+          from: "0",
+          to: "0.8",
         },
       },
       {
         name: "buy-feature-more-bet",
         output: "freespin-more-bet",
-        percent: 20,
+        percent: "20",
         option: {
-          from: 0,
-          to: 100,
+          from: "0",
+          to: "100",
         },
       },
     ],
@@ -998,6 +615,7 @@ const settingPG80:SettingPG  = {
       formData.credit = data.data.credit
       formData.settingPGSet = data.data.set
       show_data.value = data.data.set
+
     }
     loading.value = false;
   }
@@ -1127,23 +745,23 @@ const chang_show_data = (value :number) => {
   show_data.value = value
   switch (value) {
     case 1:
-      formData.settingPG = settingPG20;
+      formData.settingPG = Constants.settingPG20;
       formData.settingPGSet = 1;
       break;
     case 2:
-      formData.settingPG = settingPG40;
+      formData.settingPG = Constants.settingPG40;
       formData.settingPGSet = 2;
       break;
     case 3:
-      formData.settingPG = settingPG50;
+      formData.settingPG = Constants.settingPG50;
       formData.settingPGSet = 3;
       break;
     case 4:
-      formData.settingPG = settingPG60;
+      formData.settingPG = Constants.settingPG60;
       formData.settingPGSet = 4;
       break;
     case 5:
-      formData.settingPG = settingPG80;
+      formData.settingPG = Constants.settingPG80;
       formData.settingPGSet = 5;
       break;
     case 6:

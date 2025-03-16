@@ -26,6 +26,70 @@ export async function getSettingGameServices(): Promise<getResponse> {
     }
 }
 
+export async function getSettingListGameServices(): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    
+    try {
+        const response = await axios.get<getResponse>(`${url}/setting-game/getGameList`, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export async function sysDataListGameServices(data : any): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    
+    const body = {
+        "image":data.image,
+        "name":data.name,
+        "product":data.product,
+        "productCode":data.productCode,
+        "provider":data.provider ? data.provider.toString() : ""
+    }
+
+    try {
+        const response = await axios.post<getResponse>(`${url}/setting-game/sysncListGame`,body, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+export async function getListGameServices(data :any): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    const queryParams = [
+        `sl_type=${data.sl_type}`,
+        `de_type=${data.de_type}`,
+        `gameName=${data.gameName}`,
+        `page=${data.page}`,
+        `pageSize=${data.pageSize}`
+    ];
+    const search = queryParams.join('&');
+
+    try {
+        const response = await axios.get<getResponse>(`${url}/setting-game/getListGame?`+search, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
 export async function getGamePGListServices(): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
@@ -131,7 +195,28 @@ export async function uploadImageGameServices(game:any,image:any): Promise<getRe
     }
 }
 
-export async function changeCreditPg100(credit:number): Promise<getResponse> {
+export async function uploadImageGameListServices(game:any,image:any): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+    console.log(game);
+    console.log(image);
+    
+    var body = {
+        "image":image
+    }
+
+    try {
+        const response = await axios.post<getResponse>(`${url}/setting-game/updateImageGameList/${game.id}`,body, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export async function changeCreditPg100(credit:string): Promise<getResponse> {
     const config = useRuntimeConfig();
     const url = config.public.serviceUrls;
     const headers = {
@@ -139,7 +224,7 @@ export async function changeCreditPg100(credit:number): Promise<getResponse> {
     };
     
     var body = {
-        "credit":credit
+        "credit":String(credit)
     }
 
     try {
@@ -159,7 +244,7 @@ export async function editSettingPG100Services(data:any,number:number): Promise<
 
     try {
         const  body = {
-            "data":number,
+            "data":Number(number),
             "detail":data
         }
         const response = await axios.post<getResponse>(`${url}/pg-game/updateSettingPG`,body, { headers });

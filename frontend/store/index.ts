@@ -7,6 +7,7 @@ export const notifyStore = defineStore('setting', {
             withdraw: "0",
             deposit: "0",
         } as Notify,
+        sysnceData:false,
         setting: {
             bgColor: "",
             bgImage: "",

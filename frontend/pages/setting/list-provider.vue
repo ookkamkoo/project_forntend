@@ -1,0 +1,3 @@
+<template>
+    <PagesListGameProviderComponent/>
+</template>

@@ -4,7 +4,11 @@
     <template #footer></template>
   </a-modal>
   <a-modal v-model:open="statement" width="1300px" title="รายการจากทางธนาคาร" :closable="true">
-    <TableTablesStatement :closeModal="closeModal" :id="idGetStatement"/>
+    <TableTablesStatement :closeModal="closeModal" :id="idGetStatement" :bankId="BankGetStatement"/>
+    <template #footer></template>
+  </a-modal>
+  <a-modal v-model:open="addCreditFmp" width="1300px" title="รายการเครดิต payment" :closable="true">
+    <TableTablesPlaymentStatement :id="idGetStatement"/>
     <template #footer></template>
   </a-modal>
   <a-row class="p-2" justify="end">
@@ -58,7 +62,8 @@
             <a-button type="dashed" @click="CheckConnect(record.id)" :disabled="isLoadingCheckConnect[record.id]"><a-spin size="small" v-if="isLoadingCheckConnect[record.id]"/> <SwapOutlined v-else/></a-button>
           </template>
           <template v-else-if="column.key === 'statement'">
-            <a-button class="sky" type="primary" @click="Statement(record.id)"><a-spin size="small" v-if="isLoadingStatement"/><BarsOutlined v-else/></a-button>
+            <a-button class="sky m-1" type="primary" @click="Statement(record.id,record.bank_id)"><a-spin size="small" v-if="isLoadingStatement"/><BarsOutlined v-else/></a-button>
+            <a-button class="sky" type="primary" @click="CreditFmp(record.id,)" v-if="record.bank_id == 17"><PlusOutlined /></a-button>
           </template>
           <template v-else-if="column.key === 'date'">
             <div>{{ dayjs(record.created_at).format('YYYY-MM-DD HH:mm:ss') }}</div>
@@ -76,6 +81,7 @@ import { Alert } from '../Alert/alertComponent';
 
 const open = ref<boolean>(false);
 const statement = ref<boolean>(false);
+const addCreditFmp = ref<boolean>(false);
 const dataShow = ref<any[]>([]);
 const bankSystemEdit = ref<any>();
 const active = ref<boolean>(true);
@@ -84,6 +90,7 @@ const allRecord = ref<number>(0);
 const isLoadingCheckConnect = ref<Record<number, boolean>>({});
 const isLoadingStatement = ref(false);
 const idGetStatement = ref(0);
+const BankGetStatement = ref(0);
 const status = ref(0);
 
 const showModal = () => {
@@ -222,10 +229,15 @@ const CheckConnect = async(id: number) =>{
     isLoadingCheckConnect.value[id] = false;
 }
 
-const Statement = async(id: number) =>{
+const Statement = async(id: number,bank: number) =>{
   isLoadingStatement.value = true
   idGetStatement.value = id
   isLoadingStatement.value = false
   statement.value = true
+  BankGetStatement.value = bank
+}
+const CreditFmp = async(id: number) =>{
+  addCreditFmp.value = true
+  idGetStatement.value = id
 }
 </script>

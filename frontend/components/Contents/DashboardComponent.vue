@@ -1,10 +1,11 @@
 <template>
+    <NuxtLink to="/setting/list-provider">ไปที่หน้าเกี่ยวกับเรา</NuxtLink>
     <a-row class="p-2">
       <a-col :span="24" :md="10" :lg="11">
         <a-row >
           <a-col class="p-1" :span="15">
             <label>เริ่มต้นวันที่</label>
-            <a-date-picker v-model:value="formData.dateStart" />
+             <a-date-picker v-model:value="formData.dateStart" />
           </a-col>
           <a-col class="p-1" :span="9">
             <label><br></label>
@@ -294,24 +295,24 @@
     ]);
     
     const indicator = h(LoadingOutlined, {
-    style: {
-        fontSize: '10x',
-    },
-    spin: true,
+        style: {
+            fontSize: '10x',
+        },
+        spin: true,
     });
 
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    const day = String(currentDate.getDate()).padStart(2, '0');
+    const today = dayjs();
+    const year = today.year();
+    const month = String(today.month() + 1).padStart(2, '0'); // ทำให้เดือนเป็น 2 หลัก
+    const day = String(today.date()).padStart(2, '0'); // ทำให้วันเป็น 2 หลัก
 
-    let formData = reactive({
-        timeStart:ref(dayjs('00:00:00', 'HH:mm:ss')),
-        timeEnd:ref(dayjs('23:59:59', 'HH:mm:ss')),
-        dateStart:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
-        dateEnd:ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
-        dateSelect:ref<string>('Today'),
-        dateSelectShow:ref<string>('Profit'),
+    const formData = reactive({
+        timeStart: dayjs('00:00:00', 'HH:mm:ss') as Dayjs, 
+        timeEnd: dayjs('23:59:59', 'HH:mm:ss') as Dayjs,   
+        dateStart: dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD') as Dayjs,
+        dateEnd: dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD') as Dayjs,
+        dateSelect: ref('Today'),   // ค่านี้เป็น string ถูกต้องแล้ว
+        dateSelectShow: ref('Profit'),  // ค่านี้เป็น string ถูกต้องแล้ว
     });
 
     const handleDateSelectChange = () => {

@@ -1,7 +1,7 @@
 <template>
   <a-modal v-model:open="open" title="รายละเอียด" width="750px">
     <pre style="white-space: pre-wrap; word-wrap: break-word;">
-    {{ JSON.stringify(detail, null, 2) }}
+      {{"\n"}}{{ JSON.stringify(detail, null, 2) }}
   </pre>
   </a-modal>
   <a-modal v-model:open="openPromotion" title="โปรโมชั่น">

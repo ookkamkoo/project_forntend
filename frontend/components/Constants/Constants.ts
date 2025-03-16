@@ -375,6 +375,397 @@ const creditCustom = [
     },
 ];
 
+
+interface SettingPG {
+    gameCode: string;
+    username: string;
+    isPlayerSetting: boolean;
+    setting: {
+      name: string;
+      output: string;
+      percent: any;
+      option: {
+        from: any;
+        to: any;
+      };
+    }[];
+    buyFeatureSetting: {
+      name: string;
+      output: string;
+      percent: any;
+      option: {
+        from: any;
+        to: any;
+      };
+    }[];
+  }
+
+const settingPG20:SettingPG  = {
+    gameCode: "fortune-ox",
+    username: "testuser",
+    isPlayerSetting: true,
+    setting: [
+      {
+        name: "normal-spin",
+        output: "normal-spin",
+        percent: 80,
+        option: {
+          from: 0,
+          to: 0,
+        },
+      },
+      {
+        name: "less-bet",
+        output: "less-bet",
+        percent: 15.14,
+        option: {
+          from: 0,
+          to: 1,
+        },
+      },
+      {
+        name: "more-bet",
+        output: "more-bet",
+        percent: 4.61,
+        option: {
+          from: 0,
+          to: 20,
+        },
+      },
+      {
+        name: "freespin-less-bet",
+        output: "freespin-less-bet",
+        percent: 0.21,
+        option: {
+          from: 0,
+          to: 0.5,
+        },
+      },
+      {
+        name: "freespin-more-bet",
+        output: "freespin-more-bet",
+        percent: 0.04,
+        option: {
+          from: 0,
+          to: 100,
+        },
+      },
+    ],
+    buyFeatureSetting: [
+      {
+        name: "buy-feature-less-bet",
+        output: "freespin-less-bet",
+        percent: 90,
+        option: {
+          from: 0,
+          to: 0.8,
+        },
+      },
+      {
+        name: "buy-feature-more-bet",
+        output: "freespin-more-bet",
+        percent: 10,
+        option: {
+          from: 0,
+          to: 100,
+        },
+      },
+    ],
+  };
+const settingPG40:SettingPG  = {
+gameCode: "fortune-ox",
+username: "testuser",
+isPlayerSetting: true,
+setting: [
+    {
+    name: "normal-spin",
+    output: "normal-spin",
+    percent: 60,
+    option: {
+        from: 0,
+        to: 0,
+    },
+    },
+    {
+    name: "less-bet",
+    output: "less-bet",
+    percent: 30,
+    option: {
+        from: 0,
+        to: 1,
+    },
+    },
+    {
+    name: "more-bet",
+    output: "more-bet",
+    percent: 9.5,
+    option: {
+        from: 0,
+        to: 5,
+    },
+    },
+    {
+    name: "freespin-less-bet",
+    output: "freespin-less-bet",
+    percent: 0.4,
+    option: {
+        from: 0,
+        to: 0.5,
+    },
+    },
+    {
+    name: "freespin-more-bet",
+    output: "freespin-more-bet",
+    percent: 0.1,
+    option: {
+        from: 1,
+        to: 3,
+    },
+    },
+],
+buyFeatureSetting: [
+    {
+    name: "buy-feature-less-bet",
+    output: "freespin-less-bet",
+    percent: 80,
+    option: {
+        from: 0,
+        to: 0.8,
+    },
+    },
+    {
+    name: "buy-feature-more-bet",
+    output: "freespin-more-bet",
+    percent: 20,
+    option: {
+        from: 1,
+        to: 3,
+    },
+    },
+],
+};
+
+const settingPG50:SettingPG  = {
+    gameCode: "fortune-ox",
+    username: "testuser",
+    isPlayerSetting: true,
+    setting: [
+    {
+        name: "normal-spin",
+        output: "normal-spin",
+        percent: 50,
+        option: {
+        from: 0,
+        to: 0,
+        },
+    },
+    {
+        name: "less-bet",
+        output: "less-bet",
+        percent: 37.15,
+        option: {
+        from: 0,
+        to: 1,
+        },
+    },
+    {
+        name: "more-bet",
+        output: "more-bet",
+        percent: 12.19,
+        option: {
+        from: 0,
+        to: 20,
+        },
+    },
+    {
+        name: "freespin-less-bet",
+        output: "freespin-less-bet",
+        percent: 0.53,
+        option: {
+        from: 0,
+        to: 0.5,
+        },
+    },
+    {
+        name: "freespin-more-bet",
+        output: "freespin-more-bet",
+        percent: 0.13,
+        option: {
+        from: 0,
+        to: 100,
+        },
+    },
+    ],
+    buyFeatureSetting: [
+    {
+        name: "buy-feature-less-bet",
+        output: "freespin-less-bet",
+        percent: 75,
+        option: {
+        from: 0,
+        to: 0.8,
+        },
+    },
+    {
+        name: "buy-feature-more-bet",
+        output: "freespin-more-bet",
+        percent: 25,
+        option: {
+        from: 0,
+        to: 100,
+        },
+    },
+    ],
+};
+
+const settingPG60:SettingPG  = {
+    gameCode: "fortune-ox",
+    username: "testuser",
+    isPlayerSetting: true,
+    setting: [
+    {
+        name: "normal-spin",
+        output: "normal-spin",
+        percent: 40,
+        option: {
+        from: 0,
+        to: 0,
+        },
+    },
+    {
+        name: "less-bet",
+        output: "less-bet",
+        percent: 45.17,
+        option: {
+        from: 0,
+        to: 1,
+        },
+    },
+    {
+        name: "more-bet",
+        output: "more-bet",
+        percent: 14.08,
+        option: {
+        from: 0,
+        to: 20,
+        },
+    },
+    {
+        name: "freespin-less-bet",
+        output: "freespin-less-bet",
+        percent: 0.60,
+        option: {
+        from: 0,
+        to: 0.5,
+        },
+    },
+    {
+        name: "freespin-more-bet",
+        output: "freespin-more-bet",
+        percent: 0.15,
+        option: {
+        from: 0,
+        to: 80,
+        },
+    },
+    ],
+    buyFeatureSetting: [
+    {
+        name: "buy-feature-less-bet",
+        output: "freespin-less-bet",
+        percent: 70,
+        option: {
+        from: 0,
+        to: 0.8,
+        },
+    },
+    {
+        name: "buy-feature-more-bet",
+        output: "freespin-more-bet",
+        percent: 30,
+        option: {
+        from: 0,
+        to: 100,
+        },
+    },
+    ],
+};
+
+const settingPG80:SettingPG  = {
+    gameCode: "fortune-ox",
+    username: "testuser",
+    isPlayerSetting: true,
+    setting: [
+    {
+        name: "normal-spin",
+        output: "normal-spin",
+        percent: 20,
+        option: {
+        from: 0,
+        to: 0,
+        },
+    },
+    {
+        name: "less-bet",
+        output: "less-bet",
+        percent: 60,
+        option: {
+        from: 0,
+        to: 1,
+        },
+    },
+    {
+        name: "more-bet",
+        output: "more-bet",
+        percent: 19.00,
+        option: {
+        from: 0,
+        to: 20,
+        },
+    },
+    {
+        name: "freespin-less-bet",
+        output: "freespin-less-bet",
+        percent: 0.78,
+        option: {
+        from: 0,
+        to: 0.5,
+        },
+    },
+    {
+        name: "freespin-more-bet",
+        output: "freespin-more-bet",
+        percent: 0.22,
+        option: {
+        from: 0,
+        to: 50,
+        },
+    },
+    ],
+    buyFeatureSetting: [
+    {
+        name: "buy-feature-less-bet",
+        output: "freespin-less-bet",
+        percent: 60,
+        option: {
+        from: 0,
+        to: 0.8,
+        },
+    },
+    {
+        name: "buy-feature-more-bet",
+        output: "freespin-more-bet",
+        percent: 40,
+        option: {
+        from: 0,
+        to: 100,
+        },
+    },
+    ],
+};
+
+
+
 export {optionsType,
     optionsListType,
     optionsMaxWithdrow,
@@ -391,5 +782,10 @@ export {optionsType,
     optionsLoseTypeMember,
     optionsFee,
     optionsSystemLogin,
-    creditCustom
+    creditCustom,
+    settingPG20,
+    settingPG40,
+    settingPG50,
+    settingPG60,
+    settingPG80,
 }

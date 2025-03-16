@@ -63,9 +63,9 @@
           <a-tag color="pink" v-else-if="record.type == 2">ถอน</a-tag>
       </template>
       <template v-if="column.key == 'channel'">
-          <a-tag color="cyan" v-if="record.type == 1"> Api</a-tag>
-          <a-tag color="pink" v-else-if="record.type == 2">Sms</a-tag>
-          <a-tag color="orange" v-else-if="record.type == 3">เพิ่มมือ</a-tag>
+          <a-tag color="cyan" v-if="record.channel == 1"> Api</a-tag>
+          <a-tag color="pink" v-else-if="record.channel == 2">Sms</a-tag>
+          <a-tag color="orange" v-else-if="record.channel == 3">เพิ่มมือ</a-tag>
       </template>
       <template v-if="column.key == 'bank_system'">
           <a-image

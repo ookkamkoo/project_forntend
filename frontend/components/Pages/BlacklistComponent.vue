@@ -120,12 +120,13 @@
   
   const dateSelect = ref<string>('Today');
 
-  let formData = reactive({
-    dateStart: ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
-    dateEnd: ref<Dayjs>(dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD')),
-    typeSearch:1,
-      search:"",
+  const formData = reactive({
+    dateStart: dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD') as Dayjs,
+    dateEnd: dayjs(`${year}-${month}-${day}`, 'YYYY-MM-DD') as Dayjs,
+    typeSearch: 1,
+    search: "",
   });
+
 
   const getBackList = async() =>{
     const data = await getBackListServices(formData);

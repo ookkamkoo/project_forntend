@@ -173,6 +173,14 @@
                 <div v-if="record.promotion_id == 0"><a-tag color="red">ไม่รับโปร</a-tag></div>
                 <div v-else="record.promotion_id"><a-tag color="green">รับโปร</a-tag></div>
             </template>
+            <template v-else-if="column.key === 'setting_name_pg100'">
+                <div v-if="record.setting_name_pg100 == 1">20</div>
+                <div v-else-if="record.setting_name_pg100 == 2">40</div>
+                <div v-else-if="record.setting_name_pg100 == 3">50</div>
+                <div v-else-if="record.setting_name_pg100 == 4">60</div>
+                <div v-else-if="record.setting_name_pg100 == 5">80</div>
+                <div v-else-if="record.setting_name_pg100 == 6">custom</div>
+            </template>
             <template v-else-if="column.key === 'is_active'">
                 <a-switch v-model:checked="record.is_active" @change="update_status(record.id, record.is_active,record.username,index)"/>
             </template>
@@ -225,7 +233,7 @@
       { title: 'เลขบัญชี', width: 80, dataIndex: 'bankNo', key: 'bankNo',  },
       { title: 'ทรูวอเล็ต', width: 50, dataIndex: 'bankTrue', key: 'bankTrue',  },
       { title: 'เลขทรูวอเล็ต', width: 80, dataIndex: 'bankTrueNo', key: 'bankTrueNo',  },
-    //   { title: 'ช่องทาง', width: 100, dataIndex: 'marketing', key: 'marketing' },
+      { title: 'pg setting', width: 80, dataIndex: 'setting_name_pg100', key: 'setting_name_pg100' },
       { title: 'สถานะโปรโมชั่น', width: 80, dataIndex: 'promotion', key: 'promotion' },
       { title: 'สถานะ', width: 80, dataIndex: 'is_active', key: 'is_active' },
     //   { title: 'รายละเอียด', width: 100, dataIndex: 'detail', key: 'detail' },

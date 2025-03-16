@@ -11,7 +11,12 @@
         </div>
       </template>
     </a-modal>
-    <a-row class="p-2" justify="end">
+    <a-row class="p-2" justify="space-between">
+      <a-col class="p-1">
+        <label><br></label>
+        <a-button type="primary" @click="getStatement(props.id, '1')" style="margin-right:5px;"><span v-if="props.bankId != 17">รายการทั้งหมด</span><span v-else>รายการฝาก</span></a-button> 
+        <a-button type="primary" @click="getStatement(props.id, '2')" v-if="props.bankId == 17">รายการถอน</a-button>
+      </a-col>
       <a-col class="p-1">
         <label><br></label>
         <a-button class="submit sky" type="primary" @click="refresh" ghost>
@@ -114,12 +119,13 @@
 
   const props = defineProps<{
     id: number;
+    bankId: number;
   }>();
   
-  const getStatement = async (id: number) => {
+  const getStatement = async (id: number,type: string) => {
     loading.value = true;
     try {
-      const responseData = await getStatementServices(id);
+      const responseData = await getStatementServices(id,type);
       if (responseData.status === "success") {
         dataShow.value = responseData.data; // Correctly assign the data
         allRecord.value = responseData.data.length; // Correctly count and assign the number of records
@@ -135,13 +141,13 @@
   };
   
   const refresh = () => {
-    getStatement(props.id);
+    getStatement(props.id,"1");
   }
   
   watch(() => props.id, (newValue: number) => {
     if (newValue) {
       dataShow.value = [];
-      getStatement(newValue);
+      getStatement(newValue,"1");
     }
   }, { immediate: true });
   

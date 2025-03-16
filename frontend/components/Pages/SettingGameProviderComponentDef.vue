@@ -1,6 +1,35 @@
 <template>
+  <a-modal v-model:open="open" title="เเก้ไขรูปภาพ" >
+    <p>ขนาดไฟล์ในการอัปโหลด ขนาดเเนะนำ 1:1 ไฟล์ PNG JPG JPEG </p>
+    <a-upload-dragger
+        v-model:fileList="fileList"
+        name="file"
+        :showUploadList=false
+        class="image-upload"
+        @change="handleChange"
+    >
+        <div class="image-upload-text">
+            <div v-if="ImageText">
+                <p class="ant-upload-drag-icon">
+                    <inbox-outlined></inbox-outlined>
+                </p>
+                <p class="ant-upload-text">Click or drag file to this area to upload QR Code</p>
+                <p class="ant-upload-hint">
+                    โปรดเช็คขนาดไฟล์ในการอัปโหลด ขนาดเเนะนำ 1:1 ไฟล์ PNG JPG JPEG
+                </p>
+            </div>
+        </div>
+        <div v-if="previewImage" class="preview-image-container">
+            <img :src="previewImage" class="preview-image" style="width: 350px;">
+        </div>
+    </a-upload-dragger>
+    <template #footer>
+        <a-button @click="closeModal()" class="m-1">Cancel</a-button>
+        <a-button @click="uploadImage()" type="primary" class="m-1 sky">อัปโหลด</a-button>
+    </template>
+  </a-modal>
   <a-tabs v-model:activeKey="activeKey" type="card" @change="handdleMenu()">
-    <a-tab-pane key="1" tab="ตั้งค่าค่ายเกมส์">
+    <a-tab-pane :key="'1'" tab="ตั้งค่าค่ายเกมส์">
       <a-row>
         <h2>ตั้งค่าเมนู</h2>
         <a-col :span="24" :md="24">
@@ -43,15 +72,28 @@
           <a-row>
             <a-col :span="8" :md="4" :lg="2" class="p-1" v-for="gameDetail in game.settingGame" >
               <div class="center">
-                <a-image
-                  width="100%"
-                  :src="gameDetail.image"
-                  :preview="false"
-                />
+                <div class="imageUpload" @click="showModal(game)">
+                  <!-- รูปภาพหลัก -->
+                  <a-image
+                    class="main-image"
+                    width="100%"
+                    :src="gameDetail.image_upload != ''?gameDetail.image_upload:gameDetail.image"
+                    :preview="false"
+                  />
+
+                  <!-- องค์ประกอบที่ต้องการให้แสดงเมื่อ hover -->
+                  <div class="hover-content">
+                    <button class="upload-button"><upload-outlined></upload-outlined></button>
+                  </div>
+                </div>
                 <p class="long-text">{{gameDetail.name}}</p>
                 <a-switch v-model:checked="gameDetail.is_active"/>
-                <div class="p-2">
+                <div class="p-1">
                   <a-input-number id="inputNumber" v-model:value="gameDetail.priority" :min="1"/>
+                </div>
+                <div class="p-1">
+                  <!-- <a-button type="primary" @click="showModal(game)" ghost>เเก้ไขรูปภาพ</a-button> -->
+                  <a-button type="primary" @click="showModal(game)" ghost>ตั้งค่าเกมส์</a-button>
                 </div>
               </div>
             </a-col>
@@ -65,7 +107,7 @@
         </a-col>
       </a-row>
     </a-tab-pane>
-    <a-tab-pane key="2" tab="ตั้งค่าเกมส์ PG">
+    <a-tab-pane :key="'2'" tab="ตั้งค่าเกมส์ PG">
       <a-row>
         <h2>ตั้งค่าเกมส์ PG</h2>
         <a-col :span="24" :md="24">
@@ -95,6 +137,18 @@
                   <template v-if="column.key === 'game_code'">
                     <div>{{ record.game_code }}</div>
                   </template>
+                  <template v-if="column.key === 'pg_real'">
+                    <a-tag color="success" v-if="record.status == 1 || record.status == 3">มี</a-tag>
+                    <a-tag color="error" v-else>ไม่มี</a-tag>
+                  </template>
+                  <template v-if="column.key === 'pg100'">
+                    <a-tag color="success" v-if="record.status == 2 || record.status == 3">มี</a-tag>
+                    <a-tag color="error" v-else>ไม่มี</a-tag>
+                  </template>
+                  <template v-if="column.key === 'working'">
+                    <a-tag color="success" v-if="record.pg_status">pg100</a-tag>
+                    <a-tag color="error" v-else>reel</a-tag>
+                  </template>
                   <template v-if="column.key === 'product_code'">
                     <div>{{ record.product_code }}</div>
                   </template>
@@ -108,7 +162,7 @@
                     <a-switch v-model:checked="record.maintain" @change="editPGGame(record)"/>
                   </template>
                   <template v-if="column.key === 'pg_status'">
-                    <a-switch v-model:checked="record.pg_status" @change="editPGGame(record)"/>
+                    <a-switch v-model:checked="record.pg_status" @change="editPGGame(record)" :disabled="record.status == 1 || record.status == 2"/>
                   </template>
                 </template>
               </a-table>
@@ -119,10 +173,23 @@
         </a-col>
       </a-row>
     </a-tab-pane>
-    <a-tab-pane key="3" tab="ตั้งค่าเกมส์ PG ปรับเเตก">
+    <a-tab-pane :key="'3'" tab="ตั้งค่าเกมส์ PG ปรับเเตก">
       <a-row>
         <h2>ตั้งค่าเกมส์ PG ปรับเเตก</h2>
         <a-col :span="24" :md="24">
+          <a-row class="my-0">
+            <a-col :span="24" :md="8">
+              <h3>เครดิตคงเหลือ</h3>
+              <a-form-item ref="option-from" name="option-from" class="update-credit">
+                    <a-input v-model:value="formData.credit" :disabled="getPermission() != 'Programer'"/>
+              </a-form-item>
+            </a-col>
+            <a-col :span="24">
+              <a-row justify="end" v-if="getPermission() == 'Programer'">
+                <a-button type="primary" class="sky" html-type="submit" @click="changeCredit()">บันทึก</a-button>
+              </a-row>
+            </a-col>
+          </a-row>
           <a-row class="my-0">
             <a-col :span="24">
               <h3>ข้อระวัง</h3>
@@ -318,14 +385,24 @@
 import { ref,createVNode } from 'vue';
 // import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
 // import * as Constants from '../Constants/Constants';
-import { getSettingGameServices,setSettingGameMenu,setSettingGame,getGamePGListServices,setSettingGamePgServices,getGamePGSettingServices,editSettingPG100Services } from '~/services/settingGameService';
+import { getSettingGameServices,setSettingGameMenu,setSettingGame,getGamePGListServices,setSettingGamePgServices,getGamePGSettingServices,editSettingPG100Services,uploadImageGameServices,changeCreditPg100 } from '~/services/settingGameService';
 import { Alert } from '../Alert/alertComponent';
+import type { UploadChangeParam } from 'ant-design-vue';
+import { getPermission } from '~/auth/authToken';
+import type { UploadFile } from 'ant-design-vue';
 
-const activeKey = ref('1');
+const activeKey = ref<string | number>('1'); // ✅ รองรับทั้ง string และ number
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
 const loading = ref(true);
 const show_data = ref(1);
+const open = ref<boolean>(false);
+const fileList = ref<UploadFile<any>[]>([]);
+const ImageText = ref(true);
+const previewImage = ref('');
+const Image = ref<any>(null);
+const dataGame = ref<any>(null);
+
 
 interface SettingPG {
   gameCode: string;
@@ -334,19 +411,19 @@ interface SettingPG {
   setting: {
     name: string;
     output: string;
-    percent: number;
+    percent: any;
     option: {
-      from: number;
-      to: number;
+      from: any;
+      to: any;
     };
   }[];
   buyFeatureSetting: {
     name: string;
     output: string;
-    percent: number;
+    percent: any;
     option: {
-      from: number;
-      to: number;
+      from: any;
+      to: any;
     };
   }[];
 }
@@ -380,7 +457,7 @@ setting: [
     percent: 4.61,
     option: {
       from: 0,
-      to: 8,
+      to: 20,
     },
   },
   {
@@ -398,7 +475,7 @@ setting: [
     percent: 0.04,
     option: {
       from: 0,
-      to: 8,
+      to: 100,
     },
   },
 ],
@@ -409,7 +486,7 @@ buyFeatureSetting: [
     percent: 90,
     option: {
       from: 0,
-      to: 0.5,
+      to: 0.8,
     },
   },
   {
@@ -418,7 +495,7 @@ buyFeatureSetting: [
     percent: 10,
     option: {
       from: 0,
-      to: 10,
+      to: 100,
     },
   },
 ],
@@ -452,7 +529,7 @@ setting: [
     percent: 9.5,
     option: {
       from: 0,
-      to: 8,
+      to: 5,
     },
   },
   {
@@ -469,8 +546,8 @@ setting: [
     output: "freespin-more-bet",
     percent: 0.1,
     option: {
-      from: 0,
-      to: 8,
+      from: 1,
+      to: 3,
     },
   },
 ],
@@ -481,7 +558,7 @@ buyFeatureSetting: [
     percent: 80,
     option: {
       from: 0,
-      to: 0.5,
+      to: 0.8,
     },
   },
   {
@@ -489,8 +566,8 @@ buyFeatureSetting: [
     output: "freespin-more-bet",
     percent: 20,
     option: {
-      from: 0,
-      to: 10,
+      from: 1,
+      to: 3,
     },
   },
 ],
@@ -525,7 +602,7 @@ const settingPG50:SettingPG  = {
       percent: 12.19,
       option: {
         from: 0,
-        to: 8,
+        to: 20,
       },
     },
     {
@@ -543,7 +620,7 @@ const settingPG50:SettingPG  = {
       percent: 0.13,
       option: {
         from: 0,
-        to: 8,
+        to: 100,
       },
     },
   ],
@@ -563,7 +640,7 @@ const settingPG50:SettingPG  = {
       percent: 25,
       option: {
         from: 0,
-        to: 10,
+        to: 100,
       },
     },
   ],
@@ -598,7 +675,7 @@ const settingPG60:SettingPG  = {
       percent: 14.08,
       option: {
         from: 0,
-        to: 8,
+        to: 20,
       },
     },
     {
@@ -616,7 +693,7 @@ const settingPG60:SettingPG  = {
       percent: 0.15,
       option: {
         from: 0,
-        to: 8,
+        to: 80,
       },
     },
   ],
@@ -636,7 +713,7 @@ const settingPG60:SettingPG  = {
       percent: 30,
       option: {
         from: 0,
-        to: 10,
+        to: 100,
       },
     },
   ],
@@ -671,7 +748,7 @@ const settingPG80:SettingPG  = {
       percent: 19.00,
       option: {
         from: 0,
-        to: 8,
+        to: 20,
       },
     },
     {
@@ -689,7 +766,7 @@ const settingPG80:SettingPG  = {
       percent: 0.22,
       option: {
         from: 0,
-        to: 8,
+        to: 50,
       },
     },
   ],
@@ -709,7 +786,7 @@ const settingPG80:SettingPG  = {
       percent: 40,
       option: {
         from: 0,
-        to: 10,
+        to: 100,
       },
     },
   ],
@@ -720,6 +797,7 @@ casinoStatus: true,
 game: [] as any,
 page: ref<number>(1),
 pageSize: ref<number>(10),
+credit: ref<string>("0"),
 settingPGSet: ref<number>(2),
 settingPG: {
   gameCode: "fortune-ox",
@@ -729,46 +807,46 @@ settingPG: {
     {
       name: "normal-spin",
       output: "normal-spin",
-      percent: 60,
+      percent: "60",
       option: {
-        from: 0,
-        to: 0,
+        from: "0",
+        to: "0",
       },
     },
     {
       name: "less-bet",
       output: "less-bet",
-      percent: 30,
+      percent: "30",
       option: {
-        from: 0,
-        to: 1,
+        from: "0",
+        to: "1",
       },
     },
     {
       name: "more-bet",
       output: "more-bet",
-      percent: 9.5,
+      percent: "9.5",
       option: {
-        from: 0,
-        to: 8,
+        from: "0",
+        to: "20",
       },
     },
     {
       name: "freespin-less-bet",
       output: "freespin-less-bet",
-      percent: 0.4,
+      percent: "0.4",
       option: {
-        from: 0,
-        to: 0.5,
+        from: "0",
+        to: "0.5",
       },
     },
     {
       name: "freespin-more-bet",
       output: "freespin-more-bet",
-      percent: 0.1,
+      percent: "0.1",
       option: {
-        from: 0,
-        to: 8,
+        from: "0",
+        to: "100",
       },
     },
   ],
@@ -776,19 +854,19 @@ settingPG: {
     {
       name: "buy-feature-less-bet",
       output: "freespin-less-bet",
-      percent: 80,
+      percent: "80",
       option: {
-        from: 0,
-        to: 0.8,
+        from: "0",
+        to: "0.8",
       },
     },
     {
       name: "buy-feature-more-bet",
       output: "freespin-more-bet",
-      percent: 20,
+      percent: "20",
       option: {
-        from: 0,
-        to: 10,
+        from: "0",
+        to: "100",
       },
     },
   ],
@@ -801,46 +879,46 @@ settingPGdefault: {
     {
       name: "normal-spin",
       output: "normal-spin",
-      percent: 60,
+      percent: "60",
       option: {
-        from: 0,
-        to: 0,
+        from: "0",
+        to: "0",
       },
     },
     {
       name: "less-bet",
       output: "less-bet",
-      percent: 30,
+      percent: "30",
       option: {
-        from: 0,
-        to: 1,
+        from: "0",
+        to: "1",
       },
     },
     {
       name: "more-bet",
       output: "more-bet",
-      percent: 9.5,
+      percent: "9.5",
       option: {
-        from: 0,
-        to: 8,
+        from: "0",
+        to: "20",
       },
     },
     {
       name: "freespin-less-bet",
       output: "freespin-less-bet",
-      percent: 0.4,
+      percent: "0.4",
       option: {
-        from: 0,
-        to: 0.5,
+        from: "0",
+        to: "0.5",
       },
     },
     {
       name: "freespin-more-bet",
       output: "freespin-more-bet",
-      percent: 0.1,
+      percent: "0.1",
       option: {
-        from: 0,
-        to: 8,
+        from: "0",
+        to: "100",
       },
     },
   ],
@@ -848,19 +926,19 @@ settingPGdefault: {
     {
       name: "buy-feature-less-bet",
       output: "freespin-less-bet",
-      percent: 80,
+      percent: "80",
       option: {
-        from: 0,
-        to: 0.8,
+        from: "0",
+        to: "0.8",
       },
     },
     {
       name: "buy-feature-more-bet",
       output: "freespin-more-bet",
-      percent: 20,
+      percent: "20",
       option: {
-        from: 0,
-        to: 10,
+        from: "0",
+        to: "100",
       },
     },
   ],
@@ -873,6 +951,35 @@ const getSettingGame = async () =>{
     formData.game = data.data
   }
 }
+
+const handleChange = async (info: UploadChangeParam) => {
+    const status = info.file.status;
+    const file = info.file.originFileObj; // File object
+
+    if (file instanceof File) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const base64String = reader.result as string;
+            if (base64String) {
+                previewImage.value = base64String;
+                Image.value = base64String;
+            }
+        };
+        ImageText.value = false;
+        reader.readAsDataURL(file);
+    }
+    
+    if (status !== 'uploading') {
+        console.log(info.file, info.fileList);
+    }
+    
+    if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+    } else if (status === 'error') {
+        message.error(`อัพโหลดรูปภาพเรียบร้อย`);
+    }
+};
 
 const getGamePGList = async () =>{
   loading.value = true;
@@ -890,8 +997,10 @@ const getGamePGSetting = async () =>{
   if (data.status === "success") {
     formData.settingPG = data.data.detail
     formData.settingPGdefault = data.data.detail
+    formData.credit = data.data.credit
     formData.settingPGSet = data.data.set
     show_data.value = data.data.set
+
   }
   loading.value = false;
 }
@@ -938,6 +1047,29 @@ const editPGGame = async(datas :any) => {
       }
 };
 
+const changeCredit = async() => {
+  const data = await changeCreditPg100(formData.credit);
+      if(data.status == "success"){
+          Alert('success','ตั้งค่าเกมส์ PG เรียบร้อย.')
+          getGamePGList();
+      }else{
+          Alert('error',data.message);
+          getGamePGList();
+      }
+};
+
+const uploadImage = async() => {
+  const data = await uploadImageGameServices(dataGame.value,Image.value);
+      if(data.status == "success"){
+          Alert('success','ตั้งค่าเกมส์ PG เรียบร้อย.')
+          // getGamePGList();
+          getSettingGame();
+      }else{
+          Alert('error',data.message);
+          // getGamePGList();
+      }
+};
+
 
 const dynamicColumns = computed(() => {
 return [
@@ -948,6 +1080,9 @@ return [
     { title: 'รูป', width: 50, dataIndex: 'image', key: 'image'},
     { title: 'ชื่อเกมส์', width: 50, dataIndex: 'game_code', key: 'game_code'},
     { title: 'ค่ายเกมส์', width: 50, dataIndex: 'product_code', key: 'product_code'},
+    { title: 'pg soft', width: 50, dataIndex: 'pg_real', key: 'pg_real'},
+    { title: 'pg100', width: 50, dataIndex: 'pg100', key: 'pg100'},
+    { title: 'ทำงาน', width: 50, dataIndex: 'working', key: 'working'},
     { title: 'เกมส์นิยมเล่น', width: 50, dataIndex: 'hot', key: 'hot'},
     { title: 'เเสดงหน้าเว็บ', width: 50, dataIndex: 'status', key: 'status'},
     { title: 'ปิดปรับปรุง', width: 50, dataIndex: 'maintain', key: 'maintain'},
@@ -956,6 +1091,7 @@ return [
 },
 ];
 });
+
 const handdleMenu = () =>{
 if(activeKey.value == "1"){
   getSettingGame();
@@ -972,6 +1108,17 @@ pageSize: 20,
 total: 0,
 showTotal: (total: number) => `ทั้งหมด ${total} รายการ`,
 });
+
+const showModal = (data :any) => {
+console.log(data);
+dataGame.value = data
+open.value = true;
+};
+
+const closeModal = () => {
+// console.log(data);
+open.value = false;
+};
 
 const handleTableChange = (pagination: any) => {
 formData.page = pagination.current
@@ -1014,6 +1161,46 @@ getSettingGame();
 });
   
 </script>
+<style scoped>
+.imageUpload {
+position: relative; /* เตรียมให้สามารถจัดวางองค์ประกอบซ้อนทับกันได้ */
+display: inline-block; /* หากต้องการขนาดพอดีกับภาพ */
+cursor: pointer; /* ให้เป็นรูปมือเวลาชี้ */
+background: radial-gradient(circle at center, #130a34 0%, /* สีม่วงโทนหนึ่ง */ #0f092f 100% /* สีม่วงโทนใกล้เคียง */);
+border-radius: 15px;
+}
+.update-credit{
+margin: 1rem 0;
+}
+
+/* ซ่อน hover-content ไว้ก่อน */
+.hover-content {
+display: none;
+position: absolute; 
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+
+/* ตกแต่งปุ่มเพิ่มได้ เช่น สี, ขนาด, ความโค้ง */
+/* ตัวอย่าง */
+z-index: 10;
+}
+
+/* เมื่อเอาเมาส์ชี้ .imageUpload จะแสดง .hover-content */
+.imageUpload:hover .hover-content {
+display: block;
+}
+
+/* ตกแต่งเพิ่มเติม */
+.upload-button {
+background-color: rgba(0, 0, 0, 0.5);
+color: #fff;
+border: none;
+padding: 6px 12px;
+border-radius: 4px;
+cursor: pointer;
+}
+</style>
 <style>
 .select-member-detail{
   margin: 0.20rem;
