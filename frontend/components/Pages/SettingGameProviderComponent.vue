@@ -93,7 +93,9 @@
                   </div>
                   <div class="p-1">
                     <!-- <a-button type="primary" @click="showModal(game)" ghost>เเก้ไขรูปภาพ</a-button> -->
-                    <NuxtLink to="/setting/list-provider"><a-button type="primary" ghost>ตั้งค่าลิสเกมส์</a-button></NuxtLink>
+                    <NuxtLink :to="`/setting/list-provider?game=${gameDetail.name}`">
+                      <a-button type="primary" ghost>ตั้งค่าลิสเกมส์</a-button>
+                    </NuxtLink>
                   </div>
                 </div>
               </a-col>

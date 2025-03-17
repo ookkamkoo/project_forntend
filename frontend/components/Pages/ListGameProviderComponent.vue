@@ -183,6 +183,10 @@ import type { UploadFile } from 'ant-design-vue';
 import type { UploadChangeParam } from 'ant-design-vue';
 import { Alert } from '../Alert/alertComponent';
 import { notifyStore } from '~/store/index';
+
+const route = useRoute();
+const gameDetail = ref({ name: route.query.game || 'ไม่พบชื่อเกม' });
+
 const store = notifyStore();
 const open = ref<boolean>(false);
 const openUploadimage = ref<boolean>(false);
@@ -257,8 +261,6 @@ const handleChange = async (info: UploadChangeParam) => {
   };
 
 const uploadImage = async() => {
-  console.log("sssssssssssssssssss");
-  
   const data = await uploadImageGameListServices(dataGame.value,Image.value);
       if(data.status == "success"){
           Alert('success','ตั้งค่าเกมส์ PG เรียบร้อย.')
@@ -346,6 +348,7 @@ const handleTableChange = (pagination: any) => {
 };
 
 onMounted(() => {
+  formData.de_type = String(gameDetail.value.name)
   getListProduct();
   getListGame();
 });

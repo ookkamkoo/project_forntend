@@ -1,4 +1,14 @@
 <template>
+  <div>
+    <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+        <OtherMemberDetail :memberDetailId="memberDetailId"/>
+        <template #footer>
+            <a-row justify="end">
+                <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+            </a-row>
+        </template>
+    </a-modal>
+  </div>
     <a-row class="p-2">
         <a-col class="p-1" :span="8">
             <label>ประเภท</label>
@@ -91,7 +101,7 @@
           <a-tag color="purple">ยอดเสีย</a-tag>
         </template>
         <template v-if="column.key === 'username'">
-          <div>{{ record.username }}</div>
+          <div @click="showMemberDetailModal(record.member_id)">{{ record.username }}</div>
         </template>
         <template v-if="column.key === 'amount'">
           <div>{{ record.amount }}</div>
@@ -143,6 +153,8 @@
   });
   const allRecord = ref<number>(0);
   const loading = ref(true);
+  const memberDetail = ref<boolean>(false);
+  const memberDetailId = ref<number>(0);
 
   const dynamicColumns = computed(() => {
     return [
@@ -219,6 +231,11 @@
     formData.timeStart = dayjs('00:00', 'HH:mm');
     formData.timeEnd = dayjs('23:59', 'HH:mm');
     getReFound();
+};
+
+const showMemberDetailModal = (data: number) => {
+  memberDetailId.value = data;
+  memberDetail.value = true;
 };
 
 const search = () =>{

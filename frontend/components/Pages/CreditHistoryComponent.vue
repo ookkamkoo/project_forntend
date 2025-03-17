@@ -1,4 +1,14 @@
 <template>
+  <div>
+    <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+        <OtherMemberDetail :memberDetailId="memberDetailId"/>
+        <template #footer>
+            <a-row justify="end">
+                <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+            </a-row>
+        </template>
+    </a-modal>
+  </div>
   <a-row class="p-2">
     <a-col class="p-1" :span="6">
       <label>ประเภท</label>
@@ -92,6 +102,9 @@
         <a-tag color="cyan" v-else-if="record.action == 8">คืนเครดิต</a-tag>
         <a-tag color="red" v-else-if="record.action == 9">ลูกค้าถอนเงิน</a-tag>
       </template>
+      <template v-if="column.key === 'username'">
+        <div @click="showMemberDetailModal(record.member_id)">{{ record.username }}</div>
+      </template>
       <template v-if="column.key === 'created_by_name'">
         <div>{{ record.created_by_name }}</div>
       </template>
@@ -113,6 +126,8 @@ import { getCreditTransactionHistoryServices } from '~/services/creditTransactio
 const dataShow = ref<any[]>([]);
 const allRecord = ref<number>(0);
 const loading = ref(true);
+const memberDetail = ref<boolean>(false);
+const memberDetailId = ref<number>(0);
 
 
 const currentDate = new Date();
@@ -206,6 +221,11 @@ const getCreditHistory = async() => {
 const search = () =>{
   getCreditHistory();
 }
+
+const showMemberDetailModal = (data: number) => {
+  memberDetailId.value = data;
+  memberDetail.value = true;
+};
 
 const paginationConfig = ref({
   current: 1,

@@ -134,7 +134,7 @@
         </a-row>
         <a-row justify="center">
             <a-button @click="props.closeModal()" class="m-1">Cancel</a-button>
-            <a-button type="primary" html-type="submit" class="m-1 sky">เเก้ไขเครดิต</a-button>
+            <a-button type="primary" html-type="submit" class="m-1 sky" :loading="loading">เเก้ไขเครดิต</a-button>
         </a-row>
     </a-form>
 </template>
@@ -147,6 +147,7 @@
     
     
     const dataShow = ref<any[]>([]);
+    const loading = ref(true);
 
     const currentDate = dayjs();
 
@@ -197,6 +198,7 @@
     };
 
     const handleSubmit = async() => {
+        loading.value = true;
         console.log(formData);
         formData.date = date.value
         formData.time = time.value
@@ -208,7 +210,7 @@
         }else{
             Alert('error',data.message);
         }
-        
+        loading.value = false;
     };
 
     const addTurn = () => {

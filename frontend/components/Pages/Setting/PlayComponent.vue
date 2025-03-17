@@ -2,6 +2,8 @@
     <a-tabs v-model:activeKey="activeKey" type="card" @change="changeTab">
         <a-tab-pane key="0" tab="Theam">
         </a-tab-pane>
+        <a-tab-pane key="14" tab="พื้นหลัง">
+        </a-tab-pane>
         <a-tab-pane key="1" tab="Navbar">
         </a-tab-pane>
         <a-tab-pane key="2" tab="Menubar">
@@ -31,10 +33,294 @@
     </a-tabs>
     <div v-if="activeKey=='0'">
         <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/blue.png"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(1)" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/red.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(2)" :loading="loading === 2">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/green.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(3)" :loading="loading === 3">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/purple.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(4)" :loading="loading === 4">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/orange.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(5)" :loading="loading === 5">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/pink.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(6)" :loading="loading === 6">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/yellow.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(7)" :loading="loading === 7">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/black.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(8)" :loading="loading === 8">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/brown.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(9)" :loading="loading === 9">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/pastel.webp"
+                    style="border-radius: 5px;"
+                    :preview="false"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectTheam(10)" :loading="loading === 10">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
         </a-row>
-
         <a-row justify="end">
             <a-button type="primary" html-type="submit" class="m-1 sky" @click="saveSettingGame(1)">บันทึก</a-button>
+        </a-row>
+    </div>
+    <div v-if="activeKey=='14'">
+        <h3>สีน้ำเงิน</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/blue-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/blue-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีเเดง</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/red-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/red-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีเขียว</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/green-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/green-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/green-2.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/green-2.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีม่วง</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/purple-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/purple-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/purple-2.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/purple-2.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีส้ม</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/orange-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/orange-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีชมพู</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/pink-2.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/pink-2.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีเหลือง</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/yellow-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/yellow-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีดำ</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/black-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/black-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีน้ำตาล</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/brown-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/brown-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/brown-2.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/brown-2.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
+        </a-row>
+        <h3>สีพาสเทล</h3>
+        <a-row>
+            <a-col :span="24" :md="6" style="padding: 10px;">
+                <a-image
+                    src="https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/pastel-1.webp"
+                    style="border-radius: 5px;"
+                    :preview="true"
+                    width="100%"
+                />
+                <a-row class="p-1" :justify="'center'">
+                    <a-button type="primary" ghost @click="selectBg('https://cdn-cns.sgp1.cdn.digitaloceanspaces.com/theam/bg/pastel-1.webp')" :loading="loading === 1">เลือกธีม</a-button>
+                </a-row>
+            </a-col>
         </a-row>
     </div>
     <div v-else-if="activeKey=='1'">
@@ -805,9 +1091,12 @@
     </div>
   </template>
   <script lang="ts" setup>
-  import { ref } from 'vue';
-  import { getSettingThemeServices,saveSettingThemeServices } from '~/services/settingThemeService';
+  import { ref,createVNode } from 'vue';
+  import { getSettingThemeServices,saveSettingThemeServices,saveThemeServices } from '~/services/settingThemeService';
   import { Alert } from '../../Alert/alertComponent';
+  import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+  const [modal, contextHolder] = Modal.useModal();
+
   interface GradientInterface {
     lg: string;
     angle: string;
@@ -816,7 +1105,8 @@
     color3?: string; // Optional
     }
 
-    const activeKey = ref('1');
+    const activeKey = ref('0');
+    const loading = ref<number | null>(null);
     const degree = ref(90);
     var gradientValue = ref<GradientInterface>({
         lg: 'linear-gradient(90deg, #f8f9fa, #e9ecef)',
@@ -869,6 +1159,7 @@
 
 
     const sidebarNeutralGradients = ref<GradientInterface[]>([
+        { lg: 'linear-gradient(182deg, #b60c19, #600002)', angle: '182deg', color1: '#b60c19', color2: '#600002' },
         { lg: 'linear-gradient(90deg, #FFF700, #FFD700, #FFA500)', angle: '90deg', color1: '#FFF700', color2: '#FFD700', color3: '#FFA500' },
         { lg: 'linear-gradient(90deg,#ffd700,#ffbf00,#ffd700)', angle: '90deg', color1: '#ffd700', color2: '#ffbf00', color3: '#ffd700' },
         { lg: 'linear-gradient(120deg, #1a1a1a, #414141)', angle: '120deg', color1: '#1a1a1a', color2: '#414141' },
@@ -1247,6 +1538,276 @@
             changeTab()
         }
     }
+
+    // const sentTheam = async(id:number) =>{
+    //     const theme = await selectTheme(id);
+    //     if (theme) {
+    //         const data = await saveThemeServices(theme);
+    //         if (data.status === "success") {
+    //             // page 1 
+    //             formData.selectedGradientNavbar = data.data.navBarColor
+    //             formData.selectedGradientMenuBar = data.data.menuBarColor
+    //             formData.selectedGradientSideBar = data.data.sideBarColor
+    //             formData.selectedGradientSideBarButtom = data.data.sideBarButtomColor
+    //             formData.selectedGradientNewIndex = data.data.newIndexColor
+    //             formData.selectedGradientPopup = data.data.popUpColor
+    //             formData.selectedGradientInformation = data.data.informationColor
+    //             formData.selectedGradientActivity = data.data.activityColor
+    //             formData.selectedGradientNavFooter = data.data.navFooter
+    //             formData.selectedGradientFooter = data.data.footer
+    //             formData.selectedGradientBorder = data.data.borderColor
+    //             formData.selectedGradientButton = data.data.buttonColor
+
+    //             formData.text = data.data.text
+
+    //             changeTab()
+    //         }
+    //     }
+    // }
+
+    const selectTheam = (id: number) => {
+        loading.value = id; // ตั้งค่า loading
+
+        Modal.confirm({
+            title: "คุณต้องการเลือกธีมนี้ ใช่หรือไหม?",
+            icon: createVNode(ExclamationCircleOutlined),
+            content: `ลบโปรโมชั่น ชื่อ `,
+            okText: "OK",
+            okType: "danger",
+            cancelText: "No",
+            async onOk() {
+                try {
+                    const theme = await selectTheme(id);
+                    if (theme) {
+                        const data = await saveThemeServices(theme);
+                        if (data.status === "success") {
+                            // อัปเดตข้อมูลธีม
+                            formData.selectedGradientNavbar = data.data.navBarColor;
+                            formData.selectedGradientMenuBar = data.data.menuBarColor;
+                            formData.selectedGradientSideBar = data.data.sideBarColor;
+                            formData.selectedGradientSideBarButtom = data.data.sideBarButtomColor;
+                            formData.selectedGradientNewIndex = data.data.newIndexColor;
+                            formData.selectedGradientPopup = data.data.popUpColor;
+                            formData.selectedGradientInformation = data.data.informationColor;
+                            formData.selectedGradientActivity = data.data.activityColor;
+                            formData.selectedGradientNavFooter = data.data.navFooter;
+                            formData.selectedGradientFooter = data.data.footer;
+                            formData.selectedGradientBorder = data.data.borderColor;
+                            formData.selectedGradientButton = data.data.buttonColor;
+                            formData.text = data.data.text;
+
+                            changeTab();
+                            Alert("success", "เปลี่ยนธีมเรียบร้อยเเล้ว");
+                        }
+                    }
+                } catch (error) {
+                    console.error("เกิดข้อผิดพลาดในการเปลี่ยนธีม", error);
+                    Alert("error", "เกิดข้อผิดพลาดในการเปลี่ยนธีม");
+                } finally {
+                    loading.value = null; // ปิดสถานะโหลด ไม่ว่าจะสำเร็จหรือไม่
+                }
+            },
+            onCancel() {
+                console.log("Cancel");
+                loading.value = null; // กรณียกเลิก ต้องปิดสถานะโหลดเช่นกัน
+            },
+        });
+    };
+
+    const selectBg = (url: string) => {
+        Modal.confirm({
+            title: "คุณต้องการเลือกธีมนี้ ใช่หรือไหม?",
+            icon: createVNode(ExclamationCircleOutlined),
+            content: `ลบโปรโมชั่น ชื่อ `,
+            okText: "OK",
+            okType: "danger",
+            cancelText: "No",
+            async onOk() {
+                try {
+                    const data = await saveThemeServices(url);
+                    if (data.status === "success") {
+                        // อัปเดตข้อมูลธีม
+                        Alert("success", "เปลี่ยนธีมเรียบร้อยเเล้ว");
+                    }
+                } catch (error) {
+                    console.error("เกิดข้อผิดพลาดในการเปลี่ยนธีม", error);
+                    Alert("error", "เกิดข้อผิดพลาดในการเปลี่ยนธีม");
+                } finally {
+                    loading.value = null; // ปิดสถานะโหลด ไม่ว่าจะสำเร็จหรือไม่
+                }
+            },
+            onCancel() {
+                console.log("Cancel");
+                loading.value = null; // กรณียกเลิก ต้องปิดสถานะโหลดเช่นกัน
+            },
+        });
+    };
+
+    const selectTheme = async (id: number) => {
+        if (id === 1) {
+            return {
+                selectedGradientNavbar: "linear-gradient(90deg, rgba(0,24,70,1) 26%, rgba(91,151,205,1) 65%, rgba(0,24,70,1) 90%)",
+                selectedGradientMenuBar: "linear-gradient(0deg, #000428, #004e92)",
+                selectedGradientSideBar: "linear-gradient(0deg, #000428, #004e92)",
+                selectedGradientSideBarButtom: "linear-gradient(0deg, #000428, #004e92)",
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #000000 100%)",
+                selectedGradientPopup: "linear-gradient(0deg, #000428, #004e92)",
+                selectedGradientInformation: "linear-gradient(0deg, #000428, #004e92)",
+                selectedGradientActivity: "linear-gradient(0deg, #000428, #004e92)",
+                selectedGradientNavFooter: "linear-gradient(90deg, #ffd70080, #ffbf00, #ffd70080)",
+                selectedGradientFooter: "linear-gradient(#000000CF, #000000CF)",
+                selectedGradientBorder: "linear-gradient(90deg, #FFF700, #FFD700, #FFA500)",
+                selectedGradientButton: "linear-gradient(90deg, #ffd700, #ffbf00, #ffd700)",
+                text: "#F5F5F5"
+            };
+        }else if (id === 2) {
+            return {
+                selectedGradientNavbar: "linear-gradient(182deg, #b60c19, #600002)", // แดงเข้ม -> แดงสด -> แดงเข้ม
+                selectedGradientMenuBar: "linear-gradient(182deg, #b60c19, #600002)", // แดงเข้ม -> แดงอ่อน
+                selectedGradientSideBar: "linear-gradient(180deg, #434343, #000000)", // แดงเข้ม -> ส้มแดง
+                selectedGradientSideBarButtom: "linear-gradient(182deg, #b60c19, #600002)", // แดงเข้ม -> แดงสด
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #8B0000 100%)", // โปร่งใส -> แดงเข้ม
+                selectedGradientPopup: "linear-gradient(182deg, #b60c19, #600002)", // แดงเข้ม -> แดงสด
+                selectedGradientInformation: "linear-gradient(180deg, #434343, #000000)", // แดงเข้ม -> ส้มแดง
+                selectedGradientActivity: "linear-gradient(180deg, #434343, #000000)", // แดงเข้ม -> แดงสด
+                selectedGradientNavFooter: "linear-gradient(182deg, #b60c19, #600002)", // ส้มแดง -> แดงสด -> ส้มแดง
+                selectedGradientFooter: "linear-gradient(182deg, #b60c19, #600002)", // แดงเข้มล้วน
+                selectedGradientBorder: "linear-gradient(90deg, #FF0000, #DC143C, #8B0000)", // แดงสด -> แดงเข้ม
+                selectedGradientButton: "linear-gradient(90deg, #FF4500, #FF0000, #FF4500)", // ส้มแดง -> แดงสด -> ส้มแดง
+                text: "#FFFFFF"
+            };
+        }else if (id === 3) { // 🎨 ธีมสีเขียวเข้ม
+            return {
+                selectedGradientNavbar: "linear-gradient(182deg, #064E3B, #022C22)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientMenuBar: "linear-gradient(182deg, #065F46, #013220)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientSideBar: "linear-gradient(180deg, #022C22, #001A12)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientSideBarButtom: "linear-gradient(182deg, #064E3B, #022C22)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #013220 100%)", // โปร่งใส -> เขียวเข้ม
+                selectedGradientPopup: "linear-gradient(182deg, #064E3B, #022C22)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientInformation: "linear-gradient(180deg, #022C22, #001A12)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientActivity: "linear-gradient(180deg, #022C22, #001A12)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientNavFooter: "linear-gradient(182deg, #064E3B, #022C22)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientFooter: "linear-gradient(182deg, #064E3B, #022C22)", // เขียวเข้มล้วน
+                selectedGradientBorder: "linear-gradient(90deg, #013220, #064E3B, #022C22)", // เขียวเข้ม -> เขียวดำ
+                selectedGradientButton: "linear-gradient(90deg, #065F46, #013220, #065F46)", // เขียวเข้ม -> เขียวดำ -> เขียวเข้ม
+                text: "#E5E5E5" // ขาวเทา เพื่อให้อ่านง่าย
+            };
+        }else if (id === 4) { // 🎨 ธีมสีฟ้าอ่อน
+            return {
+                selectedGradientNavbar: "linear-gradient(182deg, #4A148C, #6A1B9A)", // ม่วงเข้ม -> ม่วงอมน้ำเงิน
+                selectedGradientMenuBar: "linear-gradient(182deg, #6A1B9A, #8E24AA)", // ม่วงอมน้ำเงิน -> ม่วงสด
+                selectedGradientSideBar: "linear-gradient(180deg, #311B92, #1A237E)", // ม่วงน้ำเงินเข้ม -> ม่วงดำ
+                selectedGradientSideBarButtom: "linear-gradient(182deg, #4A148C, #6A1B9A)", // ม่วงเข้ม -> ม่วงอมน้ำเงิน
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #311B92 100%)", // โปร่งใส -> ม่วงน้ำเงินเข้ม
+                selectedGradientPopup: "linear-gradient(182deg, #4A148C, #6A1B9A)", // ม่วงเข้ม -> ม่วงอมน้ำเงิน
+                selectedGradientInformation: "linear-gradient(180deg, #6A1B9A, #8E24AA)", // ม่วงอมน้ำเงิน -> ม่วงสด
+                selectedGradientActivity: "linear-gradient(180deg, #6A1B9A, #8E24AA)", // ม่วงอมน้ำเงิน -> ม่วงสด
+                selectedGradientNavFooter: "linear-gradient(182deg, #4A148C, #6A1B9A)", // ม่วงเข้ม -> ม่วงอมน้ำเงิน
+                selectedGradientFooter: "linear-gradient(182deg, #4A148C, #6A1B9A)", // ม่วงเข้มล้วน
+                selectedGradientBorder: "linear-gradient(90deg, #311B92, #4A148C, #6A1B9A)", // ม่วงน้ำเงินเข้ม -> ม่วงเข้ม
+                selectedGradientButton: "linear-gradient(90deg, #6A1B9A, #4A148C, #6A1B9A)", // ม่วงอมน้ำเงิน -> ม่วงเข้ม -> ม่วงอมน้ำเงิน
+                text: "#EDE7F6" // ม่วงอ่อนเพื่อให้อ่านง่าย
+            };
+        }else if (id === 5) { // 🎨 ธีมสีส้มเข้ม
+            return {
+                selectedGradientNavbar: "linear-gradient(182deg, #D35400, #E67E22)", // ส้มเข้ม -> ส้มสด
+                selectedGradientMenuBar: "linear-gradient(182deg, #E67E22, #F39C12)", // ส้มสด -> ส้มทอง
+                selectedGradientSideBar: "linear-gradient(180deg, #C0392B, #9C1C00)", // ส้มแดงเข้ม -> น้ำตาลแดง
+                selectedGradientSideBarButtom: "linear-gradient(182deg, #D35400, #E67E22)", // ส้มเข้ม -> ส้มสด
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #C0392B 100%)", // โปร่งใส -> ส้มแดงเข้ม
+                selectedGradientPopup: "linear-gradient(182deg, #D35400, #E67E22)", // ส้มเข้ม -> ส้มสด
+                selectedGradientInformation: "linear-gradient(180deg, #E67E22, #F39C12)", // ส้มสด -> ส้มทอง
+                selectedGradientActivity: "linear-gradient(180deg, #E67E22, #F39C12)", // ส้มสด -> ส้มทอง
+                selectedGradientNavFooter: "linear-gradient(182deg, #D35400, #E67E22)", // ส้มเข้ม -> ส้มสด
+                selectedGradientFooter: "linear-gradient(182deg, #D35400, #E67E22)", // ส้มเข้มล้วน
+                selectedGradientBorder: "linear-gradient(90deg, #C0392B, #D35400, #E67E22)", // ส้มแดงเข้ม -> ส้มเข้ม
+                selectedGradientButton: "linear-gradient(90deg, #E67E22, #D35400, #E67E22)", // ส้มสด -> ส้มเข้ม -> ส้มสด
+                text: "#FFF5E1" // ขาวอมส้มเพื่อให้อ่านง่าย
+            };
+        }else if (id === 6) { // 🎨 ธีมสีชมพูเข้ม
+            return {
+                selectedGradientNavbar: "linear-gradient(182deg, #8E44AD, #9B59B6)", // ม่วงอมชมพู -> ชมพูเข้ม
+                selectedGradientMenuBar: "linear-gradient(182deg, #9B59B6, #E91E63)", // ชมพูเข้ม -> ชมพูสด
+                selectedGradientSideBar: "linear-gradient(180deg, #6A1B9A, #880E4F)", // ม่วงแดงเข้ม -> ชมพูแดงเข้ม
+                selectedGradientSideBarButtom: "linear-gradient(182deg, #8E44AD, #9B59B6)", // ม่วงอมชมพู -> ชมพูเข้ม
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #880E4F 100%)", // โปร่งใส -> ชมพูแดงเข้ม
+                selectedGradientPopup: "linear-gradient(182deg, #8E44AD, #9B59B6)", // ม่วงอมชมพู -> ชมพูเข้ม
+                selectedGradientInformation: "linear-gradient(180deg, #9B59B6, #E91E63)", // ชมพูเข้ม -> ชมพูสด
+                selectedGradientActivity: "linear-gradient(180deg, #9B59B6, #E91E63)", // ชมพูเข้ม -> ชมพูสด
+                selectedGradientNavFooter: "linear-gradient(182deg, #8E44AD, #9B59B6)", // ม่วงอมชมพู -> ชมพูเข้ม
+                selectedGradientFooter: "linear-gradient(182deg, #8E44AD, #9B59B6)", // ม่วงอมชมพูล้วน
+                selectedGradientBorder: "linear-gradient(90deg, #6A1B9A, #8E44AD, #9B59B6)", // ม่วงแดงเข้ม -> ม่วงอมชมพู
+                selectedGradientButton: "linear-gradient(90deg, #E91E63, #9B59B6, #E91E63)", // ชมพูสด -> ชมพูเข้ม -> ชมพูสด
+                text: "#FFE4E1" // ขาวอมชมพูเพื่อให้อ่านง่าย
+            };
+        }else if (id === 7) { 
+            return {
+                selectedGradientNavbar: "linear-gradient(180deg, #f1c40f, #e67e22)", // ทอง -> เหลืองสด
+                selectedGradientMenuBar: "linear-gradient(180deg, #f1c40f, #e67e22)", // เหลืองสด -> เหลืองอ่อน
+                selectedGradientSideBar: "linear-gradient(180deg, #f1c40f, #e67e22)", // ทอง -> ส้มทอง
+                selectedGradientSideBarButtom: "linear-gradient(180deg, #f1c40f, #e67e22)", 
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #FFD700 100%)", 
+                selectedGradientPopup: "linear-gradient(180deg, #f1c40f, #e67e22)", 
+                selectedGradientInformation: "linear-gradient(180deg, #f1c40f, #e67e22)", 
+                selectedGradientActivity: "linear-gradient(180deg, #f1c40f, #e67e22)", 
+                selectedGradientNavFooter: "linear-gradient(180deg, #f1c40f, #e67e22)", 
+                selectedGradientFooter: "linear-gradient(180deg, #f1c40f, #e67e22)", 
+                selectedGradientBorder: "linear-gradient(90deg, #FFA000, #FFD700, #FFC107)", 
+                selectedGradientButton: "linear-gradient(90deg, #FFEB3B, #FFC107, #FFEB3B)", 
+                text: "#4A2C00" // น้ำตาลเข้มเพื่อให้อ่านง่าย
+            };
+        }else if (id === 8) { 
+            return {
+                selectedGradientNavbar: "linear-gradient(182deg, #2C2C2C, #000000)", // เทาเข้ม -> ดำ
+                selectedGradientMenuBar: "linear-gradient(182deg, #3B3B3B, #1C1C1C)", // เทากลาง -> ดำเทา
+                selectedGradientSideBar: "linear-gradient(180deg, #2C2C2C, #000000)", 
+                selectedGradientSideBarButtom: "linear-gradient(182deg, #2C2C2C, #000000)", 
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #1C1C1C 100%)", 
+                selectedGradientPopup: "linear-gradient(182deg, #2C2C2C, #000000)", 
+                selectedGradientInformation: "linear-gradient(180deg, #3B3B3B, #1C1C1C)", 
+                selectedGradientActivity: "linear-gradient(180deg, #3B3B3B, #1C1C1C)", 
+                selectedGradientNavFooter: "linear-gradient(182deg, #2C2C2C, #000000)", 
+                selectedGradientFooter: "linear-gradient(182deg, #2C2C2C, #000000)", 
+                selectedGradientBorder: "linear-gradient(90deg, #666666, #4D4D4D, #333333)", 
+                selectedGradientButton: "linear-gradient(90deg, #666666, #4D4D4D, #666666)", 
+                text: "#E0E0E0" // ขาวเทาเพื่อให้อ่านง่าย
+            };
+        }else if (id === 9) { 
+            return {
+                selectedGradientNavbar: "linear-gradient(182deg, #8B4513, #5D3A1A)", // น้ำตาลไม้ -> น้ำตาลเข้ม
+                selectedGradientMenuBar: "linear-gradient(182deg, #A0522D, #8B4513)", // น้ำตาลแดง -> น้ำตาลไม้
+                selectedGradientSideBar: "linear-gradient(180deg, #5D3A1A, #3E2A14)", // น้ำตาลเข้ม -> น้ำตาลดำ
+                selectedGradientSideBarButtom: "linear-gradient(182deg, #8B4513, #5D3A1A)", 
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #5D3A1A 100%)", 
+                selectedGradientPopup: "linear-gradient(182deg, #8B4513, #5D3A1A)", 
+                selectedGradientInformation: "linear-gradient(180deg, #A0522D, #8B4513)", 
+                selectedGradientActivity: "linear-gradient(180deg, #A0522D, #8B4513)", 
+                selectedGradientNavFooter: "linear-gradient(182deg, #8B4513, #5D3A1A)", 
+                selectedGradientFooter: "linear-gradient(182deg, #8B4513, #5D3A1A)", 
+                selectedGradientBorder: "linear-gradient(90deg, #6D4C41, #8B4513, #A0522D)", 
+                selectedGradientButton: "linear-gradient(90deg, #A0522D, #8B4513, #A0522D)", 
+                text: "#F5E1D2" // น้ำตาลอ่อนเพื่อให้อ่านง่าย
+            };
+        }else if (id === 10) { 
+            return {
+                selectedGradientNavbar: "linear-gradient(182deg, #FFD1DC, #FFB6C1)", // ชมพูอ่อน -> ชมพูพาสเทล
+                selectedGradientMenuBar: "linear-gradient(182deg, #B5EAD7, #AEE1FF)", // ฟ้าอ่อน -> ฟ้าพาสเทล
+                selectedGradientSideBar: "linear-gradient(180deg, #FFDAC1, #FFABAB)", // ส้มพาสเทล -> แดงพาสเทล
+                selectedGradientSideBarButtom: "linear-gradient(182deg, #FFD1DC, #FFB6C1)", 
+                selectedGradientNewIndex: "linear-gradient(360deg, #00000000 0%, #AEE1FF 100%)", 
+                selectedGradientPopup: "linear-gradient(182deg, #FFD1DC, #FFB6C1)", 
+                selectedGradientInformation: "linear-gradient(180deg, #B5EAD7, #AEE1FF)", 
+                selectedGradientActivity: "linear-gradient(180deg, #B5EAD7, #AEE1FF)", 
+                selectedGradientNavFooter: "linear-gradient(182deg, #FFD1DC, #FFB6C1)", 
+                selectedGradientFooter: "linear-gradient(182deg, #FFD1DC, #FFB6C1)", 
+                selectedGradientBorder: "linear-gradient(90deg, #FFABAB, #FFD1DC, #FFB6C1)", 
+                selectedGradientButton: "linear-gradient(90deg, #AEE1FF, #B5EAD7, #AEE1FF)", 
+                text: "#6D6D6D" // เทากลางเพื่อให้อ่านง่าย
+            };
+        }
+        
+        return null; // ถ้า `id` ไม่ตรงกับที่กำหนด ให้คืนค่า `null`
+    };
 
     onMounted(() => {
         getSettingThemes();

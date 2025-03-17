@@ -241,6 +241,17 @@ export async function editSettingPG100Services(data:any,number:number): Promise<
     const headers = {
         Authorization: `Bearer ${getToken()}`
     };
+    data.setting.forEach((element:any, index:number) => {
+        data.setting[index].percent = parseFloat(element.percent);
+        data.setting[index].option.from = parseFloat(element.option.from);
+        data.setting[index].option.to = parseFloat(element.option.to);
+    });
+    
+    data.buyFeatureSetting.forEach((element:any, index:number) => {
+        data.buyFeatureSetting[index].percent = parseFloat(element.percent);
+        data.buyFeatureSetting[index].option.from = parseFloat(element.option.from);
+        data.buyFeatureSetting[index].option.to = parseFloat(element.option.to);
+    });
 
     try {
         const  body = {
@@ -260,6 +271,18 @@ export async function editSettingPG100ServicesByUser(data:any,number:number,id:n
     const headers = {
         Authorization: `Bearer ${getToken()}`
     };
+
+    data.setting.forEach((element:any, index:number) => {
+        data.setting[index].percent = parseFloat(element.percent);
+        data.setting[index].option.from = parseFloat(element.option.from);
+        data.setting[index].option.to = parseFloat(element.option.to);
+    });
+    
+    data.buyFeatureSetting.forEach((element:any, index:number) => {
+        data.buyFeatureSetting[index].percent = parseFloat(element.percent);
+        data.buyFeatureSetting[index].option.from = parseFloat(element.option.from);
+        data.buyFeatureSetting[index].option.to = parseFloat(element.option.to);
+    });
 
     try {
         const  body = {

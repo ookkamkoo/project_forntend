@@ -3,6 +3,16 @@
         <FormFindMember :closeModal="closeModal" :addData="addData" :getList="getList"/>
         <template #footer></template>
     </a-modal>
+    <div>
+        <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+            <OtherMemberDetail :memberDetailId="memberDetailId"/>
+            <template #footer>
+                <a-row justify="end">
+                    <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+                </a-row>
+            </template>
+        </a-modal>
+    </div>
   <a-table 
     :columns="dynamicColumns"
     :data-source="dataShow"
@@ -16,7 +26,8 @@
         <div>{{ record.id }}</div>
       </template>
       <template v-if="column.key === 'username'">
-        <div v-if="record.username != ''">{{ record.username }}</div>
+        <!-- <div @click="showMemberDetailModal(record.id)">{{ record.username_agent }}</div> -->
+        <div v-if="record.username != ''" @click="showMemberDetailModal(record.member_id)">{{ record.username }}</div>
         <div v-else> - </div>
       </template>
       <template v-if="column.key === 'amount_before'">
@@ -91,6 +102,8 @@ const allRecord = ref<number>(0);
 const loading = ref(true);
 const open = ref<boolean>(false);
 const addData = ref<number>(0);
+const memberDetail = ref<boolean>(false);
+const memberDetailId = ref<number>(0);
 
 let formData = reactive({
     timeStart:ref(dayjs('00:00', 'HH:mm')),
@@ -119,6 +132,11 @@ onMounted(() => {
 
 const closeModal = () => {
   open.value = false;
+};
+
+const showMemberDetailModal = (data: number) => {
+    memberDetailId.value=data;
+    memberDetail.value = true;
 };
 
 

@@ -3,6 +3,16 @@
     <FormWithdraw :closeModal="closeModal" :getWithdraw="getList" :dataMember="dataMember" />
     <template #footer></template>
   </a-modal>
+  <div>
+    <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+        <OtherMemberDetail :memberDetailId="memberDetailId"/>
+        <template #footer>
+            <a-row justify="end">
+                <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+            </a-row>
+        </template>
+    </a-modal>
+  </div>
   <a-table 
     :columns="dynamicColumns"
     :data-source="dataShow"
@@ -17,7 +27,7 @@
         <div>{{ record.id }}</div>
       </template>
       <template v-if="column.key === 'username'">
-        <div>{{ record.username }}</div>
+        <div @click="showMemberDetailModal(record.member_id)">{{ record.username }}</div>
       </template>
       <template v-if="column.key === 'amount_before'">
         <div>{{ record.amount_before }}</div>
@@ -87,6 +97,8 @@ const allRecord = ref<number>(0);
 const loading = ref(true);
 const open = ref<boolean>(false);
 const dataMember = ref<any>({});
+const memberDetail = ref<boolean>(false);
+const memberDetailId = ref<number>(0);
 
 
 let formData = reactive({
@@ -179,6 +191,11 @@ const manualWithdraw = (record:any) => {
         },
     });
 }
+
+const showMemberDetailModal = (data: number) => {
+    memberDetailId.value=data;
+    memberDetail.value = true;
+};
 
 watch(() => store.notify.withdraw,(newVal, oldVal) => {
     console.log(`notify.notify.withdraw เปลี่ยนจาก ${oldVal} เป็น ${newVal}`);

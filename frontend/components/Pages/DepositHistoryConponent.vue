@@ -4,6 +4,16 @@
       {{"\n"}}{{ JSON.stringify(detail, null, 2) }}
   </pre>
   </a-modal>
+  <div>
+    <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+        <OtherMemberDetail :memberDetailId="memberDetailId"/>
+        <template #footer>
+            <a-row justify="end">
+                <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+            </a-row>
+        </template>
+    </a-modal>
+  </div>
   <a-modal v-model:open="openPromotion" title="โปรโมชั่น">
     <a-textarea
       v-model:value="promotion.promotion"
@@ -110,7 +120,7 @@
         <div>{{ record.id }}</div>
       </template>
       <template v-if="column.key === 'username'">
-        <div>{{ record.username }}</div>
+        <div @click="showMemberDetailModal(record.member_id)">{{ record.username }}</div>
       </template>
       <template v-if="column.key === 'amount_before'">
         <div>{{ record.amount_before }}</div>
@@ -200,6 +210,8 @@ const allRecord = ref<number>(0);
 const loading = ref(true);
 const open = ref<boolean>(false);
 const openPromotion = ref<boolean>(false);
+const memberDetail = ref<boolean>(false);
+const memberDetailId = ref<number>(0);
 
 const showModal = (data:any) => {
   open.value = true;
@@ -241,6 +253,11 @@ const getList = async() => {
   }
   loading.value = false;
 }
+
+const showMemberDetailModal = (data: number) => {
+    memberDetailId.value = data;
+    memberDetail.value = true;
+};
 
 onMounted(() => {
   getList();

@@ -4,6 +4,16 @@
       {{"\n"}}{{ JSON.stringify(detail, null, 2) }}
     </pre>
   </a-modal>
+  <div>
+    <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+        <OtherMemberDetail :memberDetailId="memberDetailId"/>
+        <template #footer>
+            <a-row justify="end">
+                <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+            </a-row>
+        </template>
+    </a-modal>
+  </div>
   <a-row class="p-2">
       <a-col class="p-1" :span="4">
         <label>ประเภท</label>
@@ -101,7 +111,7 @@
         <div>{{ record.id }}</div>
       </template>
       <template v-if="column.key === 'username'">
-        <div>{{ record.username }}</div>
+        <div @click="showMemberDetailModal(record.member_id)">{{ record.username }}</div>
       </template>
       <template v-if="column.key === 'amount_before'">
         <div>{{ record.amount_before }}</div>
@@ -181,6 +191,8 @@ const detail = ref<any>();
 const allRecord = ref<number>(0);
 const loading = ref(true);
 const open = ref<boolean>(false);
+const memberDetail = ref<boolean>(false);
+const memberDetailId = ref<number>(0);
 
 const showModal = (data:any) => {
   console.log("sssssssssss");
@@ -220,6 +232,11 @@ let formData = reactive({
     }
     loading.value = false;
   }
+
+const showMemberDetailModal = (data: number) => {
+  memberDetailId.value = data;
+  memberDetail.value = true;
+};
 
 onMounted(() => {
   getList();

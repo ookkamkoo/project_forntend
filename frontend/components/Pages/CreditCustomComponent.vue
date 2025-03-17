@@ -1,4 +1,14 @@
 <template class="search">
+  <div>
+    <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+        <OtherMemberDetail :memberDetailId="memberDetailId"/>
+        <template #footer>
+            <a-row justify="end">
+                <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+            </a-row>
+        </template>
+    </a-modal>
+  </div>
   <a-row class="p-2">
     <a-col class="p-1" :span="24" :md="8">
       <label>ยูสเซอร์เนม</label>
@@ -82,8 +92,8 @@
             <a-tag color="red" v-else-if="record.action == 2">ลดเครดิต</a-tag>
             <a-tag color="cyan" v-else-if="record.action == 3">ฝากเงินไม่เข้า</a-tag>
           </template>
-          <template v-if="column.key === 'username'">
-            <div>{{ record.username }}</div>
+          <template v-if="column.key === 'username'"> 
+            <div @click="showMemberDetailModal(record.member_id)">{{ record.username }}</div>
           </template>
           <!-- <template v-if="column.key === 'amount_before'">
             <div>{{ record.amount_before }}</div>
@@ -137,6 +147,8 @@ const dataShow = ref<any[]>([]);
 const open = ref<boolean>(false);
 const allRecord = ref<number>(0);
 const loading = ref(true);
+const memberDetail = ref<boolean>(false);
+const memberDetailId = ref<number>(0);
 
 const showModal = () => {
     open.value = true;
@@ -231,6 +243,11 @@ const dynamicColumns = computed(() => {
     },
   ];
 });
+
+const showMemberDetailModal = (data: number) => {
+    memberDetailId.value = data;
+    memberDetail.value = true;
+};
 
 const search = () =>{
   getCreditCustom();

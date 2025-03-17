@@ -98,3 +98,19 @@ export async function saveSettingThemeServices(data:any,page:number): Promise<ge
         return error.response.data;
     }
 }
+
+export async function saveThemeServices(data:any): Promise<getResponse> {
+    const config = useRuntimeConfig();
+    const url = config.public.serviceUrls;
+
+    const headers = {
+        Authorization: `Bearer ${getToken()}`
+    };
+
+    try {
+        const response = await axios.post<getResponse>(`${url}/setting/updatedThemes`,data, { headers });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}

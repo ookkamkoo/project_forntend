@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink to="/setting/list-provider">ไปที่หน้าเกี่ยวกับเรา</NuxtLink>
+    <!-- <NuxtLink to="/setting/list-provider">ไปที่หน้าเกี่ยวกับเรา</NuxtLink> -->
     <a-row class="p-2">
       <a-col :span="24" :md="10" :lg="11">
         <a-row >

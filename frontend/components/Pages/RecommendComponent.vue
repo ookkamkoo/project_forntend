@@ -1,4 +1,14 @@
 <template>
+  <div>
+    <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+        <OtherMemberDetail :memberDetailId="memberDetailId"/>
+        <template #footer>
+            <a-row justify="end">
+                <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+            </a-row>
+        </template>
+    </a-modal>
+  </div>
   <a-row class="p-2">
     <a-col :span="24" :md="8">
       <a-row >
@@ -83,6 +93,9 @@
       <template v-if="column.key === 'type'">
         <a-tag color="blue">เเนะนำเพื่อน</a-tag>
       </template>
+      <template v-if="column.key === 'username_receive_id'">
+        <div @click="showMemberDetailModal(record.receive_id)">{{ record.username_receive_id }}</div>
+      </template>
       <template v-if="column.key === 'date'">
         <div>{{ dayjs(record.date).format('YYYY-MM-DD') }}</div>
       </template>
@@ -131,6 +144,8 @@ const loading = ref(true);
   sumAmountTotal: 0,
   sumRefundAmount: 0
 });
+const memberDetail = ref<boolean>(false);
+const memberDetailId = ref<number>(0);
 
 
 const currentDate = new Date();
@@ -203,6 +218,11 @@ const handleDateSelectChange = () => {
   formData.timeStart = dayjs('00:00', 'HH:mm');
   formData.timeEnd = dayjs('23:59', 'HH:mm');
   getRecommend();
+};
+
+const showMemberDetailModal = (data: number) => {
+  memberDetailId.value = data;
+  memberDetail.value = true;
 };
 
 const getRecommend = async() => {

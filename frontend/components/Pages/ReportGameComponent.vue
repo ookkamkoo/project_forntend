@@ -1,5 +1,14 @@
 <template>
-  
+  <div>
+    <a-modal v-model:open="memberDetail" width="1200px" title="รายละเอียดลูกค้า">
+        <OtherMemberDetail :memberDetailId="memberDetailId"/>
+        <template #footer>
+            <a-row justify="end">
+                <a-button @click="memberDetail=false" class="m-1">Cancel</a-button>
+            </a-row>
+        </template>
+    </a-modal>
+  </div>
     <a-row class="p-2">
         <a-col class="p-1" :span="6">
           <label>ประเภท</label>
@@ -77,6 +86,9 @@
         @change="handleTableChange"
     >
         <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'username'">
+            <div @click="showMemberDetailModal(record.user_id)">{{ record.username }}</div>
+          </template>
             <template v-if="column.key === 'created_at'">
                 <div >{{ dayjs(record.created_at).format('YYYY-MM-DD') }} <br> {{ dayjs(record.created_at).format('HH:mm:ss') }}</div>
             </template>
@@ -103,6 +115,8 @@
     const sumBetResult = ref<number>(0);
     const sumBetWinloss = ref<number>(0);
     const loading = ref(true);
+    const memberDetail = ref<boolean>(false);
+    const memberDetailId = ref<number>(0);
 
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -192,6 +206,10 @@ const getReportGame = async() => {
   loading.value = false;
 }
 
+const showMemberDetailModal = (data: number) => {
+  memberDetailId.value = data;
+  memberDetail.value = true;
+};
 
 const paginationConfig = ref({
   current: 1,
